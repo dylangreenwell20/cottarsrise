@@ -22,13 +22,16 @@ public class HealthController : MonoBehaviour
 
     private float healthBarStartWidth; //starting width of health bar (at max health)
 
-    private MeshRenderer mR; //mesh renderer of the health bar/enemy
+    private MeshRenderer mR; //mesh renderer of the enemy
+
+    private CapsuleCollider cC; //capsule collider of the enemy
 
     private bool isDead; //is the health at 0 or not
 
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
+        cC = GetComponent<CapsuleCollider>(); //get capsule collider
         currentHealth = maxHealth; //current health is max health
         healthBarStartWidth = healthBar.sizeDelta.x; //width of health bar
         UpdateUI(); //update the health bar UI
@@ -49,8 +52,11 @@ public class HealthController : MonoBehaviour
         {
             currentHealth = 0; //set health to 0 to avoid negative health
             isDead = true; //enemy is dead
-            mR.enabled = false; //disable mesh renderer to hide enemy
-            healthPanel.SetActive(false); //disable health bar
+            Destroy(gameObject); //destroy the enemy gameobject
+
+            //cC.enabled = false; //disable the collision of the enemy                      --- these lines are for just disabling the capsule collider, mesh renderer and health canvas on death
+            //mR.enabled = false; //disable mesh renderer to hide enemy                         the game object would still persist so this is just mainly for testing what happens
+            //healthPanel.SetActive(false); //disable health bar                                when enemies die and what code would still run - basically this is for testing
         }
 
         UpdateUI(); //update the health bar UI

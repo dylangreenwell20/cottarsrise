@@ -17,10 +17,10 @@ TagManager:
   - Ground
   - Arrows
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - LevelObjectNoWalk
+  - Player
+  - LevelObjectWalkable
   - 
   - 
   - 
