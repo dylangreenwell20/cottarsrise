@@ -32,13 +32,16 @@ public class EnemyAI : MonoBehaviour
 
     public float patrolCooldownLower; //lower cooldown number for random time between enemy patrols
     public float patrolCooldownHigher; //higher cooldown number for random time between enemy patrols
-    public bool cdActive;
-    public float patrolCD;
+    public bool cdActive; //patrol cooldown is active
+    public float patrolCD; //cooldown between patrol points
+
+    public float enemyDamage; //damage the enemy deals
+    private bool isPlayerDead; //is player dead or alive
 
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
-        playerTransform = GameObject.Find("PlayerObject").transform; //find player transform
+        playerTransform = player.transform; //find player transform
         nma = GetComponent<NavMeshAgent>(); //get nav mesh agent from enemy
     }
 
@@ -54,38 +57,47 @@ public class EnemyAI : MonoBehaviour
             Patroling(); //patrol the area
         }
 
-        if (distanceToTarget <= viewDistance) //if the distance from the player is less than or equal to the enemy's view distance
+        isPlayerDead = player.GetComponent<PlayerHealth>().isDead; //check if player is dead and assign the result to 'isPlayerDead' bool
+        
+        if (!isPlayerDead) //if player is alive
         {
-            if (Vector3.Angle(transform.forward, playerTarget) < viewAngle / 2) //if player is in the view cone infront of the enemy
+            if (distanceToTarget <= viewDistance) //if the distance from the player is less than or equal to the enemy's view distance
             {
-                if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, whatIsObject) == false) //if the enemy has a clear raycast to the player (it is false because the statement checks for collision with objects in the environment)
+                if (Vector3.Angle(transform.forward, playerTarget) < viewAngle / 2) //if player is in the view cone infront of the enemy
                 {
-                    playerInSight = true; //player is in sight
-                    ChasePlayer(); //chase the player
+                    if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, whatIsObject) == false) //if the enemy has a clear raycast to the player (it is false because the statement checks for collision with objects in the environment)
+                    {
+                        playerInSight = true; //player is in sight
+                        ChasePlayer(); //chase the player
 
-                    //IF WITHIN ATTACK DISTANCE
-                    //  ENEMY ATTACK FUNCTION
+                        //IF WITHIN ATTACK DISTANCE
+                        //  ENEMY ATTACK FUNCTION
 
-                    Debug.Log("ENEMY SEES YOU!!!"); //for testing
+                        Debug.Log("ENEMY SEES YOU!!!"); //for testing
+                    }
                 }
-            }
-            else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
-            {
-                //'ENEMY HEARS PLAYER' CODE
-                //basically if player walks or sprints then the enemy will target the player
-                //if isWalking or isSprinting (https://youtu.be/ho7-pVNU62g)
-                //    ChasePlayer();
+                else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
+                {
+                    //'ENEMY HEARS PLAYER' CODE
+                    //basically if player walks or sprints then the enemy will target the player
+                    //if isWalking or isSprinting (https://youtu.be/ho7-pVNU62g)
+                    //    ChasePlayer();
 
-                Debug.Log("ENEMY HEARS YOU!!!"); //for testing
+                    Debug.Log("ENEMY HEARS YOU!!!"); //for testing
+                }
+                else //if player is not in view distance
+                {
+                    NotInSight(); //player is not in sight of enemy
+                }
             }
             else //if player is not in view distance
             {
                 NotInSight(); //player is not in sight of enemy
             }
         }
-        else //if player is not in view distance
+        else //else if the player is dead
         {
-            NotInSight(); //player is not in sight of enemy
+            playerInSight = false; //player no longer in sight - this is for enemies that were attacking or chasing the player as the player died and this will make them patrol again
         }
     }
 
@@ -169,6 +181,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!isAttackingPlayer) //if isnt currently attacking the player
         {
+            player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
             //ENEMY ATTACK CODE HERE - DO MELEE FIRST
 
             Debug.Log("YOU HAVE BEEN ATTACKED!!!"); //for testing
