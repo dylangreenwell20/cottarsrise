@@ -31,6 +31,10 @@ public class WeaponController : MonoBehaviour
     public float swordRange = 3f; //distance the sword can attack
     public Transform attackPoint; //point where hit reg is calculated from sword
 
+    public float manaCost; //mana cost of the staff attack
+    public float currentMana; //current mana the player has
+    public GameObject player; //reference to the player
+
     private void Update()
     {
         if (Input.GetMouseButton(0) && sW.swordActive) //if left click pressed and sword is equipped
@@ -45,6 +49,12 @@ public class WeaponController : MonoBehaviour
         {
             if (CanAttack) //if player can attack
             {
+                //check if user has enough arrows
+
+
+                //---------------------------------------------------------------------------------------------------------------------------------1234567890
+
+
                 BowAttack(); //attack function
             }
         }
@@ -53,13 +63,19 @@ public class WeaponController : MonoBehaviour
         {
             if (CanAttack) //if player can attack
             {
-                StaffAttack(); //attack function
+                currentMana = player.gameObject.GetComponent<PlayerMana>().currentMana; //get current mana value
+                //Debug.Log(currentMana); //for testing
+
+                if(currentMana >=  manaCost) //check if player has more mana than the staff requires
+                {
+                    StaffAttack(); //attack function
+                }
             }
         }
 
-        if (sW.bowActive)
+        if (sW.bowActive) //if bow is active
         {
-            if(CanAttack && !IsAttacking)
+            if(CanAttack && !IsAttacking) //if player can attack and is not currently attacking
             {
                 modelArrow.SetActive(true); //enable the model arrow in the bow
             }
@@ -141,6 +157,9 @@ public class WeaponController : MonoBehaviour
 
         InstantiateProjectile(firePoint); //create projectile function
 
+        player.gameObject.GetComponent<PlayerMana>().LoseMana(manaCost); //take away mana cost of the staff from the player's mana value
+        //Debug.Log(currentMana); //for testing
+
         StartCoroutine(ResetAttackCooldown(StaffAttackCooldown)); //reset attack cooldown using staff attack cooldown time
     }
 
@@ -155,7 +174,6 @@ public class WeaponController : MonoBehaviour
         StartCoroutine(ResetAttackBoolean(AttackCD)); //reset attack boolean variable
         yield return new WaitForSeconds(AttackCD); //wait for cooldown
         CanAttack = true; //set CanAttack to true
-        
     }
 
     IEnumerator ResetAttackBoolean(float AttackCD)

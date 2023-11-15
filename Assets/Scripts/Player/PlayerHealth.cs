@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private float maxHealth; //max health of player
 
-    private float currentHealth; //current health of player
+    public float currentHealth; //current health of player
 
     [SerializeField]
     private GameObject healthPanel; //reference to health panel
@@ -23,6 +23,15 @@ public class PlayerHealth : MonoBehaviour
     private float healthBarStartWidth; //starting width of health bar (at max health)
 
     public bool isDead; //is the health at 0 or not
+
+    [SerializeField]
+    private GameObject player; //reference to player game object
+
+    [SerializeField]
+    private GameObject cam; //reference to player camera
+
+    [SerializeField]
+    private GameObject weaponHolder; //reference to player weapon holder
 
     private void Start()
     {
@@ -44,10 +53,9 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = 0; //set current health to 0 to avoid negative hp
             isDead = true; //player is dead
-
-            //GAME OVER SCRIPT HERE
-            //GAME OVER SCRIPT HERE
-            //GAME OVER SCRIPT HERE
+            player.SetActive(false); //disable player character
+            cam.GetComponent<PlayerCamera>().enabled = false; //stop player from being able to move the camera
+            weaponHolder.SetActive(false); //disable player weapon holder
         }
 
         UpdateUI(); //update the ui

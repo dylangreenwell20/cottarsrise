@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 123873822}
   - component: {fileID: 123873821}
   - component: {fileID: 123873824}
+  - component: {fileID: 123873825}
   m_Layer: 11
   m_Name: PlayerObject
   m_TagString: Player
@@ -576,10 +577,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
   healthPanel: {fileID: 1854475997}
   healthText: {fileID: 56469548}
   healthBar: {fileID: 1902146872}
   isDead: 0
+  player: {fileID: 1736622279}
+  cam: {fileID: 2045633767}
+  weaponHolder: {fileID: 215420374}
+--- !u!114 &123873825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123873819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d941a6254242d3249a98ac94b933ddda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMana: 100
+  currentMana: 0
+  manaPanel: {fileID: 1420141074}
+  manaText: {fileID: 1693947667}
+  manaBar: {fileID: 1850151134}
 --- !u!1 &144352320
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +834,9 @@ MonoBehaviour:
     m_Bits: 256
   swordRange: 1.25
   attackPoint: {fileID: 1422496431}
+  manaCost: 15
+  currentMana: 0
+  player: {fileID: 123873819}
 --- !u!114 &215420377
 MonoBehaviour:
   m_ObjectHideFlags: 0
