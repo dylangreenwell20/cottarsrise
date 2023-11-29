@@ -35,6 +35,9 @@ public class WeaponController : MonoBehaviour
     public float currentMana; //current mana the player has
     public GameObject player; //reference to the player
 
+    public float arrowCost; //cost to shoot an arrow - useful for abilities that may cost multiple arrows or just firing normally which costs 1
+    public bool noArrows; //if player has no arrows left
+
     private void Update()
     {
         if (Input.GetMouseButton(0) && sW.swordActive) //if left click pressed and sword is equipped
@@ -49,13 +52,10 @@ public class WeaponController : MonoBehaviour
         {
             if (CanAttack) //if player can attack
             {
-                //check if user has enough arrows
-
-
-                //---------------------------------------------------------------------------------------------------------------------------------1234567890
-
-
-                BowAttack(); //attack function
+                if(!noArrows) //if player has no arrows left
+                {
+                    BowAttack(); //attack function
+                } 
             }
         }
 
@@ -77,7 +77,12 @@ public class WeaponController : MonoBehaviour
         {
             if(CanAttack && !IsAttacking) //if player can attack and is not currently attacking
             {
-                modelArrow.SetActive(true); //enable the model arrow in the bow
+                noArrows = player.gameObject.GetComponent<ArrowCounter>().noArrows;
+
+                if (!noArrows)
+                {
+                    modelArrow.SetActive(true); //enable the model arrow in the bow
+                }
             }
         }
     }
@@ -134,6 +139,8 @@ public class WeaponController : MonoBehaviour
         currentArrow.transform.forward = angleOfDirection.normalized; //rotate arrow to fire where the player is aiming
 
         currentArrow.GetComponent<Rigidbody>().AddForce(angleOfDirection.normalized * arrowForce, ForceMode.Impulse); //force of the arrow
+
+        player.gameObject.GetComponent<ArrowCounter>().LoseArrow(1); //take away an arrow from the player's current arrow count
 
         StartCoroutine(ResetAttackCooldown(BowAttackCooldown)); //reset attack cooldown using bow attack cooldown time
     }
