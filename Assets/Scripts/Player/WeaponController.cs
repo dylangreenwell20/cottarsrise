@@ -38,8 +38,18 @@ public class WeaponController : MonoBehaviour
     public float arrowCost; //cost to shoot an arrow - useful for abilities that may cost multiple arrows or just firing normally which costs 1
     public bool noArrows; //if player has no arrows left
 
+    public Inventory inventory; //reference to inventory script
+    private bool inventoryOpen; //if inventory is open or not
+
     private void Update()
     {
+        inventoryOpen = inventory.inventoryOpen; //get status of whether inventory is open or closed
+
+        if (inventoryOpen) //if inventory is open
+        {
+            return; //return function so player will not attack when clicking in inventory
+        }
+
         if (Input.GetMouseButton(0) && sW.swordActive) //if left click pressed and sword is equipped
         {
             if (CanAttack) //if player can attack
