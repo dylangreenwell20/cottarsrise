@@ -1071,6 +1071,7 @@ MonoBehaviour:
   cdActive: 0
   patrolCD: 0
   enemyDamage: 20
+  pm: {fileID: 1736622282}
 --- !u!114 &179700997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4879,6 +4880,7 @@ MonoBehaviour:
   cdActive: 0
   patrolCD: 0
   enemyDamage: 20
+  pm: {fileID: 1736622282}
 --- !u!114 &1077505902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8853,12 +8855,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 423361f5b2e50b743914854bdc05557f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 6
+  sprintSpeed: 10
+  stealthSpeed: 3
+  crouchSpeed: 3
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
   jumpKey: 32
+  sprintKey: 304
+  stealthKey: 306
   groundCheck: {fileID: 1038155380}
   groundDistance: 0.4
   whatIsGround:
@@ -8866,6 +8873,10 @@ MonoBehaviour:
     m_Bits: 4160
   orientation: {fileID: 644861487}
   cam: {fileID: 2045633771}
+  isSprinting: 0
+  isStealthing: 0
+  isMoving: 0
+  canStealth: 0
 --- !u!114 &1736622283
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,6 +38,8 @@ public class EnemyAI : MonoBehaviour
     public float enemyDamage; //damage the enemy deals
     private bool isPlayerDead; //is player dead or alive
 
+    public PlayerMovement pm; //reference to PlayerMovement script
+
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
@@ -70,20 +72,21 @@ public class EnemyAI : MonoBehaviour
                         playerInSight = true; //player is in sight
                         ChasePlayer(); //chase the player
 
-                        //IF WITHIN ATTACK DISTANCE
-                        //  ENEMY ATTACK FUNCTION
-
                         Debug.Log("ENEMY SEES YOU!!!"); //for testing
                     }
                 }
                 else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
                 {
-                    //'ENEMY HEARS PLAYER' CODE
-                    //basically if player walks or sprints then the enemy will target the player
-                    //if isWalking or isSprinting (https://youtu.be/ho7-pVNU62g)
-                    //    ChasePlayer();
+                    bool isStealthing = pm.isStealthing; //check if player is stealthing or not
+                    if (!isStealthing) //if player is not stealthing (so if they are either walking or sprinting)
+                    {
+                        if(pm.isMoving) //if player is moving and making noise
+                        {
+                            ChasePlayer(); //chase the player
+                        }
+                    }
 
-                    Debug.Log("ENEMY HEARS YOU!!!"); //for testing
+                    Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
                 }
                 else //if player is not in view distance
                 {
