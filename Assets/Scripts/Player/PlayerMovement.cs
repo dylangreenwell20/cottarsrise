@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
                 InteractableItems interactable = hit.collider.GetComponent<InteractableItems>(); //get InteractableItems component from what was hit
                 if(interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
                 {
-                    interactable.DeleteItem(); //delete the item
+                    interactable.Interact(); //pick up the item
                 }
             }
         }

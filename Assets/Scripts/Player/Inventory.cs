@@ -12,8 +12,24 @@ public class Inventory : MonoBehaviour
 
     public PlayerCamera pc; //reference to player camera for unlocking the cursor
 
+    public List<Item> items = new List<Item>(); //create new list for storing items
+
+    public static Inventory instance; //create singleton of inventory
+
+    public int inventorySize = 25; //size of inventory
+
+    public delegate void OnItemChanged(); //create new delegate type
+    public OnItemChanged onItemChangedCallback; //create new delegate callback to implement the delegate
+
     private void Awake()
     {
+        if(instance != null) //if instance already created
+        {
+            Debug.LogWarning("More than one Inventory instance was found..."); //send debug message to inform of the error
+            return; //return function
+        }
+
+        instance = this; //set instance to this (inventory)
         inventory.SetActive(false); //hide the inventory on awake
     }
 
@@ -36,6 +52,35 @@ public class Inventory : MonoBehaviour
 
                 inventoryOpen = false; ; //inv is closed
             }
+        }
+    }
+
+    public bool AddItem (Item item)
+    {
+        if(!item.isDefaultItem) //if item is not a default (starting) item
+        {
+            if(items.Count >= inventorySize) //if inventory size has been reached
+            {
+                Debug.Log("Not enough room in inventory!"); //output message that inventory is full
+                return false; //return false as item was not added
+            }
+            items.Add(item); //add item to list
+
+            if(onItemChangedCallback != null) //if the callback exists
+            {
+                onItemChangedCallback.Invoke(); //invoke the delegate callback
+            }
+        }
+        return true; //return true as item was added
+    }
+
+    public void RemoveItem (Item item)
+    {
+        items.Remove(item); //remove item from list
+
+        if (onItemChangedCallback != null) //if the callback exists
+        {
+            onItemChangedCallback.Invoke(); //invoke the delegate callback
         }
     }
 }
