@@ -23,15 +23,13 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround; //layermask variable for what is the ground
     bool grounded; //boolean variable for grounded (true = on ground, false = off ground)
 
-    //public float playerHeight; //float variable for player height
-    //public LayerMask whatIsGround; //layermask variable for what is the ground                ###old ground check code - replaced due to issues with jumping
-    //bool grounded; //boolean variable for grounded (true = on ground, false = off ground)
-
     public Transform orientation; //orientation variable
     float horizontalInput; //horizontal movement input variable
     float verticalInput; //vertical movement input variable
     Vector3 moveDirection; //movement direction variable
     Rigidbody rb; //rigidbody variable
+
+    public Camera cam; //reference to camera
 
     private void Start()
     {
@@ -43,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround); //check if the player is on the ground
-        //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround); //check is player is on ground            ###old ground check code - replaced due to isses with jumping
         MyInput(); //run MyInput function
         SpeedControl(); //run SpeedControl function
 
@@ -54,6 +51,21 @@ public class PlayerMovement : MonoBehaviour
         else //if player is not on the ground
         {
             rb.drag = 0; //apply no drag to movement
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) //if E is pressed
+        {
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //create a ray from the camera where the player is looking
+            RaycastHit hit; //create new raycasthit variable
+
+            if (Physics.Raycast(ray, out hit, 3)) //if raycast hit something within 10 units
+            {
+                InteractableItems interactable = hit.collider.GetComponent<InteractableItems>(); //get InteractableItems component from what was hit
+                if(interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
+                {
+                    interactable.DeleteItem(); //delete the item
+                }
+            }
         }
     }
 
