@@ -19,6 +19,8 @@ public class EquipmentManager : MonoBehaviour
 
     Inventory inventory; //reference to inventory
 
+    public GameObject headSlot, chestSlot, legSlot, bootSlot, weaponSlot, offhandSlot; //references to equipment buttons
+
     private void Start()
     {
         inventory = Inventory.instance; //set inventory as instance of inventory class
@@ -45,7 +47,32 @@ public class EquipmentManager : MonoBehaviour
 
         currentEquipment[slotIndex] = newItem; //set specific equipment slot to the new item
 
-        //put item in equipment slot here
+        //put item in equipment slot here - TURN INTO FOR LOOP
+
+        if(slotIndex == 0) //if slot index is 0 (helmet index)
+        {
+            headSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
+        if (slotIndex == 1) //if slot index is 1 (chestplate index)
+        {
+            chestSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
+        if (slotIndex == 2) //if slot index is 2 (leggings index)
+        {
+            legSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
+        if (slotIndex == 3) //if slot index is 3 (boots index)
+        {
+            bootSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
+        if (slotIndex == 4) //if slot index is 4 (weapon index)
+        {
+            weaponSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
+        if (slotIndex == 5) //if slot index is 5 (offhand index)
+        {
+            offhandSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+        }
     }
 
     public void Unequip(int slotIndex)
@@ -61,6 +88,33 @@ public class EquipmentManager : MonoBehaviour
             {
                 onEquipmentChanged.Invoke(null, equippedItem); //invoke the delegate
             }
+
+            /*
+            if (slotIndex == 0) //if slot index is 0 (helmet index)
+            {
+                headSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in head slot
+            }
+            if (slotIndex == 1) //if slot index is 1 (chestplate index)
+            {
+                chestSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in chest slot
+            }
+            if (slotIndex == 2) //if slot index is 2 (leggings index)
+            {
+                legSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in leg slot
+            }
+            if (slotIndex == 3) //if slot index is 3 (boots index)
+            {
+                bootSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in boot slot
+            }
+            if (slotIndex == 4) //if slot index is 4 (weapon index)
+            {
+                weaponSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in weapon slot
+            }
+            if (slotIndex == 5) //if slot index is 5 (offhand index)
+            {
+                offhandSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in offhand slot
+            }
+            */
         }
     }
 }

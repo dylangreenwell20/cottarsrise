@@ -21,6 +21,8 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged(); //create new delegate type
     public OnItemChanged onItemChangedCallback; //create new delegate callback to implement the delegate
 
+    public GameObject arrowCountUI, currentWeaponUI; //references to UI elements which need to be hidden when inventory is open
+
     private void Awake()
     {
         if(instance != null) //if instance already created
@@ -42,6 +44,9 @@ public class Inventory : MonoBehaviour
                 
                 pc.UnlockCursor(); //unlock the cursor so player can use cursor for inventory
 
+                arrowCountUI.SetActive(false); //hide arrow count UI
+                currentWeaponUI.SetActive(false); //hide current weapon ui
+
                 inventoryOpen = true; //inv is open
             }
             else
@@ -49,6 +54,9 @@ public class Inventory : MonoBehaviour
                 inventory.SetActive(false); //close inventory
 
                 pc.LockCursor(); //lock the cursor so player can look around again
+
+                arrowCountUI.SetActive(true); //show arrow count UI
+                currentWeaponUI.SetActive(true); //show current weapon ui
 
                 inventoryOpen = false; ; //inv is closed
             }
