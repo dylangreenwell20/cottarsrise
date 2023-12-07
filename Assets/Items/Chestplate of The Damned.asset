@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f713592455e732044a14751c9ec75997, type: 3}
+  m_Name: Chestplate of The Damned
+  m_EditorClassIdentifier: 
+  name: Chestplate of The Damned
+  itemIcon: {fileID: 21300000, guid: 8686589a30e69c24499f14d2f0a9d05c, type: 3}
+  isDefaultItem: 0
+  isEquippable: 1
+  equipSlot: 1
+  armourModifier: 3
+  damageModifier: 2

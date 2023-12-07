@@ -87,9 +87,9 @@ public class WeaponController : MonoBehaviour
         {
             if(CanAttack && !IsAttacking) //if player can attack and is not currently attacking
             {
-                noArrows = player.gameObject.GetComponent<ArrowCounter>().noArrows;
+                noArrows = player.gameObject.GetComponent<ArrowCounter>().noArrows; //check state of player having arrows left in quiver
 
-                if (!noArrows)
+                if (!noArrows) //if player has arrows left
                 {
                     modelArrow.SetActive(true); //enable the model arrow in the bow
                 }
@@ -153,6 +153,17 @@ public class WeaponController : MonoBehaviour
         player.gameObject.GetComponent<ArrowCounter>().LoseArrow(1); //take away an arrow from the player's current arrow count
 
         StartCoroutine(ResetAttackCooldown(BowAttackCooldown)); //reset attack cooldown using bow attack cooldown time
+
+        noArrows = player.gameObject.GetComponent<ArrowCounter>().noArrows; //check state of player having arrows left in quiver
+
+        if (noArrows) //if player has no arrows left
+        {
+            return; //return attack function
+
+            //the purpose of this function is to fix a bug where the bow would keep shooting arrows if the player had the attack button held down
+            //and the game would only check if the player had arrows left as they clicked, so the player would be able to keep shooting the bow
+            //even if they had 0 arrows left
+        }
     }
 
     public void StaffAttack()

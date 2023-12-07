@@ -26,7 +26,7 @@ public class InventoryUI : MonoBehaviour
             {
                 slots[i].AddItem(inventory.items[i]); //add item to specific inventory slot
             }
-            else //else if there are no itesm to add
+            else //else if there are no items to add
             {
                 slots[i].ClearItemSlot(); //clear the specific item slot
             }

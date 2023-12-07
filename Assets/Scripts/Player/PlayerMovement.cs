@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //create a ray from the camera where the player is looking
             RaycastHit hit; //create new raycasthit variable
 
-            if (Physics.Raycast(ray, out hit, 3)) //if raycast hit something within 10 units
+            if (Physics.Raycast(ray, out hit, 3)) //if raycast hit something within 3 units
             {
                 InteractableItems interactable = hit.collider.GetComponent<InteractableItems>(); //get InteractableItems component from what was hit
                 if(interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
