@@ -9922,6 +9922,7 @@ GameObject:
   - component: {fileID: 1736622282}
   - component: {fileID: 1736622283}
   - component: {fileID: 1736622284}
+  - component: {fileID: 1736622285}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -10034,6 +10035,23 @@ MonoBehaviour:
   bootSlot: {fileID: 248262989}
   weaponSlot: {fileID: 814945360}
   offhandSlot: {fileID: 1682962728}
+--- !u!114 &1736622285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736622279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcebd89bc4f012d46a99bca80f62fbfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  damage:
+    baseValue: 0
+  armour:
+    baseValue: 0
 --- !u!1001 &1736717679
 PrefabInstance:
   m_ObjectHideFlags: 0

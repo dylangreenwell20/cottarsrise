@@ -121,11 +121,14 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown); //invoke the ResetJump function with jumpCooldown
         }
 
-        if(!isStealthing && grounded) //if player is not in stealth mode and is grounded
+        if(!isStealthing) //if player is not in stealth mode
         {
-            if (Input.GetKeyDown(sprintKey)) //if sprint key is pressed down
+            if(grounded) //if player is grounded
             {
-                isSprinting = true; //player is sprinting
+                if (Input.GetKeyDown(sprintKey)) //if sprint key is pressed down
+                {
+                    isSprinting = true; //player is sprinting
+                }
             }
             if (Input.GetKeyUp(sprintKey)) //if sprint key is released
             {
@@ -137,17 +140,20 @@ public class PlayerMovement : MonoBehaviour
         //make a tryingToCrouch bool or tryingToUncrouch bool and check if the player has uncrouched. if uncrouched check raycast above player if they are able to uncrouch
         //if cannot uncrouch then keep the player crouched BUT make it so the player height is not changed again in the code below
 
-        if(canStealth && grounded) //if player can enter stealth mode and is grounded
+        if(canStealth) //if player can enter stealth mode
         {
             if (!isStealthing) //if player is not stealthing
             {
-                if (Input.GetKeyDown(stealthKey)) //if stealth key is pressed down
+                if (grounded)
                 {
-                    isStealthing = true; //player is in stealth mode
-                    /*
-                    transform.localScale = new Vector3(transform.localScale.x, crouchingHeight, transform.localScale.z); //set height to crouchingHeight value
-                    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); //move player downwards as they will be floating initially from the crouch
-                    */
+                    if (Input.GetKeyDown(stealthKey)) //if stealth key is pressed down
+                    {
+                        isStealthing = true; //player is in stealth mode
+                        /*
+                        transform.localScale = new Vector3(transform.localScale.x, crouchingHeight, transform.localScale.z); //set height to crouchingHeight value
+                        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); //move player downwards as they will be floating initially from the crouch
+                        */
+                    }
                 }
             }
 

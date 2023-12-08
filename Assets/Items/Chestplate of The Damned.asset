@@ -17,5 +17,5 @@ MonoBehaviour:
   isDefaultItem: 0
   isEquippable: 1
   equipSlot: 1
-  armourModifier: 3
+  armourModifier: 5
   damageModifier: 2
