@@ -28,35 +28,35 @@ public class HealthController : MonoBehaviour
 
     private bool isDead; //is the health at 0 or not
 
+    private CharacterStats characterStats; //reference to character stats script
+
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
         cC = GetComponent<CapsuleCollider>(); //get capsule collider
+        characterStats = GetComponent<CharacterStats>(); //get character stats
+        maxHealth = characterStats.maxHealth; //get character max health
         currentHealth = maxHealth; //current health is max health
         healthBarStartWidth = healthBar.sizeDelta.x; //width of health bar
         UpdateUI(); //update the health bar UI
     }
 
-    public void ApplyDamage(float damage)
+    public void ApplyDamage(int damage)
     {
         if(isDead == true) //if enemy is dead
         {
             return; //return
         }
 
-        //HERE I WOULD APPLY DODGE CHANCE OR BLOCK CHANCE FOR ENEMIES
+        int damageToTake = characterStats.DamageToTake(damage); //calculate damage with armour reduction applied
 
-        currentHealth -= damage; //take away damage from current health
+        currentHealth -= damageToTake; //take away damage from current health
 
         if(currentHealth <= 0) //if health is less than or equal to 0 after damage applied
         {
             currentHealth = 0; //set health to 0 to avoid negative health
             isDead = true; //enemy is dead
             Destroy(gameObject); //destroy the enemy gameobject
-
-            //cC.enabled = false; //disable the collision of the enemy                      --- these lines are for just disabling the capsule collider, mesh renderer and health canvas on death
-            //mR.enabled = false; //disable mesh renderer to hide enemy                         the game object would still persist so this is just mainly for testing what happens
-            //healthPanel.SetActive(false); //disable health bar                                when enemies die and what code would still run - basically this is for testing
         }
 
         UpdateUI(); //update the health bar UI

@@ -26,12 +26,12 @@ public class WeaponController : MonoBehaviour
     public Transform arrowFirePoint; //arrow fire point
     public GameObject modelArrow; //default arrow model in bow
 
-    public float swordDamage = 25; //damage value for sword
+    public int swordDamage = 50; //damage value for sword
     public LayerMask enemyLayer; //layer for attackable enemies
     public float swordRange = 3f; //distance the sword can attack
     public Transform attackPoint; //point where hit reg is calculated from sword
 
-    public float manaCost; //mana cost of the staff attack
+    public int manaCost = 15; //mana cost of the staff attack
     public float currentMana; //current mana the player has
     public GameObject player; //reference to the player
 
@@ -40,6 +40,8 @@ public class WeaponController : MonoBehaviour
 
     public Inventory inventory; //reference to inventory script
     private bool inventoryOpen; //if inventory is open or not
+
+    public PlayerStats playerStats; //reference to player stats script
 
     private void Update()
     {
@@ -105,9 +107,11 @@ public class WeaponController : MonoBehaviour
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, swordRange, enemyLayer); //store all hit enemies in an array as multiple enemies can be hit at once
 
+        int damageToDeal = playerStats.DamageToDeal(swordDamage); //get damage value with gear modifiers applied
+
         foreach(Collider enemy in hitEnemies) //for each enemy in the hitEnemies array
         {
-            enemy.GetComponent<HealthController>().ApplyDamage(swordDamage);
+            enemy.GetComponent<HealthController>().ApplyDamage(damageToDeal);
             //Debug.Log("Enemy hit: " + enemy.name); //print out who was hit for testing
         }
 

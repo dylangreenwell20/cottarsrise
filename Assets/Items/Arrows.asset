@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2907a6d72998a5e4f90acea1810314de, type: 3}
-  m_Name: HealthPotion
+  m_Name: Arrows
   m_EditorClassIdentifier: 
-  name: Health Potion
-  itemIcon: {fileID: 21300000, guid: 4cbd17fbd04a2f84088e05c89cf12788, type: 3}
+  name: Arrows
+  itemIcon: {fileID: 21300000, guid: ed09ae96d0a73f34da9e60fc650fa062, type: 3}
   isDefaultItem: 0
   isEquippable: 0
-  consumableType: 0
-  consumableValue: 30
+  consumableType: 2
+  consumableValue: 5

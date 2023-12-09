@@ -6,7 +6,15 @@ public class StaffProjectile : MonoBehaviour
 {
     public GameObject impactParticles; //projectile impact particle effect
     private bool hasCollided; //if projectile has collided or not
-    public float projectileDamage = 30f; //damage of projectile
+    public int projectileDamage = 30; //damage of projectile
+    private GameObject player; //player game object
+    private PlayerStats playerStats; //reference to player stats script
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player"); //find player game object
+        playerStats = player.GetComponent<PlayerStats>(); //get player stats component from player
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -17,7 +25,9 @@ public class StaffProjectile : MonoBehaviour
                 hasCollided = true; //projectile has collided
                 if (collision.gameObject.GetComponent<HealthController>() != null) //if the collided object has the component "HealthController"
                 {
-                    collision.gameObject.GetComponent<HealthController>().ApplyDamage(projectileDamage); //apply damage to the collided enemy
+                    int damageToDeal = playerStats.DamageToDeal(projectileDamage); //get damage value with gear modifiers applied
+
+                    collision.gameObject.GetComponent<HealthController>().ApplyDamage(damageToDeal); //apply damage to the collided enemy
                     //Debug.Log("enemy damaged"); //testing to see if enemy was successfully damaged
                 }
                 var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles on first collision point

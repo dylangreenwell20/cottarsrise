@@ -88,33 +88,6 @@ public class EquipmentManager : MonoBehaviour
             {
                 onEquipmentChanged.Invoke(null, equippedItem); //invoke the delegate
             }
-
-            /*
-            if (slotIndex == 0) //if slot index is 0 (helmet index)
-            {
-                headSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in head slot
-            }
-            if (slotIndex == 1) //if slot index is 1 (chestplate index)
-            {
-                chestSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in chest slot
-            }
-            if (slotIndex == 2) //if slot index is 2 (leggings index)
-            {
-                legSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in leg slot
-            }
-            if (slotIndex == 3) //if slot index is 3 (boots index)
-            {
-                bootSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in boot slot
-            }
-            if (slotIndex == 4) //if slot index is 4 (weapon index)
-            {
-                weaponSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in weapon slot
-            }
-            if (slotIndex == 5) //if slot index is 5 (offhand index)
-            {
-                offhandSlot.GetComponent<EquipmentSlot>().ClearEquipmentSlot(); //unequip piece of gear in offhand slot
-            }
-            */
         }
     }
 }

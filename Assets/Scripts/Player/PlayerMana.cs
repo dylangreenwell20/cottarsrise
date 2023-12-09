@@ -43,7 +43,7 @@ public class PlayerMana : MonoBehaviour
         UpdateUI(); //update the ui
     }
 
-    public void LoseMana(float manaDamage)
+    public void LoseMana(int manaDamage)
     {
         isDead = gameObject.GetComponent<PlayerHealth>().isDead; //check if the player is dead or alive
 
@@ -61,6 +61,18 @@ public class PlayerMana : MonoBehaviour
         }
 
         manaRegen = StartCoroutine(RegenerateMana(restartManaRegenCD)); //start a coroutine to regenerate mana after 2 seconds of not attacking
+
+        UpdateUI(); //update the ui
+    }
+
+    public void HealMana (int manaHealValue)
+    {
+        currentMana += manaHealValue; //add heal value to current health
+
+        if (currentMana > maxMana) //if current health is over max health
+        {
+            currentMana = maxMana; //set current health to max health
+        }
 
         UpdateUI(); //update the ui
     }

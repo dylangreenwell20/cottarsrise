@@ -16,9 +16,6 @@ public class Equipment : Item
         base.Use(); //call the base class for the use function
         EquipmentManager.instance.Equip(this); //pass this item into the equip function
         RemoveFromInventory(); //remove item from inventory when equipped
-
-        //void update which constantly tries to put in the values from equipment array into equipment slots
-        //!!!!!!!!!!!
     }
 }
 

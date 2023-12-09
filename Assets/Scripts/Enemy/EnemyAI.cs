@@ -35,16 +35,20 @@ public class EnemyAI : MonoBehaviour
     public bool cdActive; //patrol cooldown is active
     public float patrolCD; //cooldown between patrol points
 
-    public float enemyDamage; //damage the enemy deals
+    public int enemyDamage; //damage the enemy deals
     private bool isPlayerDead; //is player dead or alive
 
     public PlayerMovement pm; //reference to PlayerMovement script
+
+    private CharacterStats characterStats; //reference to character stats script
 
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
         playerTransform = player.transform; //find player transform
         nma = GetComponent<NavMeshAgent>(); //get nav mesh agent from enemy
+        characterStats = GetComponent<CharacterStats>(); //get character stats
+        enemyDamage = characterStats.damage.GetValue(); //get damage value
     }
 
     private void Update()
@@ -186,6 +190,10 @@ public class EnemyAI : MonoBehaviour
         {
             player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
             //ENEMY ATTACK CODE HERE - DO MELEE FIRST
+
+            //if isRange then range attack
+            //if isMage then mage attack
+            //if isMelee then melee attack
 
             Debug.Log("YOU HAVE BEEN ATTACKED!!!"); //for testing
 

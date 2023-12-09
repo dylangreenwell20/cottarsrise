@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11af7d10e9c9ee04d8ece7eafaf17903, type: 3}
+  m_Script: {fileID: 11500000, guid: 2907a6d72998a5e4f90acea1810314de, type: 3}
   m_Name: ManaPotion
   m_EditorClassIdentifier: 
   name: Mana Potion
   itemIcon: {fileID: 21300000, guid: a767014ae92000d4b84e46028c7a9570, type: 3}
   isDefaultItem: 0
+  isEquippable: 0
+  consumableType: 1
+  consumableValue: 30

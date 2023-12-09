@@ -33,21 +33,28 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private GameObject weaponHolder; //reference to player weapon holder
 
+    public PlayerStats playerStats; //reference to player stats script
+
     private void Start()
     {
+        maxHealth = playerStats.currentHealth; //fetch current health of player
         currentHealth = maxHealth; //set current hp to max hp
         healthBarStartWidth = healthBar.sizeDelta.x; //starting size of the hp bar
         UpdateUI(); //update the ui
     }
 
-    public void DamagePlayer(float damage)
+    public void DamagePlayer(int damage)
     {
         if(isDead) //if player is already dead
         {
             return; //exit function as player is dead
         }
 
-        currentHealth -= damage; //take damage away from current health
+        //get armour value and do damage reduction calculation
+
+        int damageToTake = playerStats.DamageToTake(damage); //calculate damage with armour reduction applied
+
+        currentHealth -= damageToTake; //take damage away from current health
 
         if(currentHealth <= 0) //if current health is less than or equal to 0
         {
@@ -56,6 +63,18 @@ public class PlayerHealth : MonoBehaviour
             player.SetActive(false); //disable player character
             cam.GetComponent<PlayerCamera>().enabled = false; //stop player from being able to move the camera
             weaponHolder.SetActive(false); //disable player weapon holder
+        }
+
+        UpdateUI(); //update the ui
+    }
+
+    public void HealPlayer(int healValue)
+    {
+        currentHealth += healValue; //add heal value to current health
+
+        if(currentHealth > maxHealth) //if current health is over max health
+        {
+            currentHealth = maxHealth; //set current health to max health
         }
 
         UpdateUI(); //update the ui
