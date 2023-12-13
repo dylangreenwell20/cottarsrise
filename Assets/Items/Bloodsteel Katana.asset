@@ -19,3 +19,7 @@ MonoBehaviour:
   equipSlot: 4
   armourModifier: 0
   damageModifier: 10
+  isWeapon: 1
+  isOffhand: 0
+  is2Handed: 0
+  weaponType: 1
