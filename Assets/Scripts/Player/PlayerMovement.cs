@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(isSprinting) //if player is sprinting
             {
-                Debug.Log("SPRINTING"); //for testing
+                //Debug.Log("SPRINTING"); //for testing
                 rb.AddForce(moveDirection.normalized * sprintSpeed * 10f, ForceMode.Force); //add movement force for ground movement
 
                 if (isStealthing) //if player begins stealthing
@@ -191,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
 
             else if(isStealthing) //else if player is in stealth mode
             {
-                Debug.Log("STEALTHING"); //for testing
+                //Debug.Log("STEALTHING"); //for testing
                 rb.AddForce(moveDirection.normalized * stealthSpeed * 10f, ForceMode.Force); //add movement force for ground movement
             }
 

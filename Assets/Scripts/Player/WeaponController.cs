@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    public GameObject Sword; //public GameObject Sword, Bow, Staff; //gets sword game object
+    public GameObject sword, bow, staff; //create variables for sword, bow and staff
+
     bool CanAttack = true; //boolean variable if player can attack or not
     float SwordAttackCooldown = 1f; //sword attack cooldown
     float BowAttackCooldown = 0.5f; //bow attack cooldown
@@ -17,7 +19,7 @@ public class WeaponController : MonoBehaviour
     public Camera cam; //camera for staff projectile
     private Vector3 destination; //for staff projectile destination
     public GameObject projectile; //particle effect of the projectile
-    public Transform firePoint; //location of the projectile to be shot from
+    public Transform staffFirePoint; //location of the projectile to be shot from
     public float projectileSpeed = 30; //speed of projectile
 
     public GameObject arrow; //arrow object
@@ -43,8 +45,73 @@ public class WeaponController : MonoBehaviour
 
     public PlayerStats playerStats; //reference to player stats script
 
+    public bool swordFound; //bool to see if sword was found or not
+    public bool bowFound; //bool to see if bow was found or not
+    public bool staffFound; //bool to see if staff was found or not
+
+
     private void Update()
     {
+        if (StartingWeapon.warriorClassSelected) //if warrior class selected
+        {
+            if (swordFound == false) //if sword has not been found
+            {
+                sword = GameObject.Find("Sword(Clone)"); //find sword game object and store to variable
+
+                if (sword != null) //if sword was found
+                {
+                    swordFound = true; //sword set to true
+
+                    //Debug.Log("Sword found"); //for testing
+                    
+                    attackPoint = sword.transform.Find("AttackPoint"); //find attack point of sword and store to variable
+
+                    return; //return function
+                }
+            }
+        }
+
+        if (StartingWeapon.archerClassSelected) //if archer class selected
+        {
+            if (bowFound == false) //if bow hasnt been found
+            {
+                bow = GameObject.Find("Bow(Clone)"); //find bow
+                Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
+                Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
+                modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
+
+                arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
+
+                if (bow != null) //if bow has been found
+                {
+                    bowFound = true; //bow has been found
+
+                    //Debug.Log("Bow found"); //for testing
+
+                    return; //return function
+                }
+            }
+        }
+
+        if (StartingWeapon.mageClassSelected) //if mage class selected
+        {
+            if (staffFound == false) //if staff hasnt been found
+            {
+                staff = GameObject.Find("Staff(Clone)"); //find staff
+                Transform staffTransform = staff.transform; //create transform of staff game object
+                staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
+
+                if (staff != null) //if staff has been found
+                {
+                    staffFound = true; //staff was found
+
+                    //Debug.Log("Staff found"); //for testing
+
+                    return; //return function
+                }
+            }
+        }
+
         inventoryOpen = inventory.inventoryOpen; //get status of whether inventory is open or closed
 
         if (inventoryOpen) //if inventory is open
@@ -102,7 +169,7 @@ public class WeaponController : MonoBehaviour
     {
         IsAttacking = true; //player is currently attacking
         CanAttack = false; //cannot currently attack
-        Animator animator = Sword.GetComponent<Animator>(); //get animator
+        Animator animator = sword.GetComponent<Animator>(); //get animator
         animator.SetTrigger("Attack"); //trigger animation
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, swordRange, enemyLayer); //store all hit enemies in an array as multiple enemies can be hit at once
@@ -187,7 +254,7 @@ public class WeaponController : MonoBehaviour
             destination = ray.GetPoint(75); //send projectile a distance of 75                             MAY NEED TO CHANGE THE VALUE
         }
 
-        InstantiateProjectile(firePoint); //create projectile function
+        InstantiateProjectile(staffFirePoint); //create projectile function
 
         player.gameObject.GetComponent<PlayerMana>().LoseMana(manaCost); //take away mana cost of the staff from the player's mana value
         //Debug.Log(currentMana); //for testing
@@ -195,10 +262,10 @@ public class WeaponController : MonoBehaviour
         StartCoroutine(ResetAttackCooldown(StaffAttackCooldown)); //reset attack cooldown using staff attack cooldown time
     }
 
-    public void InstantiateProjectile(Transform firePoint)
+    public void InstantiateProjectile(Transform staffFirePoint)
     {
-        var projectileObject = Instantiate(projectile, firePoint.position, Quaternion.identity) as GameObject; //create the projectile as a game object
-        projectileObject.GetComponent<Rigidbody>().velocity = (destination - firePoint.position).normalized * projectileSpeed;
+        var projectileObject = Instantiate(projectile, staffFirePoint.position, Quaternion.identity) as GameObject; //create the projectile as a game object
+        projectileObject.GetComponent<Rigidbody>().velocity = (destination - staffFirePoint.position).normalized * projectileSpeed;
     }
 
     IEnumerator ResetAttackCooldown(float AttackCD)

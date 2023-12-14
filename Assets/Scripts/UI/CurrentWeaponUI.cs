@@ -17,24 +17,55 @@ public class CurrentWeaponUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateIcon(swordImage); //default starting weapon is the sword
+        if(StartingWeapon.warriorClassSelected)
+        {
+            UpdateIcon(swordImage); //update icon with sword image
+            swordModel = GameObject.Find("Sword(Clone)"); //find sword model
+            return;
+        }
+
+        if (StartingWeapon.archerClassSelected)
+        {
+            UpdateIcon(bowImage); //update icon with bow image
+            bowModel = GameObject.Find("Bow(Clone)"); //find bow model
+            return;
+        }
+
+        if (StartingWeapon.mageClassSelected)
+        {
+            UpdateIcon(staffImage); //update icon with staff image
+            staffModel = GameObject.Find("Staff(Clone)"); //find staff model
+            return;
+        }
     }
 
     private void Update()
     {
-        if (swordModel.activeInHierarchy) //if sword model and parents are active
+        if (StartingWeapon.warriorClassSelected) //if warrior class selected
         {
-            UpdateIcon(swordImage); //make UI show that sword is currently equipped
+            if (swordModel.activeInHierarchy) //if sword model and parents are active
+            {
+                UpdateIcon(swordImage); //make UI show that sword is currently equipped
+                return;
+            }
         }
 
-        if (bowModel.activeInHierarchy) //if bow model and parents are active
+        if (StartingWeapon.archerClassSelected) //if archer class selected
         {
-            UpdateIcon(bowImage); //make UI show that bow is currently equipped
+            if (bowModel.activeInHierarchy) //if bow model and parents are active
+            {
+                UpdateIcon(bowImage); //make UI show that bow is currently equipped
+                return;
+            }
         }
 
-        if (staffModel.activeInHierarchy) //if staff model and parents are active
+        if (StartingWeapon.mageClassSelected) //if mage class selected
         {
-            UpdateIcon(staffImage); //make UI show that staff is currently equipped
+            if (staffModel.activeInHierarchy) //if staff model and parents are active
+            {
+                UpdateIcon(staffImage); //make UI show that staff is currently equipped
+                return;
+            }
         }
     }
 

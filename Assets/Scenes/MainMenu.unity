@@ -2128,7 +2128,7 @@ GameObject:
   - component: {fileID: 833885063}
   - component: {fileID: 833885064}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2231,6 +2231,7 @@ MonoBehaviour:
   mainMenu: {fileID: 1129257391}
   settingsMenu: {fileID: 1068707638}
   classMenu: {fileID: 512315269}
+  selectedClass: {fileID: 833885064}
 --- !u!114 &833885064
 MonoBehaviour:
   m_ObjectHideFlags: 0

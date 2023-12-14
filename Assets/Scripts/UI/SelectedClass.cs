@@ -119,4 +119,11 @@ public class SelectedClass : MonoBehaviour
             mageButton.GetComponent<Outline>().effectColor = defaultColour; //set outline of button to a specific colour
         }
     }
+
+    public void UpdateStaticVariables()
+    {
+        StartingWeapon.warriorClassSelected = warriorSelected; //update warriorClassSelected variable
+        StartingWeapon.archerClassSelected = archerSelected; //update archerClassSelected variable
+        StartingWeapon.mageClassSelected = mageSelected; //update mageClassSelected variable
+    }
 }

@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsMenu; //reference to settings menu
     public GameObject classMenu; //reference to class menu
 
+    public SelectedClass selectedClass; //reference to SelectedClass script
+
     private void Awake()
     {
         mainMenu.SetActive(true); //enable main menu
@@ -18,7 +20,8 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //load next scene
+        selectedClass.UpdateStaticVariables(); //update static variables so game scene can know what class was picked in menu scene
+        SceneManager.LoadScene("GameScene"); //load next scene
     }
 
     public void QuitGame()
