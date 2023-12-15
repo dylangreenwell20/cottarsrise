@@ -1183,6 +1183,7 @@ MonoBehaviour:
   currentArrows: 0
   arrowPanel: {fileID: 2101536848}
   arrowText: {fileID: 618659193}
+  arrowCountUI: {fileID: 743155181}
   noArrows: 0
   atMaxArrows: 0
 --- !u!1 &127775354
@@ -1492,6 +1493,10 @@ MonoBehaviour:
     baseValue: 15
   armour:
     baseValue: 0
+  health:
+    baseValue: 0
+  mana:
+    baseValue: 0
 --- !u!1 &180261290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,12 +1677,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb1e2ee0d4153749b981986f436c4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sword: {fileID: 0}
+  sword: {fileID: 0}
+  bow: {fileID: 0}
+  staff: {fileID: 0}
   IsAttacking: 0
   sW: {fileID: 215420377}
   cam: {fileID: 2045633771}
   projectile: {fileID: 875357261534969499, guid: c10cda7c87e05544086315d2a0e05f3c, type: 3}
-  firePoint: {fileID: 0}
+  staffFirePoint: {fileID: 0}
   projectileSpeed: 30
   arrow: {fileID: 7100880576328582869, guid: b91ea72193e7741439fc14fbbe07f9eb, type: 3}
   arrowForce: 30
@@ -1697,8 +1704,9 @@ MonoBehaviour:
   noArrows: 0
   inventory: {fileID: 1736622283}
   playerStats: {fileID: 1736622285}
-  bow: {fileID: 0}
-  staff: {fileID: 0}
+  swordFound: 0
+  bowFound: 0
+  staffFound: 0
 --- !u!114 &215420377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3556,6 +3564,10 @@ MonoBehaviour:
   damage:
     baseValue: 0
   armour:
+    baseValue: 0
+  health:
+    baseValue: 0
+  mana:
     baseValue: 0
 --- !u!1 &664431794
 GameObject:
@@ -6165,6 +6177,10 @@ MonoBehaviour:
     baseValue: 30
   armour:
     baseValue: 20
+  health:
+    baseValue: 0
+  mana:
+    baseValue: 0
 --- !u!1 &1088644376
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,6 +7690,10 @@ MonoBehaviour:
   damage:
     baseValue: 0
   armour:
+    baseValue: 0
+  health:
+    baseValue: 0
+  mana:
     baseValue: 0
 --- !u!1 &1363448704
 GameObject:
@@ -9976,6 +9996,10 @@ MonoBehaviour:
     baseValue: 0
   armour:
     baseValue: 0
+  health:
+    baseValue: 0
+  mana:
+    baseValue: 0
 --- !u!1 &1611776988
 GameObject:
   m_ObjectHideFlags: 0
@@ -10712,6 +10736,7 @@ GameObject:
   - component: {fileID: 1736622283}
   - component: {fileID: 1736622284}
   - component: {fileID: 1736622285}
+  - component: {fileID: 1736622286}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -10769,6 +10794,7 @@ MonoBehaviour:
   moveSpeed: 6
   sprintSpeed: 10
   stealthSpeed: 3
+  dashSpeed: 30
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
@@ -10782,11 +10808,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4160
   orientation: {fileID: 644861487}
+  moveDirection: {x: 0, y: 0, z: 0}
   cam: {fileID: 2045633771}
   isSprinting: 0
   isStealthing: 0
   isMoving: 0
   canStealth: 0
+  isDashing: 0
 --- !u!114 &1736622283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10841,6 +10869,28 @@ MonoBehaviour:
     baseValue: 0
   armour:
     baseValue: 0
+  health:
+    baseValue: 0
+  mana:
+    baseValue: 0
+--- !u!114 &1736622286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736622279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ef8005e85d1a343be8e601ec6c3862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: c345fa52ae7a6834ea610a6c5bc723e3, type: 2}
+  abilityFirePoint: {fileID: 1778491492}
+  fireballPrefab: {fileID: 1505676287722214968, guid: 142721427b5b15840abe1395bd109020, type: 3}
+  playerStats: {fileID: 1736622285}
+  playerMana: {fileID: 123873825}
+  abilityKey: 102
 --- !u!1001 &1736717679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11129,6 +11179,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748123421}
   m_CullTransparentMesh: 1
+--- !u!1 &1778491491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1778491492}
+  m_Layer: 0
+  m_Name: AbilityFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1778491492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778491491}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2045633768}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1793721076 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7267409736068835240, guid: 691b41fee45613e48bba3f1a820f1225, type: 3}
@@ -12378,6 +12459,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 215420375}
+  - {fileID: 1778491492}
   m_Father: {fileID: 288862435}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

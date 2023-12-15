@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed; //float for movement speed
     public float sprintSpeed; //float for sprint speed
     public float stealthSpeed; //float for stealth speed
+    public float dashSpeed; //float for dash speed
 
     //public float crouchSpeed; //float for crouch speed
 
@@ -32,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation; //orientation variable
     float horizontalInput; //horizontal movement input variable
     float verticalInput; //vertical movement input variable
-    Vector3 moveDirection; //movement direction variable
+    public Vector3 moveDirection; //movement direction variable
     Rigidbody rb; //rigidbody variable
 
     public Camera cam; //reference to camera
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isMoving; //bool for if the player is moving or not
     public bool canStealth; //bool for if player can stealth or not
+
+    public bool isDashing; //if player is dashing or not
 
     /*
     public bool canCrouch; //can the player crouch
@@ -125,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(grounded) //if player is grounded
             {
-                if (Input.GetKeyDown(sprintKey)) //if sprint key is pressed down
+                if (Input.GetKey(sprintKey)) //if sprint key is pressed down
                 {
                     isSprinting = true; //player is sprinting
                 }
@@ -211,7 +214,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); //variable for current player speed
 
-        if (isSprinting) //if player is sprinting
+        if (isDashing) //if player is dashing
+        {
+            if (flatVel.magnitude > dashSpeed) //if player speed is faster than max dash speed
+            {
+                Vector3 limitedVel = flatVel.normalized * dashSpeed; //calculate what max velocity is
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); //apply max velocity to current player speed
+            }
+        }
+        else if (isSprinting) //if player is sprinting
         {
             if (flatVel.magnitude > sprintSpeed) //if player speed is faster than max sprint speed
             {
@@ -243,6 +254,18 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true; //set readyToJump to true
+    }
+
+    public void DashState(float cooldownTime)
+    {
+        isDashing = true;
+        StartCoroutine(DashCooldown(cooldownTime));
+    }
+
+    IEnumerator DashCooldown(float cooldownTime)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        isDashing = false;
     }
 
     /*

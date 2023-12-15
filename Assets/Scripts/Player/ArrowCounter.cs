@@ -16,6 +16,9 @@ public class ArrowCounter : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI arrowText; //text displaying number of arrows left
 
+    [SerializeField]
+    private GameObject arrowCountUI; //reference to arrow count ui game object
+
     private bool isDead; //bool to check if the player is dead or not
 
     public bool noArrows; //bool if there are 0 arrows or not
@@ -23,11 +26,31 @@ public class ArrowCounter : MonoBehaviour
 
     private GameObject player; //reference to player
 
+    private bool classChecked; //if class has been checked or not
+
     private void Start()
     {
         currentArrows = maxArrows; //current arrows set to max arrows value
         atMaxArrows = true; //user is at max arrows
         UpdateUI(); //update the ui
+    }
+
+    private void Update()
+    {
+        if(!classChecked) //if class has not been checked
+        {
+            if (StartingWeapon.archerClassSelected) //if selected class is archer
+            {
+                arrowCountUI.SetActive(true); //enable arrow count ui
+                classChecked = true; //class has been checked
+            }
+            else //else if selected class was not archer
+            {
+                arrowCountUI.SetActive(false); //disable arrow count ui
+                classChecked = true; //class has been checked
+            }
+        }
+        
     }
 
     public void LoseArrow(int numberOfArrows)

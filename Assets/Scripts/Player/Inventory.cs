@@ -44,7 +44,11 @@ public class Inventory : MonoBehaviour
                 
                 pc.UnlockCursor(); //unlock the cursor so player can use cursor for inventory
 
-                arrowCountUI.SetActive(false); //hide arrow count UI
+                if(StartingWeapon.archerClassSelected) //if archer class selected
+                {
+                    arrowCountUI.SetActive(false); //hide arrow count UI
+                }
+                
                 currentWeaponUI.SetActive(false); //hide current weapon ui
 
                 inventoryOpen = true; //inv is open
@@ -55,7 +59,11 @@ public class Inventory : MonoBehaviour
 
                 pc.LockCursor(); //lock the cursor so player can look around again
 
-                arrowCountUI.SetActive(true); //show arrow count UI
+                if (StartingWeapon.archerClassSelected) //if archer class selected
+                {
+                    arrowCountUI.SetActive(true); //show arrow count UI
+                }
+                
                 currentWeaponUI.SetActive(true); //show current weapon ui
 
                 inventoryOpen = false; ; //inv is closed

@@ -11,6 +11,9 @@ public class CharacterStats : MonoBehaviour
     public Stat damage; //stat for damage
     public Stat armour; //stat for armour
 
+    public Stat health; //stat for health
+    public Stat mana; //stat for mana
+
     private void Awake()
     {
         currentHealth = maxHealth; //set current health to max health

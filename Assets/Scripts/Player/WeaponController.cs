@@ -16,7 +16,7 @@ public class WeaponController : MonoBehaviour
 
     public SelectedWeapon sW; //link to the SelectedWeapon script to see what weapons are currently selected
 
-    public Camera cam; //camera for staff projectile
+    public Camera cam; //camera for bow and staff projectiles
     private Vector3 destination; //for staff projectile destination
     public GameObject projectile; //particle effect of the projectile
     public Transform staffFirePoint; //location of the projectile to be shot from
