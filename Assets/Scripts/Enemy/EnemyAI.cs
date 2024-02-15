@@ -47,6 +47,7 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("PlayerObject"); //find player game object
         playerTransform = player.transform; //find player transform
         nma = GetComponent<NavMeshAgent>(); //get nav mesh agent from enemy
+        pm = GameObject.Find("Player").GetComponent<PlayerMovement>(); //get player movement component
         characterStats = GetComponent<CharacterStats>(); //get character stats
         enemyDamage = characterStats.damage.GetValue(); //get damage value
     }
@@ -81,6 +82,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
                 {
+                    /*
                     bool isStealthing = pm.isStealthing; //check if player is stealthing or not
                     if (!isStealthing) //if player is not stealthing (so if they are either walking or sprinting)
                     {
@@ -89,8 +91,11 @@ public class EnemyAI : MonoBehaviour
                             ChasePlayer(); //chase the player
                         }
                     }
+                    */
 
-                    Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
+                    ChasePlayer(); //chase the player
+
+                    //Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
                 }
                 else //if player is not in view distance
                 {

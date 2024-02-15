@@ -30,10 +30,15 @@ public class HealthController : MonoBehaviour
 
     private CharacterStats characterStats; //reference to character stats script
 
+    private EnemyLoot enemyLoot; //reference to enemy loot
+
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
         cC = GetComponent<CapsuleCollider>(); //get capsule collider
+
+        enemyLoot = GetComponentInParent<EnemyLoot>(); //get enemy loot script
+
         characterStats = GetComponent<CharacterStats>(); //get character stats
         maxHealth = characterStats.maxHealth; //get character max health
         currentHealth = maxHealth; //current health is max health
@@ -56,7 +61,10 @@ public class HealthController : MonoBehaviour
         {
             currentHealth = 0; //set health to 0 to avoid negative health
             isDead = true; //enemy is dead
-            Destroy(gameObject); //destroy the enemy gameobject
+            //Destroy(gameObject); //destroy the enemy gameobject
+
+            enemyLoot.SpawnItem(); //spawn loot item - in the future, a drop chance will be calculated first before spawning loot
+            this.gameObject.SetActive(false); //hide enemy capsule
         }
 
         UpdateUI(); //update the health bar UI
