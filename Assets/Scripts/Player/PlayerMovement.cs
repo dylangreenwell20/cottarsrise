@@ -91,6 +91,19 @@ public class PlayerMovement : MonoBehaviour
                 if(interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
                 {
                     interactable.Interact(); //pick up the item
+                    return;
+                }
+
+                Chest chest = hit.collider.GetComponent<Chest>(); //get chest component from what was hit
+
+                if(chest != null) //if item has chest component
+                {
+                    if(chest.isOpen) //if chest is already open
+                    {
+                        return;
+                    }
+                    chest.Interact(); //open chest
+                    return;
                 }
             }
         }

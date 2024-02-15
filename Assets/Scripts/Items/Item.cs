@@ -11,6 +11,7 @@ public class Item : ScriptableObject
     public Sprite itemIcon = null; //create sprite for item
     public bool isDefaultItem; //if item is a default item - essentially if its an item the player starts a dungeon with
     public bool isEquippable; //if item is equippable
+    public GameObject itemPrefab; //item prefab
 
     public virtual void Use()
     {

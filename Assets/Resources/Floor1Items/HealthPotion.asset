@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11af7d10e9c9ee04d8ece7eafaf17903, type: 3}
-  m_Name: OldHealthPotion
+  m_Script: {fileID: 11500000, guid: 2907a6d72998a5e4f90acea1810314de, type: 3}
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
   name: Health Potion
   itemIcon: {fileID: 21300000, guid: 4cbd17fbd04a2f84088e05c89cf12788, type: 3}
   isDefaultItem: 0
+  isEquippable: 0
+  itemPrefab: {fileID: 3923398772425009917, guid: fa432aac645a39d4481a1b601e115135, type: 3}
+  consumableType: 0
+  consumableValue: 30
