@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6859105364141719843}
   - component: {fileID: 7538942666800352902}
   - component: {fileID: 5727245157975931468}
+  - component: {fileID: -184999683231872752}
   m_Layer: 0
   m_Name: Staff
   m_TagString: Player
@@ -115,3 +116,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-184999683231872752
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087669672848956313}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21917415, y: 2.2114878, z: 0.21917403}
+  m_Center: {x: 0.00000022351742, y: -0.22919038, z: 0.00000018253922}

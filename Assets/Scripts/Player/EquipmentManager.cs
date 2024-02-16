@@ -7,12 +7,14 @@ public class EquipmentManager : MonoBehaviour
 {
     public static EquipmentManager instance; //create singleton instance
 
+    public SelectedWeapon sW; //reference to selected weapon script
+
     private void Awake()
     {
         instance = this; //set instance to this class
     }
 
-    Equipment[] currentEquipment; //current equipment array to store what the player has equipped
+    public Equipment[] currentEquipment; //current equipment array to store what the player has equipped
 
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment equippedItem); //create delegate for other classes to use the unequip feature
     public OnEquipmentChanged onEquipmentChanged; //create a public version of the delegate
@@ -26,6 +28,10 @@ public class EquipmentManager : MonoBehaviour
         inventory = Inventory.instance; //set inventory as instance of inventory class
         int numberOfSlots = System.Enum.GetNames(typeof(EquipSlot)).Length; //get length of Enumerator in Equipment class to know how many slots of equipment there should be
         currentEquipment = new Equipment[numberOfSlots]; //set length of equipment array to amount of equippable items there are
+
+        //give player weapons now from SelectedWeapon script
+
+        sW.StartWeapon(); //give player starting weapon
     }
 
     public void Equip (Equipment newItem)
@@ -81,6 +87,8 @@ public class EquipmentManager : MonoBehaviour
         {
             Equipment equippedItem = currentEquipment[slotIndex]; //get item that is currently equipped in that slot
             inventory.AddItem(equippedItem); //add the item back to the inventory
+
+            sW.UnequipWeapon(); //delete weapon prefab
 
             currentEquipment[slotIndex] = null; //set to null as no item is currently equipped in the slot
 

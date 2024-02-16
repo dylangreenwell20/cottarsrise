@@ -1285,9 +1285,16 @@ MonoBehaviour:
   bowActive: 0
   staffActive: 0
   wC: {fileID: 215420376}
+  eM: {fileID: 1736622284}
   swordPrefab: {fileID: 831977288852332677, guid: b203afb43242b2b4884b4cb437ff1c3f, type: 3}
   bowPrefab: {fileID: 5051582386051332622, guid: 2b82f9e179bd9714b938665b2e5f9371, type: 3}
   staffPrefab: {fileID: 6087669672848956313, guid: 4b0a7d0b2a9c1b7439c29b60a5e20d39, type: 3}
+  startingSword: {fileID: 11400000, guid: 25623c6e1ad43f64ebf3a0e810f7b89d, type: 2}
+  startingBow: {fileID: 11400000, guid: 81cf50bb4fe668a46bb41d9f7dc9b84f, type: 2}
+  startingStaff: {fileID: 11400000, guid: 2bb4df21a9a2ab3419193e79aab856e0, type: 2}
+  warriorSelected: 0
+  archerSelected: 0
+  mageSelected: 0
 --- !u!1 &241536517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,12 +1346,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponIcon: {fileID: 861606319}
-  swordImage: {fileID: 21300000, guid: 953f72845d87380409daaab1eff3d58d, type: 3}
-  bowImage: {fileID: 21300000, guid: 0baa0a44197d7b242b1f2b120f263df3, type: 3}
-  staffImage: {fileID: 21300000, guid: e8b0fcfa5e358a94dbc534a3b144934d, type: 3}
-  swordModel: {fileID: 0}
-  bowModel: {fileID: 0}
-  staffModel: {fileID: 0}
+  weaponImage: {fileID: 0}
+  eM: {fileID: 1736622284}
 --- !u!1 &242667175
 GameObject:
   m_ObjectHideFlags: 0
@@ -3994,7 +3997,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899203060
 GameObject:
@@ -7004,6 +7007,63 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7267409736068835240, guid: 691b41fee45613e48bba3f1a820f1225, type: 3}
   m_PrefabInstance: {fileID: 1129892805}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1533612924
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.9187098
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 704606265913230720, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_Name
+      value: Gold Chest 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
 --- !u!1 &1567883619
 GameObject:
   m_ObjectHideFlags: 0
@@ -8642,6 +8702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56a49524552d9c4a8e551286bc77b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sW: {fileID: 215420377}
+  currentEquipment: []
   headSlot: {fileID: 1957656603}
   chestSlot: {fileID: 786750902}
   legSlot: {fileID: 1299631183}
@@ -9924,6 +9986,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902146871}
   m_CullTransparentMesh: 1
+--- !u!1001 &1908375039
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4127405
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.9187098
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183683342837063482, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 704606265913230720, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
+      propertyPath: m_Name
+      value: Gold Chest 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 402e74cb7a182ed4b84be2d9602bd4a8, type: 3}
 --- !u!1 &1940874595
 GameObject:
   m_ObjectHideFlags: 0

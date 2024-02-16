@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     public bool isDefaultItem; //if item is a default item - essentially if its an item the player starts a dungeon with
     public bool isEquippable; //if item is equippable
     public GameObject itemPrefab; //item prefab
+    //public GameObject spawnPrefab; //spawn prefab for loot drops (different positions stored which makes it easier to spawn)
 
     public virtual void Use()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,152 +11,154 @@ public class SelectedWeapon : MonoBehaviour
     public bool staffActive; //if staff is currently equipped
 
     public WeaponController wC; //link to WeaponController script to know whether the player is currently attacking or not - the player cannot swap weapon while on attack cooldown
+    public EquipmentManager eM; //reference to equipment manager to get weapon slot
 
     public GameObject swordPrefab; //reference to sword prefab
     public GameObject bowPrefab; //reference to bow prefab
     public GameObject staffPrefab; //reference to staff prefab
 
+    //delete above when added equipment weapon system
+
+    public Equipment startingSword; //reference to starting sword
+    public Equipment startingBow; //reference to starting bow
+    public Equipment startingStaff; //reference to starting staff
+
+    public bool warriorSelected, archerSelected, mageSelected, isStartWeapon; //bools to check what class is selected and to see if the start weapon is being selected
+
 
     private void Start()
     {
-        if(StartingWeapon.warriorClassSelected == false)
+        //start player as warrior if game started from game scene from editor - useful for testing quickly
+
+        warriorSelected = StartingWeapon.warriorClassSelected; //get value of warriorClassSelected
+        archerSelected = StartingWeapon.archerClassSelected; //get value of archerClassSelected
+        mageSelected = StartingWeapon.mageClassSelected; //get value of mageClassSelected
+
+        isStartWeapon = true; //script will be equipping the player's starting weapon
+
+        if (warriorSelected == false)
         {
-            if(StartingWeapon.archerClassSelected == false)
+            if(archerSelected == false)
             {
-                if(StartingWeapon.mageClassSelected == false)
+                if(mageSelected == false)
                 {
                     StartingWeapon.warriorClassSelected = true;
+                    warriorSelected = true;
                 }
             }
         }
-
-        SelectWeapon(); //give player selected weapon
     }
 
-    /*
+    //get weapon from (equipment slot - weapon) and create it using item prefab
+    //make it so when a player equips a new weapon, it will call a function in here to delete the old weapon prefab and then spawn the new one - bool hasChangedWeapon?
 
-    public int selectedWeapon = 0; //starting weapon is 0 (sword = 0, bow = 1, staff = 2)
+    //void update for select weapon and use the hasChangedWeapon bool to only run the select weapon script when it is true
 
+    //need bool for if the player has just started so it will know to equip the starting weapon and add it to equipment, otherwise get weapon from equipment
 
-    private void Start()
+    //UNLESS add starting weapon to equipment in another method in this script THEN run SelectWeapon - that way selectweapon can be kept the same
+
+    //check if player has recently swapped weapon
+    //if yes then SelectWeapon();
+
+    public void StartWeapon()
     {
-        SelectWeapon(); //function to select weapon
+        //based on player class, add specific weapon to player weapon slot and then run SelectWeapon() to equip it
+
+        if(warriorSelected)
+        {
+            //add starting sword to inventory
+
+            EquipmentManager.instance.Equip(startingSword); //equip starting sword
+
+            //run SelectWeapon to equip it
+
+            SelectWeapon(); //equip weapon
+        }
+        else if(archerSelected)
+        {
+            //add starting bow to inventory
+
+            EquipmentManager.instance.Equip(startingBow); //equip starting bow
+
+            //run SelectWeapon to equip it
+
+            SelectWeapon(); //equip weapon
+        }
+        else if(mageSelected)
+        {
+            //add starting staff to inventory
+
+            EquipmentManager.instance.Equip(startingStaff); //equip starting staff
+
+            //run SelectWeapon to equip it
+
+            SelectWeapon(); //equip weapon
+        }
     }
 
-    private void Update()
-    {
-        
-        int previousSelectedWeapon = selectedWeapon; //temporary variable for previously selected weapon
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && wC.IsAttacking == false) //if 1 pressed
-        {
-            selectedWeapon = 0; //select sword
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && wC.IsAttacking == false && transform.childCount >= 2) //if 2 pressed
-        {
-            selectedWeapon = 1; //bow selected
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && wC.IsAttacking == false && transform.childCount >= 3) //if 3 pressed
-        {
-            selectedWeapon = 2; //staff selected
-        }
-
-        if (previousSelectedWeapon != selectedWeapon) //if previous weapon is not the same as current weapon
-        {
-            SelectWeapon(); //run code to select new weapon
-        }
-        
-    }
-    */
+    //create startWeapon bool to stop first weapon being unequipped / deleted when running select weapon
 
     public void SelectWeapon()
     {
-        bool warriorSelected = StartingWeapon.warriorClassSelected; //get value of warriorClassSelected
-        bool archerSelected = StartingWeapon.archerClassSelected; //get value of archerClassSelected
-        bool mageSelected = StartingWeapon.mageClassSelected; //get value of mageClassSelected
+        Equipment equippedWeapon = eM.currentEquipment[4]; //get current equipment in weapon slot
 
-        if (warriorSelected) //if warrior class was selected
+        if (equippedWeapon != null) //if equipment exists in weapon slot
         {
-            //spawn sword into player hand and inventory
-
-            GameObject swordObject = Instantiate(swordPrefab) as GameObject; //instantiate new sword prefab
-            swordObject.transform.parent = transform; //set prefab parent to WeaponHolder
-
-            swordActive = true;
-
-            //add to inv/equipment here
-
-            return;
-        }
-        else if (archerSelected) //if archer class was selected
-        {
-            //spawn bow into player hand and inventory
-
-            GameObject bowObject = Instantiate(bowPrefab) as GameObject; //instantiate new bow prefab
-            bowObject.transform.parent = transform; //set prefab parent to WeaponHolder
-
-            bowActive = true;
-
-            //add to inv/equipment here
-
-            return;
-        }
-        else if (mageSelected) //if mage class was selected
-        {
-            //spawn staff into player hand and inventory
-
-            GameObject staffObject = Instantiate(staffPrefab) as GameObject; //instantiate new staff prefab
-            staffObject.transform.parent = transform; //set prefab parent to WeaponHolder
-
-            staffActive = true;
-
-            //add to inv/equipment here
-
-            return;
-        }
-
-        //CALL THIS FUNCTION IN MAIN MENU WHEN THE GAME IS STARTED
-        //CALL THIS FUNCTION IN MAIN MENU WHEN THE GAME IS STARTED
-        //CALL THIS FUNCTION IN MAIN MENU WHEN THE GAME IS STARTED
-
-
-        /*
-        int i = 0; //used for going through the for loop
-        foreach (Transform weapon in transform) //for each weapon in the weapon holder
-        {
-            if(i == selectedWeapon) //if i is equal to selectedWeapon
+            Debug.Log(isStartWeapon);
+            if(isStartWeapon == false) //if it is not the start weapon being equipped
             {
-                weapon.gameObject.SetActive(true); //set that weapon to active
-                if(selectedWeapon == 0)
-                {
-                    swordActive = true;
-                    bowActive = false;
-                    staffActive = false;
-                }
-
-                else if (selectedWeapon == 1)
-                {
-                    swordActive = false;
-                    bowActive = true;
-                    staffActive = false;
-                }
-
-                else if (selectedWeapon == 2)
-                {
-                    swordActive = false;
-                    bowActive = false;
-                    staffActive = true;
-                }
+                Debug.Log("not start weapon");
+                UnequipWeapon(); //delete previous weapon prefab
             }
-            else
+
+            if (warriorSelected) //if warrior class was selected
             {
-                weapon.gameObject.SetActive(false); //set that weapon to not active
-            }
-            i++; //increment i
+                //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
+                GameObject swordObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
+                swordObject.transform.parent = transform; //set prefab parent to WeaponHolder
+
+                swordActive = true;
+
+                isStartWeapon = false;
+                Debug.Log(isStartWeapon);
+                return;
+            }
+            else if (archerSelected) //if archer class was selected
+            {
+                //get weapon currently equipped in equipment slot and spawn prefab into player hand
+
+                GameObject bowObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
+                bowObject.transform.parent = transform; //set prefab parent to WeaponHolder
+
+                bowActive = true;
+
+                isStartWeapon = false;
+
+                return;
+            }
+            else if (mageSelected) //if mage class was selected
+            {
+                //get weapon currently equipped in equipment slot and spawn prefab into player hand
+
+                GameObject staffObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
+                staffObject.transform.parent = transform; //set prefab parent to WeaponHolder
+
+                staffActive = true;
+
+                isStartWeapon = false;
+
+                return;
+            }
         }
-        */
+    }
+
+    public void UnequipWeapon()
+    {
+        //find child then delete the game object
+
+        GameObject previousWeapon = this.gameObject.transform.GetChild(0).gameObject;
+        Destroy(previousWeapon);
     }
 }

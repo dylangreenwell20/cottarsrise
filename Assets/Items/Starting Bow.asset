@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f713592455e732044a14751c9ec75997, type: 3}
+  m_Name: Starting Bow
+  m_EditorClassIdentifier: 
+  name: Starting Bow
+  itemIcon: {fileID: 21300000, guid: 7ea54584071c4ca4f99250009094774c, type: 3}
+  isDefaultItem: 0
+  isEquippable: 1
+  itemPrefab: {fileID: 5051582386051332622, guid: 2b82f9e179bd9714b938665b2e5f9371, type: 3}
+  equipSlot: 4
+  armourModifier: 0
+  damageModifier: 15
+  isWeapon: 1
+  isOffhand: 0
+  is2Handed: 1
+  weaponType: 2
