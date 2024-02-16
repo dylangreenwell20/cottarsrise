@@ -49,18 +49,17 @@ public class WeaponController : MonoBehaviour
     public bool bowFound; //bool to see if bow was found or not
     public bool staffFound; //bool to see if staff was found or not
 
-
     private void Update()
     {
         if (StartingWeapon.warriorClassSelected) //if warrior class selected
         {
-            if (swordFound == false) //if sword has not been found
+            if (sW.weaponFound == false) //if sword has not been found
             {
-                sword = GameObject.Find("Sword(Clone)"); //find sword game object and store to variable
+                sword = this.transform.Find("Sword(Clone)").gameObject; //find sword game object and store to variable
 
                 if (sword != null) //if sword was found
                 {
-                    swordFound = true; //sword set to true
+                    sW.weaponFound = true; //sword set to true
 
                     //Debug.Log("Sword found"); //for testing
                     
@@ -73,9 +72,9 @@ public class WeaponController : MonoBehaviour
 
         if (StartingWeapon.archerClassSelected) //if archer class selected
         {
-            if (bowFound == false) //if bow hasnt been found
+            if (sW.weaponFound == false) //if bow hasnt been found
             {
-                bow = GameObject.Find("Bow(Clone)"); //find bow
+                bow = this.transform.Find("Bow(Clone)").gameObject; //find bow
                 Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
                 Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
                 modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
@@ -84,7 +83,7 @@ public class WeaponController : MonoBehaviour
 
                 if (bow != null) //if bow has been found
                 {
-                    bowFound = true; //bow has been found
+                    sW.weaponFound = true; //bow has been found
 
                     //Debug.Log("Bow found"); //for testing
 
@@ -95,15 +94,15 @@ public class WeaponController : MonoBehaviour
 
         if (StartingWeapon.mageClassSelected) //if mage class selected
         {
-            if (staffFound == false) //if staff hasnt been found
+            if (sW.weaponFound == false) //if staff hasnt been found
             {
-                staff = GameObject.Find("Staff(Clone)"); //find staff
+                staff = this.transform.Find("Staff(Clone)").gameObject; //find staff
                 Transform staffTransform = staff.transform; //create transform of staff game object
                 staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
 
                 if (staff != null) //if staff has been found
                 {
-                    staffFound = true; //staff was found
+                    sW.weaponFound = true; //staff was found
 
                     //Debug.Log("Staff found"); //for testing
 

@@ -13,18 +13,16 @@ public class SelectedWeapon : MonoBehaviour
     public WeaponController wC; //link to WeaponController script to know whether the player is currently attacking or not - the player cannot swap weapon while on attack cooldown
     public EquipmentManager eM; //reference to equipment manager to get weapon slot
 
-    public GameObject swordPrefab; //reference to sword prefab
-    public GameObject bowPrefab; //reference to bow prefab
-    public GameObject staffPrefab; //reference to staff prefab
-
-    //delete above when added equipment weapon system
-
     public Equipment startingSword; //reference to starting sword
     public Equipment startingBow; //reference to starting bow
     public Equipment startingStaff; //reference to starting staff
 
     public bool warriorSelected, archerSelected, mageSelected, isStartWeapon; //bools to check what class is selected and to see if the start weapon is being selected
 
+    public Transform weaponHolder; //reference to weapon holder transform
+    public Transform cameraHolder; //reference to camera holder transform
+
+    public bool weaponFound; //used by WeaponController to get weapon fire points
 
     private void Start()
     {
@@ -42,8 +40,8 @@ public class SelectedWeapon : MonoBehaviour
             {
                 if(mageSelected == false)
                 {
-                    StartingWeapon.warriorClassSelected = true;
-                    warriorSelected = true;
+                    StartingWeapon.mageClassSelected = true;
+                    mageSelected = true;
                 }
             }
         }
@@ -97,7 +95,7 @@ public class SelectedWeapon : MonoBehaviour
         }
     }
 
-    //create startWeapon bool to stop first weapon being unequipped / deleted when running select weapon
+    //update position of transform and where to spawn it
 
     public void SelectWeapon()
     {
@@ -108,7 +106,6 @@ public class SelectedWeapon : MonoBehaviour
             Debug.Log(isStartWeapon);
             if(isStartWeapon == false) //if it is not the start weapon being equipped
             {
-                Debug.Log("not start weapon");
                 UnequipWeapon(); //delete previous weapon prefab
             }
 
@@ -116,21 +113,27 @@ public class SelectedWeapon : MonoBehaviour
             {
                 //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
-                GameObject swordObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
-                swordObject.transform.parent = transform; //set prefab parent to WeaponHolder
+                GameObject swordObject = Instantiate(equippedWeapon.itemPrefab, weaponHolder.position + equippedWeapon.itemPrefab.transform.position, weaponHolder.rotation, weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                swordObject.GetComponent<BoxCollider>().enabled = false;
+                //swordObject.transform.parent = transform; //set prefab parent to WeaponHolder
 
                 swordActive = true;
 
                 isStartWeapon = false;
-                Debug.Log(isStartWeapon);
+
                 return;
             }
             else if (archerSelected) //if archer class was selected
             {
                 //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
-                GameObject bowObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
-                bowObject.transform.parent = transform; //set prefab parent to WeaponHolder
+                //GameObject bowObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(this.transform.position.x + equippedWeapon.itemPrefab.transform.position.x, this.transform.position.y + equippedWeapon.itemPrefab.transform.position.y, this.transform.position.z + equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(this.transform.rotation.x + equippedWeapon.itemPrefab.transform.rotation.x, this.transform.rotation.y + equippedWeapon.itemPrefab.transform.rotation.y, this.transform.rotation.z + equippedWeapon.itemPrefab.transform.rotation.z), this.transform) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(equippedWeapon.itemPrefab.transform.position.x, equippedWeapon.itemPrefab.transform.position.y, equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(equippedWeapon.itemPrefab.transform.rotation.x, equippedWeapon.itemPrefab.transform.rotation.y, equippedWeapon.itemPrefab.transform.rotation.z), weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(cameraHolder.position.x + equippedWeapon.itemPrefab.transform.position.x, cameraHolder.position.y + equippedWeapon.itemPrefab.transform.position.y, cameraHolder.position.z + equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(cameraHolder.rotation.x + equippedWeapon.itemPrefab.transform.rotation.x, cameraHolder.rotation.y + equippedWeapon.itemPrefab.transform.rotation.y, cameraHolder.rotation.z + equippedWeapon.itemPrefab.transform.rotation.z), weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, weaponHolder.position + equippedWeapon.itemPrefab.transform.position, weaponHolder.rotation, weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                bowObject.GetComponent<BoxCollider>().enabled = false;
+                //bowObject.transform.parent = transform; //set prefab parent to WeaponHolder
 
                 bowActive = true;
 
@@ -142,8 +145,13 @@ public class SelectedWeapon : MonoBehaviour
             {
                 //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
-                GameObject staffObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
-                staffObject.transform.parent = transform; //set prefab parent to WeaponHolder
+                //GameObject staffObject = Instantiate(equippedWeapon.itemPrefab) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(this.transform.position.x + equippedWeapon.itemPrefab.transform.position.x, this.transform.position.y + equippedWeapon.itemPrefab.transform.position.y, this.transform.position.z + equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(this.transform.rotation.x + equippedWeapon.itemPrefab.transform.rotation.x, this.transform.rotation.y + equippedWeapon.itemPrefab.transform.rotation.y, this.transform.rotation.z + equippedWeapon.itemPrefab.transform.rotation.z), this.transform) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(equippedWeapon.itemPrefab.transform.position.x, equippedWeapon.itemPrefab.transform.position.y, equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(equippedWeapon.itemPrefab.transform.rotation.x, equippedWeapon.itemPrefab.transform.rotation.y, equippedWeapon.itemPrefab.transform.rotation.z), weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                //GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, new Vector3(cameraHolder.position.x + equippedWeapon.itemPrefab.transform.position.x, cameraHolder.position.y + equippedWeapon.itemPrefab.transform.position.y, cameraHolder.position.z + equippedWeapon.itemPrefab.transform.position.z), Quaternion.Euler(cameraHolder.rotation.x + equippedWeapon.itemPrefab.transform.rotation.x, cameraHolder.rotation.y + equippedWeapon.itemPrefab.transform.rotation.y, cameraHolder.rotation.z + equippedWeapon.itemPrefab.transform.rotation.z), weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, weaponHolder.position + equippedWeapon.itemPrefab.transform.position, weaponHolder.rotation, weaponHolder) as GameObject; //get weapon prefab and instantiate it as game object
+                staffObject.GetComponent<BoxCollider>().enabled = false;
+                //staffObject.transform.parent = transform; //set prefab parent to WeaponHolder
 
                 staffActive = true;
 
@@ -151,6 +159,10 @@ public class SelectedWeapon : MonoBehaviour
 
                 return;
             }
+        }
+        else
+        {
+            Debug.Log("null weapon");
         }
     }
 
@@ -160,5 +172,6 @@ public class SelectedWeapon : MonoBehaviour
 
         GameObject previousWeapon = this.gameObject.transform.GetChild(0).gameObject;
         Destroy(previousWeapon);
+        weaponFound = false;
     }
 }

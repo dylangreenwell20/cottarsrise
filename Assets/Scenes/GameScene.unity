@@ -1286,15 +1286,16 @@ MonoBehaviour:
   staffActive: 0
   wC: {fileID: 215420376}
   eM: {fileID: 1736622284}
-  swordPrefab: {fileID: 831977288852332677, guid: b203afb43242b2b4884b4cb437ff1c3f, type: 3}
-  bowPrefab: {fileID: 5051582386051332622, guid: 2b82f9e179bd9714b938665b2e5f9371, type: 3}
-  staffPrefab: {fileID: 6087669672848956313, guid: 4b0a7d0b2a9c1b7439c29b60a5e20d39, type: 3}
   startingSword: {fileID: 11400000, guid: 25623c6e1ad43f64ebf3a0e810f7b89d, type: 2}
   startingBow: {fileID: 11400000, guid: 81cf50bb4fe668a46bb41d9f7dc9b84f, type: 2}
   startingStaff: {fileID: 11400000, guid: 2bb4df21a9a2ab3419193e79aab856e0, type: 2}
   warriorSelected: 0
   archerSelected: 0
   mageSelected: 0
+  isStartWeapon: 0
+  weaponHolder: {fileID: 215420375}
+  cameraHolder: {fileID: 288862435}
+  weaponFound: 0
 --- !u!1 &241536517
 GameObject:
   m_ObjectHideFlags: 0

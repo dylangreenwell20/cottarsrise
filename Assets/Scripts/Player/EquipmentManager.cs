@@ -74,6 +74,8 @@ public class EquipmentManager : MonoBehaviour
         if (slotIndex == 4) //if slot index is 4 (weapon index)
         {
             weaponSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot
+
+            sW.SelectWeapon(); //spawn weapon in player hand
         }
         if (slotIndex == 5) //if slot index is 5 (offhand index)
         {
