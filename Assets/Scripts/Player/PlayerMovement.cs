@@ -39,30 +39,14 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam; //reference to camera
 
     public bool isSprinting; //bool for if the player is sprinting or not
-    //public bool isStealthing; //bool for if the player is stealthing or not
-
     public bool isMoving; //bool for if the player is moving or not
-    //public bool canStealth; //bool for if player can stealth or not
-
     public bool isDashing; //if player is dashing or not
-
-    /*
-    public bool canCrouch; //can the player crouch
-    public float crouchingHeight; //height of crouching
-    public float standingHeight; //height of standing
-    */
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); //assigning rigid body
         rb.freezeRotation = true; //freeze rigid body rotation
         readyToJump = true; //player can jump
-        //canStealth = true; //player can stealth
-
-        /*
-        standingHeight = transform.localScale.y; //get current height of player - as they are standing by default, set this value to default standing height
-        canCrouch = true; //player can crouch
-        */
     }
 
     private void Update()
@@ -137,11 +121,6 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown); //invoke the ResetJump function with jumpCooldown
         }
 
-        /*
-        if (!isStealthing) //if player is not in stealth mode
-        {
-        }
-        */
         if(grounded) //if player is grounded
         {
             if (Input.GetKey(sprintKey)) //if sprint key is pressed down
@@ -153,44 +132,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isSprinting = false; //player is no longer sprinting
         }
-        
-        
-
-        //make a tryingToCrouch bool or tryingToUncrouch bool and check if the player has uncrouched. if uncrouched check raycast above player if they are able to uncrouch
-        //if cannot uncrouch then keep the player crouched BUT make it so the player height is not changed again in the code below
-
-        /*
-        if(canStealth) //if player can enter stealth mode
-        {
-            if (!isStealthing) //if player is not stealthing
-            {
-                if (grounded)
-                {
-                    if (Input.GetKeyDown(stealthKey)) //if stealth key is pressed down
-                    {
-                        isStealthing = true; //player is in stealth mode
-                        
-                        //transform.localScale = new Vector3(transform.localScale.x, crouchingHeight, transform.localScale.z); //set height to crouchingHeight value
-                        //rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); //move player downwards as they will be floating initially from the crouch
-                        
-                    }
-                }
-            }
-
-
-            if (isStealthing) //if player is in stealth mode
-            {
-                if (Input.GetKeyUp(stealthKey)) //if stealth key is released
-                {
-                    isStealthing = false; //player is not in stealth mode anymore
-                    
-                    //transform.localScale = new Vector3(transform.localScale.x, standingHeight, transform.localScale.z); //set height to standingHeight value
-                    //isCrouching = false; //player is no longer crouching
-                    
-                }
-            }
-        }
-        */
     }
 
     private void MovePlayer()
@@ -203,23 +144,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("SPRINTING"); //for testing
                 rb.AddForce(moveDirection.normalized * sprintSpeed * 10f, ForceMode.Force); //add movement force for ground movement
-
-                /*
-                if (isStealthing) //if player begins stealthing
-                {
-                    isSprinting = false; //player no longer sprinting
-                    return; //return function
-                }
-                */
             }
-
-            /*
-            else if(isStealthing) //else if player is in stealth mode
-            {
-                //Debug.Log("STEALTHING"); //for testing
-                rb.AddForce(moveDirection.normalized * stealthSpeed * 10f, ForceMode.Force); //add movement force for ground movement
-            }
-            */
 
             else //else if player is not sprinting or crouching (they are walking)
             {
@@ -253,16 +178,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); //apply max velocity to current player speed
             }
         }
-        /*
-        else if (isStealthing) //else if player is stealthing
-        {
-            if (flatVel.magnitude > stealthSpeed) //if player speed is faster than max stealth speed
-            {
-                Vector3 limitedVel = flatVel.normalized * stealthSpeed; //calculate what the max velocity is
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); //apply max velocity to current player speed
-            }
-        }
-        */
         else if (flatVel.magnitude > moveSpeed) //else if player speed is faster than max walking speed
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed; //calculate what the max velocity is
@@ -292,27 +207,4 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
         isDashing = false;
     }
-
-    /*
-    private void Crouch()
-    {
-        StartCoroutine(CrouchOrStand()); //crouch or stand animation
-    }
-
-    
-    private IEnumerator CrouchOrStand()
-    {
-        duringCrouchTransition = true; //player is currently in the crouching or standing animation
-
-        float timeElapsed;
-        float targetHeight = isCrouching ? normalHeight : crouchHeight;
-        float currentHeight = characterController.height;
-        Vector3 targetCentre = isCrouching ? standingCentre : crouchingCentre;
-        Vector3 currentCentre = characterController.center;
-
-        duringCrouchTransition = false; //player is no longer in the crouching or standing animation
-
-        return null;
-    }
-    */
 }

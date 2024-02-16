@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if sword has not been found
             {
-                sword = this.transform.Find("Sword(Clone)").gameObject; //find sword game object and store to variable
+                sword = sW.meleePosition.Find("Sword(Clone)").gameObject; //find sword game object and store to variable
 
                 if (sword != null) //if sword was found
                 {
@@ -74,7 +74,7 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if bow hasnt been found
             {
-                bow = this.transform.Find("Bow(Clone)").gameObject; //find bow
+                bow = sW.rangePosition.Find("Bow(Clone)").gameObject; //find bow
                 Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
                 Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
                 modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
@@ -96,7 +96,7 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if staff hasnt been found
             {
-                staff = this.transform.Find("Staff(Clone)").gameObject; //find staff
+                staff = sW.magePosition.Find("Staff(Clone)").gameObject; //find staff
                 Transform staffTransform = staff.transform; //create transform of staff game object
                 staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
 

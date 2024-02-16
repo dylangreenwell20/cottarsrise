@@ -52,7 +52,7 @@ public class Chest : MonoBehaviour
         //instantiate item prefab and add item to it
 
         GameObject prefab = itemToSpawn.itemPrefab;
-        Instantiate(prefab, new Vector3(lootSpawnPoint.position.x, lootSpawnPoint.position.y, lootSpawnPoint.position.z), Quaternion.Euler(lootSpawnPoint.rotation.x, lootSpawnPoint.rotation.y, lootSpawnPoint.rotation.z), lootSpawnPoint); //instantiate item at chest location
+        Instantiate(prefab, lootSpawnPoint.position, lootSpawnPoint.rotation, lootSpawnPoint); //instantiate item at chest location
 
         GameObject spawnedItem = lootSpawnPoint.GetChild(0).gameObject; //get game object of spawned prefab
 
