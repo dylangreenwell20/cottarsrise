@@ -193,7 +193,7 @@ public class WeaponController : MonoBehaviour
 
         Equipment currentWeapon = eM.currentEquipment[4];
         int damage = currentWeapon.damage;
-        Debug.Log(damage);
+        //Debug.Log(damage);
 
         int damageToDeal = playerStats.DamageToDeal(damage); //get damage value with gear modifiers applied
 
