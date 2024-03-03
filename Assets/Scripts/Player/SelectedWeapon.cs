@@ -1,6 +1,8 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -94,10 +96,12 @@ public class SelectedWeapon : MonoBehaviour
 
         if (equippedWeapon != null) //if equipment exists in weapon slot
         {
-            Debug.Log(isStartWeapon);
+            //Debug.Log(isStartWeapon);
+
             if(isStartWeapon == false) //if it is not the start weapon being equipped
             {
                 UnequipWeapon(); //delete previous weapon prefab
+
             }
 
             if (warriorSelected) //if warrior class was selected

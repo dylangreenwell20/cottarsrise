@@ -49,13 +49,22 @@ public class WeaponController : MonoBehaviour
     public bool bowFound; //bool to see if bow was found or not
     public bool staffFound; //bool to see if staff was found or not
 
+    public EquipmentManager eM; //reference to equipment manager
+
     private void Update()
     {
         if (StartingWeapon.warriorClassSelected) //if warrior class selected
         {
             if (sW.weaponFound == false) //if sword has not been found
             {
-                sword = sW.meleePosition.Find("Sword(Clone)").gameObject; //find sword game object and store to variable
+                //get name of weapon
+
+                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
+                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+                Debug.Log(weaponName); //for testing
+
+                sword = sW.meleePosition.Find(weaponName).gameObject; //find weapon game object and store to variable
 
                 if (sword != null) //if sword was found
                 {

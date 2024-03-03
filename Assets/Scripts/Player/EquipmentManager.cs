@@ -9,6 +9,8 @@ public class EquipmentManager : MonoBehaviour
 
     public SelectedWeapon sW; //reference to selected weapon script
 
+    public PlayerStats playerStats; //reference to player stats script
+
     private void Awake()
     {
         instance = this; //set instance to this class
@@ -28,6 +30,8 @@ public class EquipmentManager : MonoBehaviour
         inventory = Inventory.instance; //set inventory as instance of inventory class
         int numberOfSlots = System.Enum.GetNames(typeof(EquipSlot)).Length; //get length of Enumerator in Equipment class to know how many slots of equipment there should be
         currentEquipment = new Equipment[numberOfSlots]; //set length of equipment array to amount of equippable items there are
+
+        playerStats.AddDelegate(); //add this class to player stats delegate for item equipping
 
         //give player weapons now from SelectedWeapon script
 
@@ -49,6 +53,7 @@ public class EquipmentManager : MonoBehaviour
         if(onEquipmentChanged != null) //if delegate is not null
         {
             onEquipmentChanged.Invoke(newItem, equippedItem); //invoke the delegate
+            Debug.Log("equipment changed");
         }
 
         currentEquipment[slotIndex] = newItem; //set specific equipment slot to the new item

@@ -6,6 +6,11 @@ public class PlayerStats : CharacterStats
 {
     void Start()
     {
+        //EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged; //subscribe to callback method
+    }
+
+    public void AddDelegate()
+    {
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged; //subscribe to callback method
     }
 
