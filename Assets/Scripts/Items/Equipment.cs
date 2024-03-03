@@ -9,6 +9,7 @@ public class Equipment : Item
     public EquipSlot equipSlot; //create new enum so gear slot can be identified
 
     public int armourModifier; //value armour will be increased by
+    public int damage; //damage value of weapons
     public int damageModifier; //value damage will be increased by
 
     public bool isWeapon; //if equipment is a weapon

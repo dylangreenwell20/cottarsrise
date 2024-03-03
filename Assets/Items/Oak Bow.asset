@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f713592455e732044a14751c9ec75997, type: 3}
-  m_Name: Wooden Bow
+  m_Name: Oak Bow
   m_EditorClassIdentifier: 
-  name: Wooden Bow
+  name: Oak Bow
   itemIcon: {fileID: 21300000, guid: 0baa0a44197d7b242b1f2b120f263df3, type: 3}
   isDefaultItem: 0
   isEquippable: 1
-  itemPrefab: {fileID: 1086071343874901727, guid: 5d76b18cfbb33b1488d11b89ac18367a, type: 3}
+  itemPrefab: {fileID: 2758330759861563590, guid: 98256f6ca59b01c41ab3704baf70d5e6, type: 3}
   equipSlot: 4
   armourModifier: 0
-  damageModifier: 10
+  damage: 30
+  damageModifier: 0
   isWeapon: 1
   isOffhand: 0
   is2Handed: 1

@@ -6,14 +6,18 @@ public class StaffProjectile : MonoBehaviour
 {
     public GameObject impactParticles; //projectile impact particle effect
     private bool hasCollided; //if projectile has collided or not
-    public int projectileDamage = 30; //damage of projectile
+    public int projectileDamage; //damage of projectile
     private GameObject player; //player game object
     private PlayerStats playerStats; //reference to player stats script
+    private EquipmentManager equipmentManager; //reference to equipment manager script
 
     private void Awake()
     {
         player = GameObject.Find("Player"); //find player game object
         playerStats = player.GetComponent<PlayerStats>(); //get player stats component from player
+        equipmentManager = player.GetComponent<EquipmentManager>(); //get equipment manager component from player
+
+        projectileDamage = equipmentManager.currentEquipment[4].damage; //get damage of current weapon
     }
 
     private void OnCollisionEnter(Collision collision)

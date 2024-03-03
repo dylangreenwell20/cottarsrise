@@ -19,7 +19,8 @@ MonoBehaviour:
   itemPrefab: {fileID: 5051582386051332622, guid: 2b82f9e179bd9714b938665b2e5f9371, type: 3}
   equipSlot: 4
   armourModifier: 0
-  damageModifier: 15
+  damage: 20
+  damageModifier: 0
   isWeapon: 1
   isOffhand: 0
   is2Handed: 1

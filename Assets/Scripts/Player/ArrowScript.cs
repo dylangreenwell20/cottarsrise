@@ -6,14 +6,19 @@ public class ArrowScript : MonoBehaviour
 {
     public float arrowLife = 3; //seconds an arrow will be alive for
     private bool hasCollided; //has arrow collided yet
-    public int bowDamage = 20; //damage of bow
+    public int bowDamage; //damage of bow
     private GameObject player; //reference to player game object
     private PlayerStats playerStats; //reference to player stats script
+    private EquipmentManager equipmentManager; //reference to equipment manager
 
     private void Awake()
     {
         player = GameObject.Find("Player"); //find player game object
         playerStats = player.GetComponent<PlayerStats>(); //get player stats component from player
+        equipmentManager = player.GetComponent<EquipmentManager>(); //get equipment manager component from player
+
+        bowDamage = equipmentManager.currentEquipment[4].damage; //get damage of current weapon
+
         Destroy(gameObject, arrowLife); //destroy arrow after "arrowLife" seconds
     }
 

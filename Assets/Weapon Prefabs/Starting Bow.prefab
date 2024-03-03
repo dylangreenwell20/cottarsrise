@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 6708726385191033819}
   - component: {fileID: 5834252718157609997}
   m_Layer: 0
-  m_Name: Bow
+  m_Name: Starting Bow
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

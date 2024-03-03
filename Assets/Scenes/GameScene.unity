@@ -1256,7 +1256,6 @@ MonoBehaviour:
   reloadTime: 0.4
   arrowFirePoint: {fileID: 0}
   modelArrow: {fileID: 0}
-  swordDamage: 50
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -8805,6 +8804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sW: {fileID: 215420377}
+  playerStats: {fileID: 1736622285}
   currentEquipment: []
   headSlot: {fileID: 1957656603}
   chestSlot: {fileID: 786750902}

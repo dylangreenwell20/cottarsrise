@@ -28,7 +28,6 @@ public class WeaponController : MonoBehaviour
     public Transform arrowFirePoint; //arrow fire point
     public GameObject modelArrow; //default arrow model in bow
 
-    public int swordDamage = 50; //damage value for sword
     public LayerMask enemyLayer; //layer for attackable enemies
     public float swordRange = 3f; //distance the sword can attack
     public Transform attackPoint; //point where hit reg is calculated from sword
@@ -62,7 +61,7 @@ public class WeaponController : MonoBehaviour
                 Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
                 string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
 
-                Debug.Log(weaponName); //for testing
+                //Debug.Log(weaponName); //for testing
 
                 sword = sW.meleePosition.Find(weaponName).gameObject; //find weapon game object and store to variable
 
@@ -83,7 +82,12 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if bow hasnt been found
             {
-                bow = sW.rangePosition.Find("Bow(Clone)").gameObject; //find bow
+                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
+                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+                //Debug.Log(weaponName); //for testing
+
+                bow = sW.rangePosition.Find(weaponName).gameObject; //find bow
                 Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
                 Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
                 modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
@@ -105,7 +109,12 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if staff hasnt been found
             {
-                staff = sW.magePosition.Find("Staff(Clone)").gameObject; //find staff
+                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
+                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+                //Debug.Log(weaponName); //for testing
+
+                staff = sW.magePosition.Find(weaponName).gameObject; //find staff
                 Transform staffTransform = staff.transform; //create transform of staff game object
                 staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
 
@@ -182,7 +191,11 @@ public class WeaponController : MonoBehaviour
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, swordRange, enemyLayer); //store all hit enemies in an array as multiple enemies can be hit at once
 
-        int damageToDeal = playerStats.DamageToDeal(swordDamage); //get damage value with gear modifiers applied
+        Equipment currentWeapon = eM.currentEquipment[4];
+        int damage = currentWeapon.damage;
+        Debug.Log(damage);
+
+        int damageToDeal = playerStats.DamageToDeal(damage); //get damage value with gear modifiers applied
 
         foreach(Collider enemy in hitEnemies) //for each enemy in the hitEnemies array
         {
