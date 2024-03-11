@@ -30,8 +30,13 @@ public class DungeonGenerator : MonoBehaviour
     //then proceed with room door generation, but do not increment the rooms created variable)
     //do not forget to store the previous room location again!!!
 
+    //so it can generate the 10th room, but just generates the door and not the room
+    //and because random trolls me, i might have to store the previous direction and if it matches multiple times, change the direction so it isnt a long line
+
     private void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond); //random seed for truly random rooms
+
         MazeGenerator(); //generate the maze
     }
 
