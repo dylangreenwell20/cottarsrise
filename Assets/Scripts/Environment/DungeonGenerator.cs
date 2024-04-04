@@ -8,13 +8,15 @@ public class DungeonGenerator : MonoBehaviour
     {
         public bool visited = false; //has cell been visited by depth first algorithm
         public bool[] status = new bool[4]; //status of each entrance of the cell
+        public bool isStartingRoom = false; //is the room a starting room - false by default
     }
 
     public Vector2 size; //size of dungeon board (x and y cells)
 
     public int startPos; //start position for generation
 
-    public GameObject roomPrefab; //reference to dungeon room prefab - add more in future
+    public GameObject roomPrefab; //reference to dungeon room prefab - currently a temporary room for testing
+    public GameObject startRoomPrefab; //starting room for dungeon
 
     public Vector2 offset; //offset for rooms to be generated - make multiple for 1x1 offset, 2x2 offset etc
 
@@ -28,6 +30,8 @@ public class DungeonGenerator : MonoBehaviour
 
     public bool sameDirectionTwice; //if 2 rooms were generated in the same direction - used because unity.random is (for some reason) not random all the time
     //and using this bool i can prevent every other dungeon from being a straight line north (yes this happens too much it should be impossible)
+
+    public bool startingRoom; //if starting room is being generated
 
     private void Start()
     {
@@ -46,11 +50,22 @@ public class DungeonGenerator : MonoBehaviour
 
                 if (currentCell.visited) //if cell was visited (essentially if it was generated - this stops a blank room being generated for each cell of the grid)
                 {
-                    var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
-                    newRoom.UpdateRoom(currentCell.status); //update room on the board
+                    if(currentCell.isStartingRoom)
+                    {
+                        var newRoom = Instantiate(startRoomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                        newRoom.UpdateRoom(currentCell.status); //update room on the board
 
-                    newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
-                    genOrder++; //for testing
+                        newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                        genOrder++; //for testing
+                    }
+                    else
+                    {
+                        var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                        newRoom.UpdateRoom(currentCell.status); //update room on the board
+
+                        newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                        genOrder++; //for testing
+                    }
                 }
             }
         }
@@ -72,6 +87,8 @@ public class DungeonGenerator : MonoBehaviour
 
         int currentCell = startPos; //define start position
 
+        startingRoom = true; //start room must be generated
+
         Stack<int> path = new Stack<int>(); //create new stack
 
         int roomsNumber = 0; //number of rooms generated so far
@@ -81,6 +98,12 @@ public class DungeonGenerator : MonoBehaviour
         while (roomsNumber < 10) //while less than 10 rooms have been generated
         {
             board[currentCell].visited = true; //current cell has been visited
+
+            if(startingRoom) //if start room hasnt been made yet
+            {
+                board[currentCell].isStartingRoom = true; //set current room to start room
+                startingRoom = false; //set to false to not make any more start rooms
+            }
 
             List<int> neighbours = CheckNeighbours(currentCell); //get list of neighbours
 

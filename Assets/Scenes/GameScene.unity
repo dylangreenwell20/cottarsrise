@@ -9644,10 +9644,12 @@ MonoBehaviour:
   size: {x: 15, y: 15}
   startPos: 112
   roomPrefab: {fileID: 3881205407125678905, guid: a3629eab30c8a2747a3072dc6bd133d8, type: 3}
+  startRoomPrefab: {fileID: 5511428991590418227, guid: 2aafe4f1e538cbd459df278a6e929ade, type: 3}
   offset: {x: 14, y: 14}
   genOrder: 0
   previousGenDirection: 0
   sameDirectionTwice: 0
+  startingRoom: 0
 --- !u!4 &1875499077
 Transform:
   m_ObjectHideFlags: 0
