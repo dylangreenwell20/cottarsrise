@@ -9641,11 +9641,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0e47d7fb10caa479afcfed9befcf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 31, y: 31}
-  startPos: 480
+  size: {x: 15, y: 15}
+  startPos: 112
   roomPrefab: {fileID: 3699069728293721884, guid: 952e89bfbbcf9cb41851096226d4b765, type: 3}
   offset: {x: 6, y: 6}
   genOrder: 0
+  previousGenDirection: 0
+  sameDirectionTwice: 0
 --- !u!4 &1875499077
 Transform:
   m_ObjectHideFlags: 0
