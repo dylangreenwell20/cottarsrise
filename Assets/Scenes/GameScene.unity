@@ -9643,8 +9643,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 15, y: 15}
   startPos: 112
-  roomPrefab: {fileID: 3699069728293721884, guid: 952e89bfbbcf9cb41851096226d4b765, type: 3}
-  offset: {x: 6, y: 6}
+  roomPrefab: {fileID: 3881205407125678905, guid: a3629eab30c8a2747a3072dc6bd133d8, type: 3}
+  offset: {x: 14, y: 14}
   genOrder: 0
   previousGenDirection: 0
   sameDirectionTwice: 0
