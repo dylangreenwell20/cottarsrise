@@ -46,8 +46,8 @@ public class SelectedWeapon : MonoBehaviour
             {
                 if(mageSelected == false)
                 {
-                    StartingWeapon.warriorClassSelected = true;
-                    warriorSelected = true;
+                    StartingWeapon.archerClassSelected = true;
+                    archerSelected = true;
                 }
             }
         }
@@ -121,8 +121,15 @@ public class SelectedWeapon : MonoBehaviour
             {
                 //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
-                GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, rangePosition.position, equippedWeapon.itemPrefab.transform.rotation, rangePosition);
+                GameObject bowObject = Instantiate(equippedWeapon.itemPrefab, rangePosition.position, rangePosition.rotation, rangePosition);
                 bowObject.GetComponent<BoxCollider>().enabled = false;
+
+                //check if 0 arrows - if true then hide model arrow
+
+                if(wC.noArrows == true) //if player has no arrows
+                {
+                    bowObject.transform.Find("Arrow").gameObject.SetActive(false); //hide model arrow
+                }
 
                 bowActive = true;
 
@@ -134,7 +141,7 @@ public class SelectedWeapon : MonoBehaviour
             {
                 //get weapon currently equipped in equipment slot and spawn prefab into player hand
 
-                GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, magePosition.position, Quaternion.Euler(0f, 0f, 0f), magePosition);
+                GameObject staffObject = Instantiate(equippedWeapon.itemPrefab, magePosition.position, magePosition.rotation, magePosition); //Quaternion.Euler(0f, 0f, 0f)
                 staffObject.GetComponent<BoxCollider>().enabled = false;
 
                 staffActive = true;
@@ -152,25 +159,36 @@ public class SelectedWeapon : MonoBehaviour
 
     public void UnequipWeapon()
     {
+        Equipment currentWeapon = eM.currentEquipment[4]; //get current equipment in weapon slot
+
         //find child then delete the game object
 
         if (warriorSelected)
         {
-            GameObject previousWeapon = meleePosition.transform.GetChild(0).gameObject;
-            Destroy(previousWeapon);
-            weaponFound = false;
+            if(currentWeapon != null)
+            {
+                GameObject previousWeapon = meleePosition.transform.GetChild(0).gameObject;
+                Destroy(previousWeapon);
+                weaponFound = false;
+            }
         }
         else if (archerSelected)
         {
-            GameObject previousWeapon = rangePosition.transform.GetChild(0).gameObject;
-            Destroy(previousWeapon);
-            weaponFound = false;
+            if (currentWeapon != null)
+            {
+                GameObject previousWeapon = rangePosition.transform.GetChild(0).gameObject;
+                Destroy(previousWeapon);
+                weaponFound = false;
+            }
         }
         else if(mageSelected)
         {
-            GameObject previousWeapon = magePosition.transform.GetChild(0).gameObject;
-            Destroy(previousWeapon);
-            weaponFound = false;
+            if (currentWeapon != null)
+            {
+                GameObject previousWeapon = magePosition.transform.GetChild(0).gameObject;
+                Destroy(previousWeapon);
+                weaponFound = false;
+            }
         }
 
         

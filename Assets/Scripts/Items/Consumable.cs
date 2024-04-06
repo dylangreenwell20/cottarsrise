@@ -16,8 +16,10 @@ public class Consumable : Item
 
     public override void Use()
     {
+        
         base.Use(); //run base Use() function
 
+        /*
         player = GameObject.Find("PlayerObject"); //find player game object
 
         if (this.consumableType == ConsumableType.Health) //if consumable type is health
@@ -44,6 +46,7 @@ public class Consumable : Item
         }
 
         RemoveFromInventory(); //remove the item from the inventory
+        */
     }
 }
 

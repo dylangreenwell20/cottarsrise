@@ -58,8 +58,6 @@ public class EquipmentManager : MonoBehaviour
 
         currentEquipment[slotIndex] = newItem; //set specific equipment slot to the new item
 
-        //put item in equipment slot here - TURN INTO FOR LOOP
-
         if(slotIndex == 0) //if slot index is 0 (helmet index)
         {
             headSlot.GetComponent<EquipmentSlot>().AddEquipment(newItem); //equip the piece of equipment to correct slot

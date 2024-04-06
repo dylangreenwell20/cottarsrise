@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class ArrowCounter : MonoBehaviour
 {
-    public int maxArrows = 10; //max number of arrows
-
-    [SerializeField]
-    private int currentArrows; //current number of arrows
+    public int maxArrows, arrowRestoreAmount; //max number of arrows and how many arrows are given when they are collected
 
     [SerializeField]
     private GameObject arrowPanel; //background panel for arrows
@@ -30,11 +27,13 @@ public class ArrowCounter : MonoBehaviour
 
     private void Start()
     {
-        currentArrows = maxArrows; //current arrows set to max arrows value
+        maxArrows = 50;
+        arrowRestoreAmount = 25;
+        Inventory.instance.arrowCount = maxArrows; //current arrows set to max arrows value
         atMaxArrows = true; //user is at max arrows
         UpdateUI(); //update the ui
     }
-
+    
     private void Update()
     {
         if(!classChecked) //if class has not been checked
@@ -52,13 +51,13 @@ public class ArrowCounter : MonoBehaviour
         }
         
     }
-
+    
     public void LoseArrow(int numberOfArrows)
     {
-        currentArrows -= numberOfArrows; //decrement current arrow value by numberOfArrows value
+        Inventory.instance.arrowCount -= numberOfArrows; //decrement current arrow value by numberOfArrows value
         atMaxArrows = false; //player cannot be at max arrows
 
-        if (currentArrows == 0) //if player has no arrows left
+        if (Inventory.instance.arrowCount == 0) //if player has no arrows left
         {
             noArrows = true; //player has no arrows left
         }
@@ -73,12 +72,12 @@ public class ArrowCounter : MonoBehaviour
             return; //return function as a player cannot gain arrows if they are holding the max
         }
 
-        currentArrows += numberOfArrows; //increase current number of arrows by amount gained
+        Inventory.instance.arrowCount += numberOfArrows; //increase current number of arrows by amount gained
         noArrows = false; //player has more than 0 arrows
 
-        if(currentArrows >= maxArrows) //if current arrow value exceeds max arrow value
+        if(Inventory.instance.arrowCount >= maxArrows) //if current arrow value exceeds max arrow value
         {
-            currentArrows = maxArrows; //set current arrows to max arrow value
+            Inventory.instance.arrowCount = maxArrows; //set current arrows to max arrow value
             atMaxArrows = true; //player is at max arrows
         }
 
@@ -89,6 +88,6 @@ public class ArrowCounter : MonoBehaviour
 
     public void UpdateUI()
     {
-        arrowText.text = currentArrows + "/" + maxArrows; //set text to display current arrow and max arrow values
+        arrowText.text = Inventory.instance.arrowCount + "/" + maxArrows; //set text to display current arrow and max arrow values
     }
 }

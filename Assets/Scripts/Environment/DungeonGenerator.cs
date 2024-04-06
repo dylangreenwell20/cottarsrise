@@ -116,7 +116,7 @@ public class DungeonGenerator : MonoBehaviour
                 else //else if items are in stack
                 {
                     currentCell = path.Pop(); //pop current value so currentCell becomes the previous cell
-                    Debug.Log(currentCell + " popped!");
+                    //Debug.Log(currentCell + " popped!");
                 }
             }
             else
@@ -133,16 +133,16 @@ public class DungeonGenerator : MonoBehaviour
 
                     for(int i = 0; i < neighbours.Count; i++)
                     {
-                        Debug.Log(neighbours[i]);
+                        //Debug.Log(neighbours[i]);
                     }
 
-                    Debug.Log("count: " + neighbours.Count);
-                    Debug.Log("index: " + randomIndex);
-                    Debug.Log("cell: " + newCell);
+                    //Debug.Log("count: " + neighbours.Count);
+                    //Debug.Log("index: " + randomIndex);
+                    //Debug.Log("cell: " + newCell);
 
                     if (board[newCell].visited) //if cell already visited
                     {
-                        Debug.Log("visited already"); //debug and make another neighbour be picked
+                        //Debug.Log("visited already"); //debug and make another neighbour be picked
                         neighbours.RemoveAt(randomIndex); //remove neighbour from the list
                     }
                     else //else if neighbour hasnt been visited
@@ -151,11 +151,11 @@ public class DungeonGenerator : MonoBehaviour
                         {
                             if ((newCell - 1) == currentCell) //check if room is east
                             {
-                                Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
+                                //Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
 
                                 if (previousGenDirection == 1 && sameDirectionTwice == true) //if rooms have been created in the same direction twice before and is going in the same direction
                                 {
-                                    Debug.Log("3rd time going in the same direction - change the path");
+                                    //Debug.Log("3rd time going in the same direction - change the path");
                                     neighbours.RemoveAt(randomIndex); //remove that neighbour from the list
 
                                     sameDirectionTwice = false; //set back to false
@@ -166,12 +166,12 @@ public class DungeonGenerator : MonoBehaviour
                                     currentCell = newCell; //update current cell to new cell
                                     board[currentCell].status[3] = true; //set west door of current cell to true
 
-                                    Debug.Log("room made east - " + roomsNumber);
+                                    //Debug.Log("room made east - " + roomsNumber);
 
                                     if(previousGenDirection == 1) //if previous room was created to the east
                                     {
                                         sameDirectionTwice = true; //two rooms have been generated in the same direction
-                                        Debug.Log("east twice!");
+                                        //Debug.Log("east twice!");
                                     }
                                     else
                                     {
@@ -189,11 +189,11 @@ public class DungeonGenerator : MonoBehaviour
                             }
                             else //else if the room is going south
                             {
-                                Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
+                                //Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
 
                                 if (previousGenDirection == 2 && sameDirectionTwice == true) //if previous direction was south and two have been made in that direction
                                 {
-                                    Debug.Log("3rd time going in the same direction - change the path");
+                                    //Debug.Log("3rd time going in the same direction - change the path");
                                     neighbours.RemoveAt(randomIndex); //remove that neighbour from the list
 
                                     sameDirectionTwice = false; //set back to false
@@ -204,12 +204,12 @@ public class DungeonGenerator : MonoBehaviour
                                     currentCell = newCell; //update current cell to new cell
                                     board[currentCell].status[0] = true; //set north door  of current cell to true
 
-                                    Debug.Log("room made south - " + roomsNumber);
+                                    //Debug.Log("room made south - " + roomsNumber);
 
                                     if(previousGenDirection == 2) //if previous room was created to the south
                                     {
                                         sameDirectionTwice = true; //two rooms have been generated in the same direction
-                                        Debug.Log("south twice!");
+                                        //Debug.Log("south twice!");
                                     }
                                     else
                                     {
@@ -230,11 +230,11 @@ public class DungeonGenerator : MonoBehaviour
                         {
                             if ((newCell + 1) == currentCell) //check if room is west
                             {
-                                Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
+                                //Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
 
                                 if (previousGenDirection == 3 && sameDirectionTwice == true)
                                 {
-                                    Debug.Log("3rd time going in the same direction - change the path");
+                                    //Debug.Log("3rd time going in the same direction - change the path");
                                     neighbours.RemoveAt(randomIndex); //remove that neighbour from the list
 
                                     sameDirectionTwice = false; //set back to false
@@ -245,12 +245,12 @@ public class DungeonGenerator : MonoBehaviour
                                     currentCell = newCell; //update current cell to new cell
                                     board[currentCell].status[2] = true; //set east door of current cell to true
 
-                                    Debug.Log("room made west - " + roomsNumber);
+                                    //Debug.Log("room made west - " + roomsNumber);
 
                                     if(previousGenDirection == 3)
                                     {
                                         sameDirectionTwice = true;
-                                        Debug.Log("west twice!");
+                                        //Debug.Log("west twice!");
                                     }
                                     else
                                     {
@@ -268,11 +268,11 @@ public class DungeonGenerator : MonoBehaviour
                             }
                             else //else if the room is going north
                             {
-                                Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
+                                //Debug.Log("pre: " + previousGenDirection + ", " + sameDirectionTwice);
 
                                 if (previousGenDirection == 0 && sameDirectionTwice == true)
                                 {
-                                    Debug.Log("3rd time going in the same direction - change the path");
+                                    //Debug.Log("3rd time going in the same direction - change the path");
                                     neighbours.RemoveAt(randomIndex); //remove that neighbour from the list
 
                                     sameDirectionTwice = false; //set back to false
@@ -283,12 +283,12 @@ public class DungeonGenerator : MonoBehaviour
                                     currentCell = newCell; //update current cell to new cell
                                     board[currentCell].status[1] = true; //set south door of current cell to true
 
-                                    Debug.Log("room made north - " + roomsNumber);
+                                    //Debug.Log("room made north - " + roomsNumber);
 
                                     if(previousGenDirection == 0)
                                     {
                                         sameDirectionTwice = true;
-                                        Debug.Log("north twice!");
+                                        //Debug.Log("north twice!");
                                     }
                                     else
                                     {

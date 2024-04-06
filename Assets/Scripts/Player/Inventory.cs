@@ -17,11 +17,15 @@ public class Inventory : MonoBehaviour
     public static Inventory instance; //create singleton of inventory
 
     public int inventorySize = 25; //size of inventory
+    public int healthPotCount, manaPotCount, arrowCount; //number of health/mana potions and arrows
 
     public delegate void OnItemChanged(); //create new delegate type
     public OnItemChanged onItemChangedCallback; //create new delegate callback to implement the delegate
 
     public GameObject arrowCountUI, currentWeaponUI; //references to UI elements which need to be hidden when inventory is open
+
+    public PotionUI potionUI; //reference to potion ui script
+    public ArrowCounter arrowCounter; //reference to arrow counter script
 
     private void Awake()
     {
@@ -98,5 +102,10 @@ public class Inventory : MonoBehaviour
         {
             onItemChangedCallback.Invoke(); //invoke the delegate callback
         }
+    }
+
+    public void AddConsumable (Item item)
+    {
+
     }
 }

@@ -50,30 +50,36 @@ public class WeaponController : MonoBehaviour
 
     public EquipmentManager eM; //reference to equipment manager
 
+    public Equipment currentWeapon; //current weapon the player has equipped
+
     private void Update()
     {
+        currentWeapon = eM.currentEquipment[4]; //get current weapon
+
         if (StartingWeapon.warriorClassSelected) //if warrior class selected
         {
             if (sW.weaponFound == false) //if sword has not been found
             {
-                //get name of weapon
-
-                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
-                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
-
-                //Debug.Log(weaponName); //for testing
-
-                sword = sW.meleePosition.Find(weaponName).gameObject; //find weapon game object and store to variable
-
-                if (sword != null) //if sword was found
+                if(currentWeapon != null)
                 {
-                    sW.weaponFound = true; //sword set to true
+                    //get name of weapon
 
-                    //Debug.Log("Sword found"); //for testing
-                    
-                    attackPoint = sword.transform.Find("AttackPoint"); //find attack point of sword and store to variable
+                    string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
 
-                    return; //return function
+                    //Debug.Log(weaponName); //for testing
+
+                    sword = sW.meleePosition.Find(weaponName).gameObject; //find weapon game object and store to variable
+
+                    if (sword != null) //if sword was found
+                    {
+                        sW.weaponFound = true; //sword set to true
+
+                        //Debug.Log("Sword found"); //for testing
+
+                        attackPoint = sword.transform.Find("AttackPoint"); //find attack point of sword and store to variable
+
+                        return; //return function
+                    }
                 }
             }
         }
@@ -82,25 +88,27 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if bow hasnt been found
             {
-                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
-                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
-
-                //Debug.Log(weaponName); //for testing
-
-                bow = sW.rangePosition.Find(weaponName).gameObject; //find bow
-                Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
-                Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
-                modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
-
-                arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
-
-                if (bow != null) //if bow has been found
+                if(currentWeapon != null)
                 {
-                    sW.weaponFound = true; //bow has been found
+                    string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
 
-                    //Debug.Log("Bow found"); //for testing
+                    //Debug.Log(weaponName); //for testing
 
-                    return; //return function
+                    bow = sW.rangePosition.Find(weaponName).gameObject; //find bow
+                    Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
+                    Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
+                    modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
+
+                    arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
+
+                    if (bow != null) //if bow has been found
+                    {
+                        sW.weaponFound = true; //bow has been found
+
+                        //Debug.Log("Bow found"); //for testing
+
+                        return; //return function
+                    }
                 }
             }
         }
@@ -109,22 +117,24 @@ public class WeaponController : MonoBehaviour
         {
             if (sW.weaponFound == false) //if staff hasnt been found
             {
-                Equipment currentWeapon = eM.currentEquipment[4]; //get current weapon
-                string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
-
-                //Debug.Log(weaponName); //for testing
-
-                staff = sW.magePosition.Find(weaponName).gameObject; //find staff
-                Transform staffTransform = staff.transform; //create transform of staff game object
-                staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
-
-                if (staff != null) //if staff has been found
+                if(currentWeapon != null)
                 {
-                    sW.weaponFound = true; //staff was found
+                    string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
 
-                    //Debug.Log("Staff found"); //for testing
+                    //Debug.Log(weaponName); //for testing
 
-                    return; //return function
+                    staff = sW.magePosition.Find(weaponName).gameObject; //find staff
+                    Transform staffTransform = staff.transform; //create transform of staff game object
+                    staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
+
+                    if (staff != null) //if staff has been found
+                    {
+                        sW.weaponFound = true; //staff was found
+
+                        //Debug.Log("Staff found"); //for testing
+
+                        return; //return function
+                    }
                 }
             }
         }
@@ -136,7 +146,7 @@ public class WeaponController : MonoBehaviour
             return; //return function so player will not attack when clicking in inventory
         }
 
-        if (Input.GetMouseButton(0) && sW.swordActive) //if left click pressed and sword is equipped
+        if (Input.GetMouseButton(0) && sW.swordActive && currentWeapon != null) //if left click pressed and sword is equipped
         {
             if (CanAttack) //if player can attack
             {
@@ -144,7 +154,7 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && sW.bowActive) //if left click pressed and bow is equipped
+        if (Input.GetMouseButton(0) && sW.bowActive && currentWeapon != null) //if left click pressed and bow is equipped
         {
             if (CanAttack) //if player can attack
             {
@@ -155,7 +165,7 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && sW.staffActive) //if left click pressed and staff is equipped
+        if (Input.GetMouseButton(0) && sW.staffActive && currentWeapon != null) //if left click pressed and staff is equipped
         {
             if (CanAttack) //if player can attack
             {
@@ -169,13 +179,14 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-        if (sW.bowActive) //if bow is active
+        if (sW.bowActive && currentWeapon != null) //if bow is active
         {
+            
             if(CanAttack && !IsAttacking) //if player can attack and is not currently attacking
             {
                 noArrows = player.gameObject.GetComponent<ArrowCounter>().noArrows; //check state of player having arrows left in quiver
 
-                if (!noArrows) //if player has arrows left
+                if (!noArrows && currentWeapon) //if player has arrows left
                 {
                     modelArrow.SetActive(true); //enable the model arrow in the bow
                 }
@@ -235,7 +246,10 @@ public class WeaponController : MonoBehaviour
 
         Vector3 angleOfDirection = destination - arrowFirePoint.position; //angle to shoot the arrow towards the target destination
 
-        modelArrow.SetActive(false); //disable the model arrow
+        if(modelArrow != null) //if model arrow exists
+        {
+            modelArrow.SetActive(false); //disable the model arrow
+        }
 
         GameObject currentArrow = Instantiate(arrow, arrowFirePoint.position, Quaternion.identity); //create an arrow
         currentArrow.transform.forward = angleOfDirection.normalized; //rotate arrow to fire where the player is aiming
