@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5710402248581345868}
   - component: {fileID: 6652671946800363642}
   - component: {fileID: 6059572197108961800}
-  - component: {fileID: 3143184863225014977}
-  - component: {fileID: 5141951371328937558}
   m_Layer: 7
   m_Name: Arrow
   m_TagString: Arrow
@@ -46,7 +44,7 @@ BoxCollider:
   m_GameObject: {fileID: 588832809740300728}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.05138749, y: 0.054827332, z: 0.40168118}
   m_Center: {x: 0.0002207458, y: 0.00022536516, z: -0.12157222}
@@ -59,40 +57,10 @@ BoxCollider:
   m_GameObject: {fileID: 588832809740300728}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.05233927, y: 0.054827332, z: 0.05146268}
   m_Center: {x: -0.00009217486, y: 0.00022536516, z: 0.10348354}
---- !u!54 &3143184863225014977
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 588832809740300728}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
---- !u!114 &5141951371328937558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 588832809740300728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde81129c410d534bac090fea31cfa21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowLife: 3
-  bowDamage: 20
 --- !u!1 &2413709286138645341
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +253,7 @@ BoxCollider:
   m_GameObject: {fileID: 2758330759861563590}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.55170125, y: 1.3864355, z: 0.09911406}
   m_Center: {x: -0.089225985, y: -0.014714688, z: 0.01759023}
