@@ -58,5 +58,6 @@ public class Chest : MonoBehaviour
 
         spawnedItem.AddComponent<ItemPickUp>(); //add ItemPickUp script to spawned loot
         spawnedItem.GetComponent<ItemPickUp>().item = itemToSpawn; //give loot the item scriptable object
+        //spawnedItem.GetComponent<BoxCollider>().enabled = false; //disable collision
     }
 }

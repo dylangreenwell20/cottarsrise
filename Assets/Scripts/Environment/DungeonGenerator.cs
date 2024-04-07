@@ -9,6 +9,7 @@ public class DungeonGenerator : MonoBehaviour
         public bool visited = false; //has cell been visited by depth first algorithm
         public bool[] status = new bool[4]; //status of each entrance of the cell
         public bool isStartingRoom = false; //is the room a starting room - false by default
+        public bool isBossRoom = false; //is the room a boss (final) room - false by default
     }
 
     public Vector2 size; //size of dungeon board (x and y cells)
@@ -17,6 +18,8 @@ public class DungeonGenerator : MonoBehaviour
 
     public GameObject roomPrefab; //reference to dungeon room prefab - currently a temporary room for testing
     public GameObject startRoomPrefab; //starting room for dungeon
+    public GameObject combatRoom1Prefab; //combat room 1 for dungeon
+    public GameObject teleporterPrefab; //room to teleport to boss
 
     public Vector2 offset; //offset for rooms to be generated - make multiple for 1x1 offset, 2x2 offset etc
 
@@ -58,13 +61,34 @@ public class DungeonGenerator : MonoBehaviour
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
                     }
-                    else
+                    else if (currentCell.isBossRoom)
                     {
-                        var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                        var newRoom = Instantiate(teleporterPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
                         newRoom.UpdateRoom(currentCell.status); //update room on the board
 
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
+                    }
+                    else
+                    {
+                        int roomType = Random.Range(0, 2); //what room prefab to generate
+
+                        if (roomType == 0)
+                        {
+                            var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status); //update room on the board
+
+                            newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                            genOrder++; //for testing
+                        }
+                        else if(roomType == 1)
+                        {
+                            var newRoom = Instantiate(combatRoom1Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status); //update room on the board
+
+                            newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                            genOrder++; //for testing
+                        }
                     }
                 }
             }
@@ -83,7 +107,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        previousGenDirection = 5; // set to 5 as this is not a valid position so it will not effect previous direction checks later on
+        previousGenDirection = 5; //set to 5 as this is not a valid position so it will not effect previous direction checks later on
 
         int currentCell = startPos; //define start position
 
@@ -123,6 +147,11 @@ public class DungeonGenerator : MonoBehaviour
             {
                 path.Push(currentCell); //push currentCell to stack
 
+                if (roomsNumber == 9) //if the final room is being generated
+                {
+                    board[currentCell].isBossRoom = true; //set cell to boss room
+                }
+
                 directionCheck = false; //set to false for room direction check loop
 
                 while (!directionCheck) //while previous direction has not been checked yet (room cannot generate to the direction it came from)
@@ -130,11 +159,6 @@ public class DungeonGenerator : MonoBehaviour
                     int randomIndex = Random.Range(0, neighbours.Count); //pick a random index from the list of neighbours
 
                     int newCell = neighbours[randomIndex]; //pick random neighbour from neighbours list
-
-                    for(int i = 0; i < neighbours.Count; i++)
-                    {
-                        //Debug.Log(neighbours[i]);
-                    }
 
                     //Debug.Log("count: " + neighbours.Count);
                     //Debug.Log("index: " + randomIndex);
@@ -162,9 +186,12 @@ public class DungeonGenerator : MonoBehaviour
                                 }
                                 else
                                 {
-                                    board[currentCell].status[2] = true; //set east door of current cell to true
-                                    currentCell = newCell; //update current cell to new cell
-                                    board[currentCell].status[3] = true; //set west door of current cell to true
+                                    if(roomsNumber != 9) //if it is not the final room
+                                    {
+                                        board[currentCell].status[2] = true; //set east door of current cell to true
+                                        currentCell = newCell; //update current cell to new cell
+                                        board[currentCell].status[3] = true; //set west door of current cell to true
+                                    }
 
                                     //Debug.Log("room made east - " + roomsNumber);
 
@@ -200,10 +227,13 @@ public class DungeonGenerator : MonoBehaviour
                                 }
                                 else
                                 {
-                                    board[currentCell].status[1] = true; //set south door of current cell to true
-                                    currentCell = newCell; //update current cell to new cell
-                                    board[currentCell].status[0] = true; //set north door  of current cell to true
-
+                                    if(roomsNumber != 9) //if it is not the final room
+                                    {
+                                        board[currentCell].status[1] = true; //set south door of current cell to true
+                                        currentCell = newCell; //update current cell to new cell
+                                        board[currentCell].status[0] = true; //set north door  of current cell to true
+                                    }
+                                    
                                     //Debug.Log("room made south - " + roomsNumber);
 
                                     if(previousGenDirection == 2) //if previous room was created to the south
@@ -241,9 +271,12 @@ public class DungeonGenerator : MonoBehaviour
                                 }
                                 else
                                 {
-                                    board[currentCell].status[3] = true; //set west door of current cell to true
-                                    currentCell = newCell; //update current cell to new cell
-                                    board[currentCell].status[2] = true; //set east door of current cell to true
+                                    if (roomsNumber != 9) //if it is not the final room
+                                    {
+                                        board[currentCell].status[3] = true; //set west door of current cell to true
+                                        currentCell = newCell; //update current cell to new cell
+                                        board[currentCell].status[2] = true; //set east door of current cell to true
+                                    }
 
                                     //Debug.Log("room made west - " + roomsNumber);
 
@@ -279,9 +312,12 @@ public class DungeonGenerator : MonoBehaviour
                                 }
                                 else
                                 {
-                                    board[currentCell].status[0] = true; //set north door of current cell to true
-                                    currentCell = newCell; //update current cell to new cell
-                                    board[currentCell].status[1] = true; //set south door of current cell to true
+                                    if (roomsNumber != 9) //if it is not the final room
+                                    {
+                                        board[currentCell].status[0] = true; //set north door of current cell to true
+                                        currentCell = newCell; //update current cell to new cell
+                                        board[currentCell].status[1] = true; //set south door of current cell to true
+                                    }
 
                                     //Debug.Log("room made north - " + roomsNumber);
 
