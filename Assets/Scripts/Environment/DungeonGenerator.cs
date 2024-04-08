@@ -8,8 +8,10 @@ public class DungeonGenerator : MonoBehaviour
     {
         public bool visited = false; //has cell been visited by depth first algorithm
         public bool[] status = new bool[4]; //status of each entrance of the cell
+        public bool[] isDoorInvisible = new bool[4]; //should the door be invisible
         public bool isStartingRoom = false; //is the room a starting room - false by default
         public bool isBossRoom = false; //is the room a boss (final) room - false by default
+        public int roomType = 5; //which room prefab to use
     }
 
     public Vector2 size; //size of dungeon board (x and y cells)
@@ -19,6 +21,9 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject roomPrefab; //reference to dungeon room prefab - currently a temporary room for testing
     public GameObject startRoomPrefab; //starting room for dungeon
     public GameObject combatRoom1Prefab; //combat room 1 for dungeon
+    public GameObject combatRoom2Prefab; //combat room 2 for dungeon
+    public GameObject combatRoom3Prefab; //combat room 3 for dungeon
+    public GameObject lootRoom1Prefab; //loot room 1 for dungeon
     public GameObject teleporterPrefab; //room to teleport to boss
 
     public Vector2 offset; //offset for rooms to be generated - make multiple for 1x1 offset, 2x2 offset etc
@@ -35,6 +40,10 @@ public class DungeonGenerator : MonoBehaviour
     //and using this bool i can prevent every other dungeon from being a straight line north (yes this happens too much it should be impossible)
 
     public bool startingRoom; //if starting room is being generated
+
+    public List<int> roomTypeList = new List<int> { 0, 1, 2, 3 }; //for what room should be generated
+
+    private int previousRoomNumber = 5; //previously generated room number - to stop the same room being generated twice
 
     private void Start()
     {
@@ -56,7 +65,7 @@ public class DungeonGenerator : MonoBehaviour
                     if(currentCell.isStartingRoom)
                     {
                         var newRoom = Instantiate(startRoomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
-                        newRoom.UpdateRoom(currentCell.status); //update room on the board
+                        newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
 
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
@@ -64,27 +73,59 @@ public class DungeonGenerator : MonoBehaviour
                     else if (currentCell.isBossRoom)
                     {
                         var newRoom = Instantiate(teleporterPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
-                        newRoom.UpdateRoom(currentCell.status); //update room on the board
+                        newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
 
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
                     }
                     else
                     {
-                        int roomType = Random.Range(0, 2); //what room prefab to generate
-
-                        if (roomType == 0)
+                        if (currentCell.roomType == 0)
                         {
-                            var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
-                            newRoom.UpdateRoom(currentCell.status); //update room on the board
+                            var newRoom = Instantiate(combatRoom1Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                            previousRoomNumber = 0;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                             genOrder++; //for testing
                         }
-                        else if(roomType == 1)
+                        else if (currentCell.roomType == 1)
                         {
-                            var newRoom = Instantiate(combatRoom1Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
-                            newRoom.UpdateRoom(currentCell.status); //update room on the board
+                            var newRoom = Instantiate(combatRoom2Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                            previousRoomNumber = 1;
+
+                            newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                            genOrder++; //for testing
+                        }
+                        else if (currentCell.roomType == 2)
+                        {
+                            var newRoom = Instantiate(combatRoom3Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                            previousRoomNumber = 2;
+
+                            newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                            genOrder++; //for testing
+                        }
+                        else if (currentCell.roomType == 3)
+                        {
+                            var newRoom = Instantiate(lootRoom1Prefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                            previousRoomNumber = 3;
+
+                            newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+                            genOrder++; //for testing
+                        }
+                        else //else if there is a bug - just create empty room
+                        {
+                            var newRoom = Instantiate(roomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
+                            newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                            previousRoomNumber = 5;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                             genOrder++; //for testing
@@ -152,6 +193,31 @@ public class DungeonGenerator : MonoBehaviour
                     board[currentCell].isBossRoom = true; //set cell to boss room
                 }
 
+                if(roomsNumber != 0 && roomsNumber != 9)
+                {
+                    List<int> roomList = new List<int>(roomTypeList); //clone list for temp storage
+
+                    int prefabType = Random.Range(0, roomList.Count); //what room prefab to generate
+
+                    Debug.Log(prefabType);
+
+                    if (prefabType == previousRoomNumber) //if room type is the same as the previously generated room
+                    {
+                        Debug.Log("two of the same room type in a row - pick a new one");
+
+                        roomList.RemoveAt(prefabType); //remove current room type from the cloned list
+                        prefabType = Random.Range(0, roomList.Count); //pick another room
+
+                        Debug.Log(prefabType);
+
+                        Debug.Log("cleared");
+                    }
+
+                    board[currentCell].roomType = prefabType; //set the prefab type of the room
+
+                    previousRoomNumber = prefabType; //set previous number to avoid two of the same room in a row
+                }
+
                 directionCheck = false; //set to false for room direction check loop
 
                 while (!directionCheck) //while previous direction has not been checked yet (room cannot generate to the direction it came from)
@@ -191,6 +257,7 @@ public class DungeonGenerator : MonoBehaviour
                                         board[currentCell].status[2] = true; //set east door of current cell to true
                                         currentCell = newCell; //update current cell to new cell
                                         board[currentCell].status[3] = true; //set west door of current cell to true
+                                        board[currentCell].isDoorInvisible[3] = true; //make the door invisible to stop overlapping doors
                                     }
 
                                     //Debug.Log("room made east - " + roomsNumber);
@@ -232,6 +299,7 @@ public class DungeonGenerator : MonoBehaviour
                                         board[currentCell].status[1] = true; //set south door of current cell to true
                                         currentCell = newCell; //update current cell to new cell
                                         board[currentCell].status[0] = true; //set north door  of current cell to true
+                                        board[currentCell].isDoorInvisible[0] = true; //make the door invisible to stop overlapping doors
                                     }
                                     
                                     //Debug.Log("room made south - " + roomsNumber);
@@ -276,6 +344,7 @@ public class DungeonGenerator : MonoBehaviour
                                         board[currentCell].status[3] = true; //set west door of current cell to true
                                         currentCell = newCell; //update current cell to new cell
                                         board[currentCell].status[2] = true; //set east door of current cell to true
+                                        board[currentCell].isDoorInvisible[2] = true; //make the door invisible to stop overlapping doors
                                     }
 
                                     //Debug.Log("room made west - " + roomsNumber);
@@ -317,6 +386,7 @@ public class DungeonGenerator : MonoBehaviour
                                         board[currentCell].status[0] = true; //set north door of current cell to true
                                         currentCell = newCell; //update current cell to new cell
                                         board[currentCell].status[1] = true; //set south door of current cell to true
+                                        board[currentCell].isDoorInvisible[1] = true; //make the door invisible to stop overlapping doors
                                     }
 
                                     //Debug.Log("room made north - " + roomsNumber);
