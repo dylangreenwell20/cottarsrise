@@ -8,6 +8,8 @@ TagManager:
   - StaffProjectile
   - Arrow
   - AbilityProjectile
+  - EnemyArrow
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - LevelObjectNoWalk
   - Player
   - LevelObjectWalkable
-  - 
+  - EnemyArrows
   - 
   - 
   - 

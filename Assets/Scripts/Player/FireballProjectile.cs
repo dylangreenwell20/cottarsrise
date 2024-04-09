@@ -22,7 +22,7 @@ public class FireballProjectile : MonoBehaviour
     {
         Debug.Log("Collided with: " + collision.gameObject.name); //for testing
 
-        if (collision.gameObject.tag != "AbilityProjectile" && collision.gameObject.tag != "Player" && !hasCollided) //if projectile collides with something other than itself, the player and has not already collided
+        if (collision.gameObject.tag != "AbilityProjectile" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "EnemyArrow" && collision.gameObject.tag != "EnemyProjectile" && !hasCollided) //if projectile collides with something other than itself, the player, enemy arrows/projectiles and has not already collided
         {
             if (collision.gameObject.tag == "Enemy" && !hasCollided) //if projectile collided with enemy
             {

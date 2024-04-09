@@ -44,6 +44,14 @@ public class EnemyAI : MonoBehaviour
 
     public bool isMelee, isRange, isMage; //what attack style the enemy has
 
+    public GameObject enemyArrow; //enemy arrow prefab
+    public GameObject enemyMagic; //enemy magic projectile prefab
+
+    public Transform arrowPoint; //spawn point of enemy arrow
+    public Transform magicPoint; //spawn point of enemy magic
+
+    private Ray ray; //ray towards player
+
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
@@ -52,6 +60,19 @@ public class EnemyAI : MonoBehaviour
         pm = GameObject.Find("Player").GetComponent<PlayerMovement>(); //get player movement component
         characterStats = GetComponent<CharacterStats>(); //get character stats
         enemyDamage = characterStats.damage.GetValue(); //get damage value
+
+        if(isMelee)
+        {
+            attackDistance = 1.5f;
+        }
+        else if(isRange)
+        {
+            attackDistance = 10.0f;
+        }
+        else if(isMage)
+        {
+            attackDistance = 10.0f;
+        }
     }
 
     private void Update()
@@ -79,7 +100,7 @@ public class EnemyAI : MonoBehaviour
                         playerInSight = true; //player is in sight
                         ChasePlayer(); //chase the player
 
-                        Debug.Log("ENEMY SEES YOU!!!"); //for testing
+                        //Debug.Log("ENEMY SEES YOU!!!"); //for testing
                     }
                 }
                 else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
@@ -201,11 +222,20 @@ public class EnemyAI : MonoBehaviour
 
 
 
-                //send projectile and send towards player
+                //spawn projectile and send towards player
 
+                transform.LookAt(player.transform); //look at player
 
+                ray.origin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                ray.direction = transform.forward;
 
-                Debug.Log("melee attack"); //for testing
+                RaycastHit hit;
+                Vector3 forward = transform.TransformDirection(Vector3.forward);
+
+                var rangeProjectile = Instantiate(enemyArrow, arrowPoint.position, Quaternion.identity) as GameObject;
+                rangeProjectile.GetComponent<Rigidbody>().AddForce(arrowPoint.forward * 300);
+
+                Debug.Log("range attack"); //for testing
 
                 isAttackingPlayer = true; //enemy currently attacking player
                 Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
@@ -218,9 +248,12 @@ public class EnemyAI : MonoBehaviour
 
                 //spawn projectile and send towards player
 
+                transform.LookAt(player.transform); //look at player
 
+                var mageProjectile = Instantiate(enemyMagic, magicPoint.position, Quaternion.identity) as GameObject;
+                mageProjectile.GetComponent<Rigidbody>().AddForce(magicPoint.forward * 300);
 
-                Debug.Log("melee attack"); //for testing
+                Debug.Log("mage attack"); //for testing
 
                 isAttackingPlayer = true; //enemy currently attacking player
                 Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown

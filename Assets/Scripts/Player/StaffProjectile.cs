@@ -11,6 +11,8 @@ public class StaffProjectile : MonoBehaviour
     private PlayerStats playerStats; //reference to player stats script
     private EquipmentManager equipmentManager; //reference to equipment manager script
 
+    public float projectileLife = 3; //life of projectile
+
     private void Awake()
     {
         player = GameObject.Find("Player"); //find player game object
@@ -18,6 +20,8 @@ public class StaffProjectile : MonoBehaviour
         equipmentManager = player.GetComponent<EquipmentManager>(); //get equipment manager component from player
 
         projectileDamage = equipmentManager.currentEquipment[4].damage; //get damage of current weapon
+
+        Destroy(gameObject, projectileLife); //destroy after a few seconds
     }
 
     private void OnCollisionEnter(Collision collision)
