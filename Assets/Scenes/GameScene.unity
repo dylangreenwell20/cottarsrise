@@ -6137,6 +6137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 69726191}
     m_Modifications:
+    - target: {fileID: 8743540600833338095, guid: af81ab22df80ca04d8d69e0d5741e154, type: 3}
+      propertyPath: isMelee
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8743540601044194958, guid: af81ab22df80ca04d8d69e0d5741e154, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10603,6 +10607,7 @@ MonoBehaviour:
   previousGenDirection: 0
   sameDirectionTwice: 0
   startingRoom: 0
+  roomTypeList: 00000000010000000200000003000000
 --- !u!4 &1875499077
 Transform:
   m_ObjectHideFlags: 0
@@ -11525,6 +11530,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 69726191}
     m_Modifications:
+    - target: {fileID: 8743540600833338095, guid: af81ab22df80ca04d8d69e0d5741e154, type: 3}
+      propertyPath: isMelee
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8743540601044194958, guid: af81ab22df80ca04d8d69e0d5741e154, type: 3}
       propertyPath: m_RootOrder
       value: 2

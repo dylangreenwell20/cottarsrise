@@ -42,6 +42,8 @@ public class EnemyAI : MonoBehaviour
 
     private CharacterStats characterStats; //reference to character stats script
 
+    public bool isMelee, isRange, isMage; //what attack style the enemy has
+
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
@@ -82,17 +84,6 @@ public class EnemyAI : MonoBehaviour
                 }
                 else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
                 {
-                    /*
-                    bool isStealthing = pm.isStealthing; //check if player is stealthing or not
-                    if (!isStealthing) //if player is not stealthing (so if they are either walking or sprinting)
-                    {
-                        if(pm.isMoving) //if player is moving and making noise
-                        {
-                            ChasePlayer(); //chase the player
-                        }
-                    }
-                    */
-
                     ChasePlayer(); //chase the player
 
                     //Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
@@ -193,17 +184,51 @@ public class EnemyAI : MonoBehaviour
 
         if (!isAttackingPlayer) //if isnt currently attacking the player
         {
-            player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
-            //ENEMY ATTACK CODE HERE - DO MELEE FIRST
+            if (isMelee)
+            {
+                //play attack animation
 
-            //if isRange then range attack
-            //if isMage then mage attack
-            //if isMelee then melee attack
+                player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
 
-            Debug.Log("YOU HAVE BEEN ATTACKED!!!"); //for testing
+                Debug.Log("melee attack"); //for testing
 
-            isAttackingPlayer = true; //enemy currently attacking player
-            Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
+                isAttackingPlayer = true; //enemy currently attacking player
+                Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
+            }
+            else if (isRange)
+            {
+                //play attack animation
+
+
+
+                //send projectile and send towards player
+
+
+
+                Debug.Log("melee attack"); //for testing
+
+                isAttackingPlayer = true; //enemy currently attacking player
+                Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
+            }
+            else if (isMage)
+            {
+                //play attack animation
+
+
+
+                //spawn projectile and send towards player
+
+
+
+                Debug.Log("melee attack"); //for testing
+
+                isAttackingPlayer = true; //enemy currently attacking player
+                Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
+            }
+            else
+            {
+                Debug.Log("no enemy class - bug");
+            }
         }
     }
 

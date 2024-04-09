@@ -17831,6 +17831,14 @@ MonoBehaviour:
   - {fileID: 5511428991666741143}
   - {fileID: 5511428992563489899}
   enemySpawnLocations: []
+  potionLocations:
+  - {fileID: 5873177297588376246}
+  - {fileID: 7596900257409207455}
+  - {fileID: 5078000101707889616}
+  - {fileID: 7241722577901110634}
+  - {fileID: 2765882880535286140}
+  chestLocations:
+  - {fileID: 7735964305466897525}
   enemyPrefab: {fileID: 4954748265372636556, guid: 721de928d6e87e340a6070d1c597b895, type: 3}
 --- !u!1 &5511428991666741143
 GameObject:

@@ -9,7 +9,8 @@ public class RoomScript : MonoBehaviour
     public GameObject[] doors; //door prefabs - same indexing as above
     public GameObject[] door_walls; //door wall prefabs - same indexing as above
     public GameObject[] enemySpawnLocations; //spawn locations of enemies
-
+    public GameObject[] potionLocations; //locations of potions
+    public GameObject[] chestLocations; //locations of chests
 
     public GameObject enemyPrefab; //enemy prefab - CHANGE TO ARRAY IN THE FUTURE WITH MANY ENEMIES AND RANDOMLY PICK ENEMY TYPES TO SPAWN
 
@@ -50,5 +51,34 @@ public class RoomScript : MonoBehaviour
             }
         }
 
+        //choose what potions to keep/hide
+
+        if(potionLocations.Length > 0) //if the room has potions
+        {
+            for(int i = 0; i < potionLocations.Length; i++) //for each potion
+            {
+                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+
+                if(chance == 0) //if 50% chance has rolled to hide the potion
+                {
+                    Destroy(potionLocations[i]); //destroy the potion
+                }
+            }
+        }
+
+        //choose what chests to keep/hide
+        
+        if (chestLocations.Length > 0) //if the room has chests
+        {
+            for (int i = 0; i < chestLocations.Length; i++) //for each chest
+            {
+                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+
+                if (chance == 0) //if 50% chance has rolled to hide the chest
+                {
+                    Destroy(chestLocations[i]); //destroy the chest
+                }
+            }
+        }
     }
 }
