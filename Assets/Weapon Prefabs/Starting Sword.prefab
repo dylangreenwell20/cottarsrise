@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2820868514583999365}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2820868514583999366}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.564, z: -0.437}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7256181665495147871}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5974160280024553292
 GameObject:
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5974160280024553291}
   - component: {fileID: 1253076194309544132}
   - component: {fileID: -2137533654813792688}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Starting Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +59,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5974160280024553292}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.8203682, y: -0, z: -0, w: 0.57183576}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7740149, y: 1.1338844, z: 1.1746393}
@@ -66,7 +67,6 @@ Transform:
   m_Children:
   - {fileID: 2820868514583999365}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 112.339096, y: 0, z: 0}
 --- !u!33 &1866782146367414121
 MeshFilter:
@@ -164,8 +164,16 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5974160280024553292}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 0.12869917, y: 0.42098823, z: 1.303596}
   m_Center: {x: 0.00000001862645, y: -0.0028262518, z: -0.27620965}

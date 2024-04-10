@@ -827,6 +827,7 @@ MonoBehaviour:
   enemyMagic: {fileID: 9146214330180021658, guid: b55935d810eef5545985cfed1c0b32c7, type: 3}
   arrowPoint: {fileID: 5104475498236656077}
   magicPoint: {fileID: 5104475498236656077}
+  playerTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &8743540600833338081
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,10 +25,10 @@ TagManager:
   - Player
   - LevelObjectWalkable
   - EnemyArrows
-  - 
-  - 
-  - 
-  - 
+  - StaffProjectile
+  - EnemyMagic
+  - AbilityProjectile
+  - Loot
   - 
   - 
   - 

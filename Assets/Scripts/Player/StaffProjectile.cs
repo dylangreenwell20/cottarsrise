@@ -26,7 +26,7 @@ public class StaffProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag != "StaffProjectile" && collision.gameObject.tag != "Player" && !hasCollided) //if projectile collides with something other than itself, the player and has not already collided
+        if(collision.gameObject.tag != "StaffProjectile" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "EnemyArrow" && collision.gameObject.tag != "EnemyProjectile" && !hasCollided) //if projectile collides with something other than itself, the player and has not already collided
         {
             if(collision.gameObject.tag == "Enemy" && !hasCollided) //if projectile collided with enemy
             {

@@ -52,6 +52,8 @@ public class EnemyAI : MonoBehaviour
 
     private Ray ray; //ray towards player
 
+    public Vector3 playerTarget; //direction towards the player
+
     private void Awake()
     {
         player = GameObject.Find("PlayerObject"); //find player game object
@@ -61,26 +63,31 @@ public class EnemyAI : MonoBehaviour
         characterStats = GetComponent<CharacterStats>(); //get character stats
         enemyDamage = characterStats.damage.GetValue(); //get damage value
 
-        if(isMelee)
+        if(isMelee) //if enemy is melee type
         {
             attackDistance = 1.5f;
+            timeBetweenAttacks = 1.0f;
         }
-        else if(isRange)
+        else if(isRange) //if enemy is range type
+        {
+            attackDistance = 8.0f;
+            timeBetweenAttacks = 1.5f;
+        }
+        else if(isMage) //if enemy is mage type
         {
             attackDistance = 10.0f;
-        }
-        else if(isMage)
-        {
-            attackDistance = 10.0f;
+            timeBetweenAttacks = 2.0f;
         }
     }
 
     private void Update()
     {
-        Vector3 playerTarget = (player.transform.position - transform.position).normalized; //direction to player
+        playerTarget = (player.transform.position - transform.position).normalized; //direction to player
         float distanceToTarget = Vector3.Distance(transform.position, player.transform.position); //calculate distance to the player
         playerInHearDistance = Physics.CheckSphere(transform.position, hearDistance, whatIsPlayer); //sphere around the enemy for the distance they can hear the player
         playerInAttackRange = Physics.CheckSphere(transform.position, attackDistance, whatIsPlayer); //sphere around the enemy for the distance they can attack the player from
+
+        //orientation.rotation = Quaternion.Euler(0, yRotation, 0); //rotating the orientation
 
         if (!playerInSight) //if player is not in sight
         {
@@ -209,6 +216,13 @@ public class EnemyAI : MonoBehaviour
             {
                 //play attack animation
 
+
+
+
+                //attack player
+
+                transform.LookAt(player.transform); //look at player
+
                 player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
 
                 Debug.Log("melee attack"); //for testing
@@ -226,14 +240,8 @@ public class EnemyAI : MonoBehaviour
 
                 transform.LookAt(player.transform); //look at player
 
-                ray.origin = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                ray.direction = transform.forward;
-
-                RaycastHit hit;
-                Vector3 forward = transform.TransformDirection(Vector3.forward);
-
-                var rangeProjectile = Instantiate(enemyArrow, arrowPoint.position, Quaternion.identity) as GameObject;
-                rangeProjectile.GetComponent<Rigidbody>().AddForce(arrowPoint.forward * 300);
+                var rangeProjectile = Instantiate(enemyArrow, arrowPoint.position, transform.rotation) as GameObject; //create arrow
+                rangeProjectile.GetComponent<Rigidbody>().AddForce(arrowPoint.forward * 15);
 
                 Debug.Log("range attack"); //for testing
 
@@ -250,8 +258,8 @@ public class EnemyAI : MonoBehaviour
 
                 transform.LookAt(player.transform); //look at player
 
-                var mageProjectile = Instantiate(enemyMagic, magicPoint.position, Quaternion.identity) as GameObject;
-                mageProjectile.GetComponent<Rigidbody>().AddForce(magicPoint.forward * 300);
+                var mageProjectile = Instantiate(enemyMagic, magicPoint.position, Quaternion.identity) as GameObject; //create mage projectile
+                mageProjectile.GetComponent<Rigidbody>().AddForce(magicPoint.forward * 15);
 
                 Debug.Log("mage attack"); //for testing
 

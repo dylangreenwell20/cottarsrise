@@ -24,7 +24,7 @@ public class ArrowScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Arrow" && collision.gameObject.tag != "Player" && !hasCollided) //if arrow has not collided with itself, the player and has not collided before
+        if (collision.gameObject.tag != "Arrow" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "EnemyArrow" && collision.gameObject.tag != "EnemyProjectile" && !hasCollided) //if arrow has not collided with itself, the player and has not collided before
         {
             if (collision.gameObject.tag == "Enemy" && !hasCollided) //if arrow collided with enemy
             {

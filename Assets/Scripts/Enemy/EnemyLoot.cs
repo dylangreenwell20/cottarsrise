@@ -32,6 +32,7 @@ public class EnemyLoot : MonoBehaviour
 
         spawnedItem.AddComponent<ItemPickUp>(); //add ItemPickUp script to spawned loot
         spawnedItem.GetComponent<ItemPickUp>().item = itemToSpawn; //give loot the item scriptable object
+        spawnedItem.layer = 17; //set to loot layer tag
         //spawnedItem.GetComponent<BoxCollider>().enabled = false; //disable collision
     }
 }

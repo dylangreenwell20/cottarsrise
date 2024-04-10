@@ -21,9 +21,11 @@ public class EnemyArrow : MonoBehaviour
             {
                 hasCollided = true; //arrow collided
 
-                if(collision.gameObject.GetComponent<PlayerHealth>() != null) //if player health component exists
+                var playerHealth = collision.transform.Find("PlayerObject").GetComponent<PlayerHealth>(); //get player health component
+
+                if (playerHealth != null) //if player health component exists
                 {
-                    collision.gameObject.GetComponent<PlayerHealth>().DamagePlayer(arrowDamage); //damage player
+                    playerHealth.GetComponent<PlayerHealth>().DamagePlayer(arrowDamage); //damage player
                 }
 
                 Destroy(gameObject); //destroy arrow

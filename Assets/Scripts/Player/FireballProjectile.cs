@@ -8,6 +8,8 @@ public class FireballProjectile : MonoBehaviour
     private int projectileDamage; //damage of projectile
     private GameObject player; //player game object
     private PlayerStats playerStats; //reference to player stats script
+    public float fireballLife = 3; //lifetime of fireball
+    public GameObject impactParticles; //impact particles
 
     private void Awake()
     {
@@ -16,6 +18,8 @@ public class FireballProjectile : MonoBehaviour
         projectileDamage = AbilityVariables.abilityDamage; //get ability damage
 
         Debug.Log("fireball created - damage is " + projectileDamage.ToString()); //for testing
+
+        Destroy(gameObject, fireballLife); //destroy after a few seconds
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -35,8 +39,8 @@ public class FireballProjectile : MonoBehaviour
                     //Debug.Log("enemy damaged"); //testing to see if enemy was successfully damaged
                 }
 
-                //var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles on first collision point
-                //Destroy(impact, 2); //destroy impact particles after 2 seconds
+                var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles on first collision point
+                Destroy(impact, 2); //destroy impact particles after 2 seconds
 
                 Destroy(gameObject); //destroy the projectile
             }
@@ -44,8 +48,8 @@ public class FireballProjectile : MonoBehaviour
             {
                 hasCollided = true; //has collided set to true
 
-                //var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles on first collision point
-                //Destroy(impact, 2); //destroy impact particles after 2 seconds
+                var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles on first collision point
+                Destroy(impact, 2); //destroy impact particles after 2 seconds
 
                 Destroy(gameObject); //destroy the projectile
             }

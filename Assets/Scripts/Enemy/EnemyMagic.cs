@@ -22,9 +22,11 @@ public class EnemyMagic : MonoBehaviour
             {
                 hasCollided = true;
 
-                if(collision.gameObject.GetComponent<PlayerHealth>() != null)
+                var playerHealth = collision.transform.Find("PlayerObject").GetComponent<PlayerHealth>(); //get player health component
+
+                if (playerHealth != null) //if player health component exists
                 {
-                    collision.gameObject.GetComponent<PlayerHealth>().DamagePlayer(projectileDamage); //damage player
+                    playerHealth.GetComponent<PlayerHealth>().DamagePlayer(projectileDamage); //damage player
                 }
 
                 var impact = Instantiate(impactParticles, collision.contacts[0].point, Quaternion.identity) as GameObject; //create impact particles

@@ -32,7 +32,7 @@ public class LootPool : MonoBehaviour
         }
         else //when testing game without loading from main menu
         {
-            floor1LootPool = Resources.LoadAll<Item>("Floor1Items/Warrior"); //create array for all items in floor 1 loot pool
+            floor1LootPool = Resources.LoadAll<Item>("Floor1Items/Archer"); //create array for all items in floor 1 loot pool
         }
 
         //floor 2
