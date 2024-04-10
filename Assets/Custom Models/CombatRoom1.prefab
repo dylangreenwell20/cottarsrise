@@ -18504,7 +18504,10 @@ MonoBehaviour:
   chestLocations:
   - {fileID: 1264131131983931217}
   - {fileID: 3036810348349437085}
-  enemyPrefab: {fileID: 4954748265372636556, guid: 721de928d6e87e340a6070d1c597b895, type: 3}
+  enemyPrefabs:
+  - {fileID: 6549436321639525895, guid: 8eca86f904cdb524492f5c695121dcb8, type: 3}
+  - {fileID: 3290321826249068824, guid: 44ed483333b7aa145b427a50d92ace0d, type: 3}
+  - {fileID: 1825857823067318052, guid: e5f71a53de051d14484e3c28be166447, type: 3}
 --- !u!1 &5261610169776862953
 GameObject:
   m_ObjectHideFlags: 0

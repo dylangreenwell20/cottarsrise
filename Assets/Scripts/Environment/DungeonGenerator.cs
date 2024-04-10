@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -45,11 +47,15 @@ public class DungeonGenerator : MonoBehaviour
 
     private int previousRoomNumber = 5; //previously generated room number - to stop the same room being generated twice
 
+    public List<GameObject> createdRooms = new List<GameObject>(); //create gameobject list to store created rooms
+
     private void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond); //random seed for truly random rooms
 
         MazeGenerator(); //generate the maze
+        GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
+        SpawnEnemies(); //spawn room enemies
     }
 
     void GenerateDungeon()
@@ -66,6 +72,8 @@ public class DungeonGenerator : MonoBehaviour
                     {
                         var newRoom = Instantiate(startRoomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
                         newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
+
+                        newRoom.MovePlayer(); //move player to spawn
 
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
@@ -88,6 +96,9 @@ public class DungeonGenerator : MonoBehaviour
                             previousRoomNumber = 0;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+
+                            createdRooms.Add(newRoom.gameObject);
+
                             genOrder++; //for testing
                         }
                         else if (currentCell.roomType == 1)
@@ -98,6 +109,9 @@ public class DungeonGenerator : MonoBehaviour
                             previousRoomNumber = 1;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+
+                            createdRooms.Add(newRoom.gameObject);
+
                             genOrder++; //for testing
                         }
                         else if (currentCell.roomType == 2)
@@ -108,6 +122,9 @@ public class DungeonGenerator : MonoBehaviour
                             previousRoomNumber = 2;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+
+                            createdRooms.Add(newRoom.gameObject);
+
                             genOrder++; //for testing
                         }
                         else if (currentCell.roomType == 3)
@@ -118,6 +135,9 @@ public class DungeonGenerator : MonoBehaviour
                             previousRoomNumber = 3;
 
                             newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
+
+                            createdRooms.Add(newRoom.gameObject);
+
                             genOrder++; //for testing
                         }
                         else //else if there is a bug - just create empty room
@@ -133,6 +153,14 @@ public class DungeonGenerator : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void SpawnEnemies()
+    {
+        for(int i = 0; i < createdRooms.Count; i++)
+        {
+            createdRooms[i].gameObject.GetComponent<RoomScript>().SpawnEnemies(); //spawn enemies
         }
     }
 

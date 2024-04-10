@@ -221,7 +221,7 @@ public class EnemyAI : MonoBehaviour
 
                 //attack player
 
-                transform.LookAt(player.transform); //look at player
+                //transform.LookAt(player.transform); //look at player
 
                 player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
 

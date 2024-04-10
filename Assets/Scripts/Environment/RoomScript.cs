@@ -11,13 +11,10 @@ public class RoomScript : MonoBehaviour
     public GameObject[] enemySpawnLocations; //spawn locations of enemies
     public GameObject[] potionLocations; //locations of potions
     public GameObject[] chestLocations; //locations of chests
+    public GameObject[] enemyPrefabs; //enemy prefabs
 
-    public GameObject enemyPrefab; //enemy prefab - CHANGE TO ARRAY IN THE FUTURE WITH MANY ENEMIES AND RANDOMLY PICK ENEMY TYPES TO SPAWN
-
-
-
-
-
+    public GameObject player; //reference to player
+    public Transform dungeonSpawn; //reference to dungeon spawn
 
     public void UpdateRoom(bool[] status, bool[] invisible)
     {
@@ -31,23 +28,6 @@ public class RoomScript : MonoBehaviour
             {
                 door_walls[i].SetActive(false); //hide door wall
                 doors[i].SetActive(false); //hide door
-            }
-        }
-
-        //spawn chests/potions/enemies
-
-        //spawn enemies
-
-        if(enemySpawnLocations.Length > 0) //if the room has enemy spawn points
-        {
-            for(int i = 0; i < enemySpawnLocations.Length; i++) //for each enemy spawn point
-            {
-                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
-
-                if(chance == 0)
-                {
-                    Instantiate(enemyPrefab, enemySpawnLocations[i].transform.position, Quaternion.identity, transform); //instantiate an enemy
-                }
             }
         }
 
@@ -80,5 +60,33 @@ public class RoomScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SpawnEnemies()
+    {
+        //spawn enemies
+
+        if (enemySpawnLocations.Length > 0) //if the room has enemy spawn points
+        {
+            for (int i = 0; i < enemySpawnLocations.Length; i++) //for each enemy spawn point
+            {
+                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+
+                if (chance == 0)
+                {
+                    int enemyRNG = Random.Range(0, enemyPrefabs.Length); //pick random enemy to spawn
+
+                    Instantiate(enemyPrefabs[enemyRNG], enemySpawnLocations[i].transform.position, Quaternion.identity, transform); //instantiate an enemy
+                }
+            }
+        }
+    }
+
+    public void MovePlayer() //move player to dungeon start
+    {
+        player = GameObject.Find("Player");
+        player.transform.position = dungeonSpawn.position;
+
+        Debug.Log("moved player");
     }
 }
