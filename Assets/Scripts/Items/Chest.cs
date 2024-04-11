@@ -11,6 +11,8 @@ public class Chest : MonoBehaviour
     private Animator animator; //reference to animator
     private LootPool lootPool; //reference to loot pool
 
+    public GameObject lootBag; //lootbag prefab
+
     public bool isOpen; //is chest open
 
     private void Awake()
@@ -51,8 +53,8 @@ public class Chest : MonoBehaviour
 
         //instantiate item prefab and add item to it
 
-        GameObject prefab = itemToSpawn.itemPrefab;
-        Instantiate(prefab, lootSpawnPoint.position, lootSpawnPoint.rotation, lootSpawnPoint); //instantiate item at chest location
+        //GameObject prefab = itemToSpawn.itemPrefab;
+        Instantiate(lootBag, lootSpawnPoint.position, lootSpawnPoint.rotation, lootSpawnPoint); //instantiate item at chest location
 
         GameObject spawnedItem = lootSpawnPoint.GetChild(0).gameObject; //get game object of spawned prefab
 

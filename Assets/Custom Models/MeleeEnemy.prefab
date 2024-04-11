@@ -901,6 +901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootSpawnPoint: {fileID: 0}
+  lootBag: {fileID: 875864819048443126, guid: 320c5eb117c875348997c5dbb861e018, type: 3}
 --- !u!1 &3923146290799299575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,7 +1650,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.4
   m_Height: 1.2736223
   m_Direction: 1
   m_Center: {x: 0, y: 0.644642, z: 0}
@@ -1749,7 +1750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aecf2b2c1b4fb46b15cf8f0a5224e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 60
   damage:
     baseValue: 15
   armour:

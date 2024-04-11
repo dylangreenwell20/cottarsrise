@@ -728,6 +728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootSpawnPoint: {fileID: 0}
+  lootBag: {fileID: 875864819048443126, guid: 320c5eb117c875348997c5dbb861e018, type: 3}
 --- !u!1 &7969563802905397110
 GameObject:
   m_ObjectHideFlags: 0

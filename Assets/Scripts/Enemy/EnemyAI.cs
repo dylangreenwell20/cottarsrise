@@ -70,12 +70,12 @@ public class EnemyAI : MonoBehaviour
         }
         else if(isRange) //if enemy is range type
         {
-            attackDistance = 8.0f;
+            attackDistance = 5.0f;
             timeBetweenAttacks = 1.5f;
         }
         else if(isMage) //if enemy is mage type
         {
-            attackDistance = 10.0f;
+            attackDistance = 5.0f;
             timeBetweenAttacks = 2.0f;
         }
     }

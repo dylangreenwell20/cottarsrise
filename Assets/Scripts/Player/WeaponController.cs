@@ -32,7 +32,7 @@ public class WeaponController : MonoBehaviour
     public float swordRange = 3f; //distance the sword can attack
     public Transform attackPoint; //point where hit reg is calculated from sword
 
-    public int manaCost = 15; //mana cost of the staff attack
+    public int manaCost = 10; //mana cost of the staff attack
     public float currentMana; //current mana the player has
     public GameObject player; //reference to the player
 

@@ -89,6 +89,13 @@ public class PlayerMovement : MonoBehaviour
                     chest.Interact(); //open chest
                     return;
                 }
+
+                BossTeleporter bossTeleporter = hit.collider.GetComponent<BossTeleporter>(); //check if boss teleport button was pressed
+
+                if(bossTeleporter != null)
+                {
+                    this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
+                }
             }
         }
 

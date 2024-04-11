@@ -8,6 +8,8 @@ public class EnemyLoot : MonoBehaviour
 
     private LootPool lootPool; //reference to loot pool
 
+    public GameObject lootBag; //loot bag prefab
+
     private void Awake()
     {
         lootPool = GameObject.Find("LootPool").GetComponent<LootPool>(); //get loot pool component
@@ -23,16 +25,21 @@ public class EnemyLoot : MonoBehaviour
 
         Debug.Log(itemToSpawn);
 
-        //instantiate item prefab and add item to it
+        int chance = Random.Range(0, 4); //25% chance
 
-        GameObject prefab = itemToSpawn.itemPrefab;
-        Instantiate(prefab, new Vector3(lootSpawnPoint.position.x, lootSpawnPoint.position.y, lootSpawnPoint.position.z), Quaternion.Euler(lootSpawnPoint.rotation.x, lootSpawnPoint.rotation.y, lootSpawnPoint.rotation.z), lootSpawnPoint); //instantiate item at enemy loot location
+        if(chance == 0)
+        {
+            //instantiate item prefab and add item to it
 
-        GameObject spawnedItem = lootSpawnPoint.GetChild(0).gameObject; //get game object of spawned prefab
+            //GameObject prefab = itemToSpawn.itemPrefab;
+            Instantiate(lootBag, new Vector3(lootSpawnPoint.position.x, lootSpawnPoint.position.y, lootSpawnPoint.position.z), Quaternion.Euler(lootSpawnPoint.rotation.x, lootSpawnPoint.rotation.y, lootSpawnPoint.rotation.z), lootSpawnPoint); //instantiate item at enemy loot location
 
-        spawnedItem.AddComponent<ItemPickUp>(); //add ItemPickUp script to spawned loot
-        spawnedItem.GetComponent<ItemPickUp>().item = itemToSpawn; //give loot the item scriptable object
-        spawnedItem.layer = 17; //set to loot layer tag
-        //spawnedItem.GetComponent<BoxCollider>().enabled = false; //disable collision
+            GameObject spawnedItem = lootSpawnPoint.GetChild(0).gameObject; //get game object of spawned prefab
+
+            spawnedItem.AddComponent<ItemPickUp>(); //add ItemPickUp script to spawned loot
+            spawnedItem.GetComponent<ItemPickUp>().item = itemToSpawn; //give loot the item scriptable object
+            spawnedItem.layer = 17; //set to loot layer tag
+            //spawnedItem.GetComponent<BoxCollider>().enabled = false; //disable collision
+        }
     }
 }

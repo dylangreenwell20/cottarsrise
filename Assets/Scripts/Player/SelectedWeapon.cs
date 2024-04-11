@@ -46,8 +46,8 @@ public class SelectedWeapon : MonoBehaviour
             {
                 if(mageSelected == false)
                 {
-                    StartingWeapon.archerClassSelected = true;
-                    archerSelected = true;
+                    StartingWeapon.mageClassSelected = true;
+                    mageSelected = true;
                 }
             }
         }
