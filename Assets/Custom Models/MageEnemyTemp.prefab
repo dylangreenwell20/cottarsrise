@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 6
+  walkPointRange: 1
   timeBetweenAttacks: 0.5
   attackDistance: 1.5
   playerInSight: 0

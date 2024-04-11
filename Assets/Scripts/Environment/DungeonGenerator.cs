@@ -49,6 +49,8 @@ public class DungeonGenerator : MonoBehaviour
 
     public List<GameObject> createdRooms = new List<GameObject>(); //create gameobject list to store created rooms
 
+    public PlayerMovement pm; //reference to player movement
+
     private void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond); //random seed for truly random rooms
@@ -73,7 +75,9 @@ public class DungeonGenerator : MonoBehaviour
                         var newRoom = Instantiate(startRoomPrefab, new Vector3(i * offset.x, 0, -j * offset.y), Quaternion.identity, transform).GetComponent<RoomScript>(); //instantiate new room
                         newRoom.UpdateRoom(currentCell.status, currentCell.isDoorInvisible); //update room on the board
 
-                        newRoom.MovePlayer(); //move player to spawn
+                        newRoom.MovePlayer(); //get player spawn location
+
+                        //pm.SpawnPlayer(); //move player to spawn location
 
                         newRoom.name += " " + i + "-" + j + " GEN " + genOrder; //name the room with its position - and gen for testing
                         genOrder++; //for testing
@@ -227,18 +231,18 @@ public class DungeonGenerator : MonoBehaviour
 
                     int prefabType = Random.Range(0, roomList.Count); //what room prefab to generate
 
-                    Debug.Log(prefabType);
+                    //Debug.Log(prefabType);
 
                     if (prefabType == previousRoomNumber) //if room type is the same as the previously generated room
                     {
-                        Debug.Log("two of the same room type in a row - pick a new one");
+                        //Debug.Log("two of the same room type in a row - pick a new one");
 
                         roomList.RemoveAt(prefabType); //remove current room type from the cloned list
                         prefabType = Random.Range(0, roomList.Count); //pick another room
 
-                        Debug.Log(prefabType);
+                        //Debug.Log(prefabType);
 
-                        Debug.Log("cleared");
+                        //Debug.Log("cleared");
                     }
 
                     board[currentCell].roomType = prefabType; //set the prefab type of the room

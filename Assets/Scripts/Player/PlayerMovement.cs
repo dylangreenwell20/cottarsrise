@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 3)) //if raycast hit something within 3 units
             {
                 InteractableItems interactable = hit.collider.GetComponent<InteractableItems>(); //get InteractableItems component from what was hit
-                if(interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
+                if (interactable != null) //if component was valid and variable was created (essentially if the item is interactable)
                 {
                     interactable.Interact(); //pick up the item
                     return;
@@ -80,9 +80,9 @@ public class PlayerMovement : MonoBehaviour
 
                 Chest chest = hit.collider.GetComponent<Chest>(); //get chest component from what was hit
 
-                if(chest != null) //if item has chest component
+                if (chest != null) //if item has chest component
                 {
-                    if(chest.isOpen) //if chest is already open
+                    if (chest.isOpen) //if chest is already open
                     {
                         return;
                     }
@@ -90,6 +90,11 @@ public class PlayerMovement : MonoBehaviour
                     return;
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.J)) //test to move player
+        {
+            SpawnPlayer();
         }
     }
 
@@ -99,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); //variable for current player speed
 
-        if(flatVel.magnitude > 3.1f) //if player has a speed greater than 0 (essentially if they are currently moving)
+        if (flatVel.magnitude > 3.1f) //if player has a speed greater than 0 (essentially if they are currently moving)
         {
             isMoving = true; //isMoving set to true
         }
@@ -200,6 +205,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isDashing = true;
         StartCoroutine(DashCooldown(cooldownTime));
+    }
+
+    public void SpawnPlayer()
+    {
+        Debug.Log(PlayerSpawn.playerSpawn);
+        this.transform.position = new Vector3(PlayerSpawn.playerSpawn.position.x, PlayerSpawn.playerSpawn.position.y, PlayerSpawn.playerSpawn.position.z); //set player position
     }
 
     IEnumerator DashCooldown(float cooldownTime)

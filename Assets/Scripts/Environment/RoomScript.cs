@@ -84,9 +84,13 @@ public class RoomScript : MonoBehaviour
 
     public void MovePlayer() //move player to dungeon start
     {
+        PlayerSpawn.playerSpawn = dungeonSpawn.transform;
+        //Debug.Log(dungeonSpawn.transform);
+        /*
         player = GameObject.Find("Player");
         player.transform.position = dungeonSpawn.position;
 
         Debug.Log("moved player");
+        */
     }
 }

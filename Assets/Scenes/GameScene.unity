@@ -10545,6 +10545,8 @@ MonoBehaviour:
   sameDirectionTwice: 0
   startingRoom: 0
   roomTypeList: 00000000010000000200000003000000
+  createdRooms: []
+  pm: {fileID: 1736622282}
 --- !u!4 &1875499077
 Transform:
   m_ObjectHideFlags: 0
