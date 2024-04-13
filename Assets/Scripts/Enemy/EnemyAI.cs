@@ -42,7 +42,7 @@ public class EnemyAI : MonoBehaviour
 
     private CharacterStats characterStats; //reference to character stats script
 
-    public bool isMelee, isRange, isMage; //what attack style the enemy has
+    public bool isMelee, isRange, isMage, isBoss; //what attack style the enemy has
 
     public GameObject enemyArrow; //enemy arrow prefab
     public GameObject enemyMagic; //enemy magic projectile prefab
@@ -54,8 +54,15 @@ public class EnemyAI : MonoBehaviour
 
     public Vector3 playerTarget; //direction towards the player
 
+    public Animator animator; //enemy animator
+
+    public HealthController healthController; //enemy health controller
+
     private void Awake()
     {
+        animator = this.transform.parent.GetComponent<Animator>(); //get animator from parent
+        healthController = this.GetComponent<HealthController>(); //get health controller component
+
         player = GameObject.Find("PlayerObject"); //find player game object
         playerTransform = player.transform; //find player transform
         nma = GetComponent<NavMeshAgent>(); //get nav mesh agent from enemy
@@ -66,22 +73,32 @@ public class EnemyAI : MonoBehaviour
         if(isMelee) //if enemy is melee type
         {
             attackDistance = 1.5f;
-            timeBetweenAttacks = 1.0f;
+            timeBetweenAttacks = 2.0f;
         }
         else if(isRange) //if enemy is range type
         {
             attackDistance = 5.0f;
-            timeBetweenAttacks = 1.5f;
+            timeBetweenAttacks = 2.5f;
         }
         else if(isMage) //if enemy is mage type
         {
             attackDistance = 5.0f;
-            timeBetweenAttacks = 2.0f;
+            timeBetweenAttacks = 3.0f;
+        }
+        else if (isBoss) //if enemy is boss type
+        {
+            attackDistance = 2.0f;
+            timeBetweenAttacks = 4.0f;
         }
     }
 
     private void Update()
     {
+        if (healthController.isDead) //if enemy is dead
+        {
+            return;
+        }
+
         playerTarget = (player.transform.position - transform.position).normalized; //direction to player
         float distanceToTarget = Vector3.Distance(transform.position, player.transform.position); //calculate distance to the player
         playerInHearDistance = Physics.CheckSphere(transform.position, hearDistance, whatIsPlayer); //sphere around the enemy for the distance they can hear the player
@@ -148,6 +165,7 @@ public class EnemyAI : MonoBehaviour
         if (walkPointSet) //if walk point is set
         {
             nma.SetDestination(walkPoint); //set enemy destination to the walk point
+            animator.SetTrigger("Walk"); //play walk animation
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint; //calculate distance to the walk point
@@ -159,10 +177,13 @@ public class EnemyAI : MonoBehaviour
                 //if cd isnt active then check distance 
                 //if distance is <1f then generate random time - put cdActive to true then after a count down move the enemy
 
+                animator.SetTrigger("StopWalk"); //stop walking animation - go back to idle
+
                 cdActive = true; //set patrol walkpoint cooldown to true
                 patrolCD = Random.Range(patrolCooldownLower, patrolCooldownHigher); //pick a random number between the cooldown times
-                Debug.Log("cd is active"); //for testing
-                Debug.Log(patrolCD); //for testing
+
+                //Debug.Log("cd is active"); //for testing
+                //Debug.Log(patrolCD); //for testing
             }
         }
         else //if cooldown is active
@@ -197,18 +218,24 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        nma.SetDestination(playerTransform.position); //set destination to the player's location
-
-        if (playerInAttackRange) //if player is in attack range
+        if(!isAttackingPlayer)
         {
-            AttackPlayer(); //attack player
+            animator.SetTrigger("Chase"); //play chase animation
+
+            nma.SetDestination(playerTransform.position); //set destination to the player's location
+
+            if (playerInAttackRange) //if player is in attack range
+            {
+                AttackPlayer(); //attack player
+            }
         }
     }
 
     private void AttackPlayer()
     {
         nma.SetDestination(transform.position); //stop enemy from moving
-        transform.LookAt(playerTransform); //look at player
+
+        transform.LookAt(new Vector3(playerTransform.position.x, 0.0f, playerTransform.position.z)); //look at player but at their own Y level to stop looking up
 
         if (!isAttackingPlayer) //if isnt currently attacking the player
         {
@@ -216,16 +243,13 @@ public class EnemyAI : MonoBehaviour
             {
                 //play attack animation
 
-
-
+                animator.SetTrigger("Attack"); //play attack animation
 
                 //attack player
 
-                //transform.LookAt(player.transform); //look at player
-
                 player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
 
-                Debug.Log("melee attack"); //for testing
+                //Debug.Log("melee attack"); //for testing
 
                 isAttackingPlayer = true; //enemy currently attacking player
                 Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
@@ -234,16 +258,14 @@ public class EnemyAI : MonoBehaviour
             {
                 //play attack animation
 
-
+                animator.SetTrigger("StopChase");
 
                 //spawn projectile and send towards player
 
-                transform.LookAt(player.transform); //look at player
-
                 var rangeProjectile = Instantiate(enemyArrow, arrowPoint.position, transform.rotation) as GameObject; //create arrow
-                rangeProjectile.GetComponent<Rigidbody>().AddForce(arrowPoint.forward * 15);
+                rangeProjectile.GetComponent<Rigidbody>().AddForce(arrowPoint.forward * 12);
 
-                Debug.Log("range attack"); //for testing
+                //Debug.Log("range attack"); //for testing
 
                 isAttackingPlayer = true; //enemy currently attacking player
                 Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
@@ -252,16 +274,56 @@ public class EnemyAI : MonoBehaviour
             {
                 //play attack animation
 
-
+                animator.SetTrigger("StopChase");
 
                 //spawn projectile and send towards player
 
-                transform.LookAt(player.transform); //look at player
-
                 var mageProjectile = Instantiate(enemyMagic, magicPoint.position, Quaternion.identity) as GameObject; //create mage projectile
-                mageProjectile.GetComponent<Rigidbody>().AddForce(magicPoint.forward * 15);
+                mageProjectile.GetComponent<Rigidbody>().AddForce(magicPoint.forward * 12);
 
-                Debug.Log("mage attack"); //for testing
+                //Debug.Log("mage attack"); //for testing
+
+                isAttackingPlayer = true; //enemy currently attacking player
+                Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
+            }
+            else if (isBoss)
+            {
+                //pick an attack randomly
+
+                int attack = Random.Range(0, 3); //random number from 0 - 2
+
+                if(attack == 0) //melee attack
+                {
+                    //play attack animation
+
+                    animator.SetTrigger("BossMelee");
+
+                    //simple melee hit
+                }
+                else if(attack == 1) //kick attack
+                {
+                    //play attack animation
+
+                    animator.SetTrigger("BossKick");
+
+                    //apply force to player rigidbody and send them away from the boss
+                }
+                else if(attack == 2) //jump attack
+                {
+                    //play attack animation
+
+                    animator.SetTrigger("BossJump");
+
+                    //wait until animation over then check if player is grounded - if yes then damage
+                }
+
+                animator.SetTrigger("Attack"); //play attack animation
+
+                //attack player
+
+                player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
+
+                //Debug.Log("boss attack"); //for testing
 
                 isAttackingPlayer = true; //enemy currently attacking player
                 Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown

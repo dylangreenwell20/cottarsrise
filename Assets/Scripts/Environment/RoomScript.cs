@@ -37,9 +37,9 @@ public class RoomScript : MonoBehaviour
         {
             for(int i = 0; i < potionLocations.Length; i++) //for each potion
             {
-                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+                int chance = Random.Range(0, 10); //number from 0 - 9
 
-                if(chance == 0) //if 50% chance has rolled to hide the potion
+                if(chance >= 2) //if 70% chance has rolled to hide the potion
                 {
                     Destroy(potionLocations[i]); //destroy the potion
                 }
@@ -52,9 +52,9 @@ public class RoomScript : MonoBehaviour
         {
             for (int i = 0; i < chestLocations.Length; i++) //for each chest
             {
-                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+                int chance = Random.Range(0, 4); //random number from 0 - 3
 
-                if (chance == 0) //if 50% chance has rolled to hide the chest
+                if (chance >= 1) //if 75% chance to destroy chest is rolled
                 {
                     Destroy(chestLocations[i]); //destroy the chest
                 }
@@ -70,9 +70,9 @@ public class RoomScript : MonoBehaviour
         {
             for (int i = 0; i < enemySpawnLocations.Length; i++) //for each enemy spawn point
             {
-                int chance = Random.Range(0, 2); //50/50 chance of 0 or 1
+                int chance = Random.Range(0, 3); //random number from 0 - 2
 
-                if (chance == 0)
+                if (chance == 0) //if 33% chance was rolled to spawn enemy
                 {
                     int enemyRNG = Random.Range(0, enemyPrefabs.Length); //pick random enemy to spawn
 
@@ -85,12 +85,5 @@ public class RoomScript : MonoBehaviour
     public void MovePlayer() //move player to dungeon start
     {
         PlayerSpawn.playerSpawn = dungeonSpawn.transform;
-        //Debug.Log(dungeonSpawn.transform);
-        /*
-        player = GameObject.Find("Player");
-        player.transform.position = dungeonSpawn.position;
-
-        Debug.Log("moved player");
-        */
     }
 }

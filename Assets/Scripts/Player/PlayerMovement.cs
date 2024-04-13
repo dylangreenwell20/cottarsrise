@@ -42,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isMoving; //bool for if the player is moving or not
     public bool isDashing; //if player is dashing or not
 
+    public GameObject enemyBossPrefab; //to spawn enemy boss on teleport
+    public GameObject enemyBossSpawn; //place to spawn enemy boss
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); //assigning rigid body
@@ -94,14 +97,22 @@ public class PlayerMovement : MonoBehaviour
 
                 if(bossTeleporter != null)
                 {
-                    this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
+                    //this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
+
+                    this.transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
+                    this.transform.rotation = Quaternion.identity; //face player north
+
+                    Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
                 }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.J)) //test to move player
+        if(Input.GetKeyDown(KeyCode.K)) //test to move player to boss room
         {
-            SpawnPlayer();
+            this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
+            this.transform.rotation = Quaternion.identity; //face player north
+
+            Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
         }
     }
 
@@ -216,8 +227,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Debug.Log(PlayerSpawn.playerSpawn);
+        //Debug.Log(PlayerSpawn.playerSpawn);
         this.transform.position = new Vector3(PlayerSpawn.playerSpawn.position.x, PlayerSpawn.playerSpawn.position.y, PlayerSpawn.playerSpawn.position.z); //set player position
+        this.transform.rotation = Quaternion.identity; //face player north
     }
 
     IEnumerator DashCooldown(float cooldownTime)

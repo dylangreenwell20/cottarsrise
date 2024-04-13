@@ -26,7 +26,7 @@ public class HealthController : MonoBehaviour
 
     private CapsuleCollider cC; //capsule collider of the enemy
 
-    private bool isDead; //is the health at 0 or not
+    public bool isDead; //is the health at 0 or not
 
     private CharacterStats characterStats; //reference to character stats script
 
@@ -64,7 +64,12 @@ public class HealthController : MonoBehaviour
             //Destroy(gameObject); //destroy the enemy gameobject
 
             enemyLoot.SpawnItem(); //spawn loot item - in the future, a drop chance will be calculated first before spawning loot
-            this.gameObject.SetActive(false); //hide enemy capsule
+
+            Animator animator = this.transform.parent.GetComponent<Animator>(); //get animator from parent
+
+            animator.SetTrigger("Dead"); //play death animation
+
+            Invoke(nameof(HideEnemy), 1.0f); //hide enemy after a second (when animation finishes)
         }
 
         UpdateUI(); //update the health bar UI
@@ -77,5 +82,10 @@ public class HealthController : MonoBehaviour
 
         healthBar.sizeDelta = new Vector2(newWidth, healthBar.sizeDelta.y); //calculate size of health bar
         healthText.text = currentHealth + "/" + maxHealth; //change health bar number
+    }
+
+    private void HideEnemy()
+    {
+        this.gameObject.SetActive(false); //hide enemy capsule
     }
 }

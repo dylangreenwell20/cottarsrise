@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BossTeleporter : MonoBehaviour
 {
+    public GameObject arena; //boss arena
     public Transform arenaSpawn; //arena spawn location
 
-    public Transform SpawnLocation()
+    public Transform MoveToBossRoom()
     {
-        arenaSpawn = GameObject.Find("BossArena").transform.Find("Spawn"); //find spawn location
+        arena = GameObject.Find("BossArena"); //find arena
+        arenaSpawn = arena.transform.Find("Spawn"); //find arena spawn location
 
-        return arenaSpawn; //return spawn location
+        return arenaSpawn;
     }
 }

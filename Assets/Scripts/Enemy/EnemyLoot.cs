@@ -10,8 +10,11 @@ public class EnemyLoot : MonoBehaviour
 
     public GameObject lootBag; //loot bag prefab
 
+    public EnemyAI enemyAI; //enemy ai script
+
     private void Awake()
     {
+        enemyAI = transform.Find("Capsule").GetComponent<EnemyAI>(); //get enemy ai component
         lootPool = GameObject.Find("LootPool").GetComponent<LootPool>(); //get loot pool component
         lootSpawnPoint = transform.Find("LootSpawn"); //get point to spawn loot
     }
@@ -19,13 +22,18 @@ public class EnemyLoot : MonoBehaviour
 
     public void SpawnItem()
     {
+        if (enemyAI.isBoss)
+        {
+            return;
+        }
+
         lootSpawnPoint = transform.Find("LootSpawn"); //get point to spawn loot
 
         Item itemToSpawn = lootPool.Floor1LootPool(); //generate random item from floor 1 loot pool - change to current floor loot pool in future
 
         Debug.Log(itemToSpawn);
 
-        int chance = Random.Range(0, 4); //25% chance
+        int chance = Random.Range(0, 5); //20% chance
 
         if(chance == 0)
         {
