@@ -256,6 +256,29 @@ public class WeaponController : MonoBehaviour
         IsAttacking = true; //player is currently attacking
         CanAttack = false; //player cannot currently attack
 
+        if (bow == null)
+        {
+            string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+            //Debug.Log(weaponName); //for testing
+
+            bow = sW.rangePosition.Find(weaponName).gameObject; //find bow
+            Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
+            Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
+            modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
+
+            arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
+
+            if (bow != null) //if bow has been found
+            {
+                sW.weaponFound = true; //bow has been found
+
+                //Debug.Log("Bow found"); //for testing
+
+                return; //return function
+            }
+        }
+
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //create a ray from the camera where the player is looking
         RaycastHit hit; //create new raycast hit variable
         Vector3 destination; //destination of where the arrow will go
@@ -301,6 +324,26 @@ public class WeaponController : MonoBehaviour
     {
         IsAttacking = true; //player is currently attacking
         CanAttack = false; //player cannot currently attack
+
+        if (staff == null)
+        {
+            string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+            //Debug.Log(weaponName); //for testing
+
+            staff = sW.magePosition.Find(weaponName).gameObject; //find staff
+            Transform staffTransform = staff.transform; //create transform of staff game object
+            staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
+
+            if (staff != null) //if staff has been found
+            {
+                sW.weaponFound = true; //staff was found
+
+                //Debug.Log("Staff found"); //for testing
+
+                return; //return function
+            }
+        }
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //create a ray from the camera where the player is looking
         RaycastHit hit; //create new raycasthit variable

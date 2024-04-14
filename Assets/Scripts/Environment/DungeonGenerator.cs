@@ -477,4 +477,36 @@ public class DungeonGenerator : MonoBehaviour
 
         return neighbours;
     }
+
+    public void RestartDungeon() //for creating a new dungeon when the player chooses to continue (so they can keep their equipment instead of reloading the scene)
+    {
+        while(transform.childCount > 0) //while object has more than 1 child
+        {
+            DestroyImmediate(transform.GetChild(0).gameObject); //destroy immediate child
+        }
+
+        for (int i = 0; i < size.x; i++) //for each cell on the x axis
+        {
+            for (int j = 0; j < size.y; j++) //for each cell on the y axis
+            {
+                Cell currentCell = board[Mathf.FloorToInt(i + j * size.x)]; //get current cell
+
+                if (currentCell.visited) //if cell is visited then reset its variables
+                {
+                    currentCell.visited = false;
+                    currentCell.isStartingRoom = false;
+                    currentCell.isBossRoom = false;
+                    currentCell.status = new bool[4];
+                    currentCell.isDoorInvisible = new bool[4];
+                    currentCell.roomType = 5;
+                }
+            }
+        }
+
+        MazeGenerator(); //generate the maze
+        GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
+        SpawnEnemies(); //spawn room enemies
+
+        pm.SpawnPlayer(); //move player to dungeon spawn
+    }
 }

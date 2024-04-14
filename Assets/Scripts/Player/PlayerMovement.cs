@@ -45,8 +45,11 @@ public class PlayerMovement : MonoBehaviour
     public GameObject enemyBossPrefab; //to spawn enemy boss on teleport
     public GameObject enemyBossSpawn; //place to spawn enemy boss
 
+    public bool bossButtonPressed; //stop player pressing boss teleport button multiple times spawning many bosses
+
     private void Start()
     {
+        bossButtonPressed = false;
         rb = GetComponent<Rigidbody>(); //assigning rigid body
         rb.freezeRotation = true; //freeze rigid body rotation
         readyToJump = true; //player can jump
@@ -95,9 +98,9 @@ public class PlayerMovement : MonoBehaviour
 
                 BossTeleporter bossTeleporter = hit.collider.GetComponent<BossTeleporter>(); //check if boss teleport button was pressed
 
-                if(bossTeleporter != null)
+                if(bossTeleporter != null && !bossButtonPressed)
                 {
-                    //this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
+                    bossButtonPressed = true; //boss button has been pressed
 
                     this.transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
                     this.transform.rotation = Quaternion.identity; //face player north
