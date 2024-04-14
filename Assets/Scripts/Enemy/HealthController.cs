@@ -34,6 +34,8 @@ public class HealthController : MonoBehaviour
 
     private bool isBoss; //is the enemy a boss
 
+    public NormalOrDeadUI uiStatus; //status of ui
+
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
@@ -62,7 +64,7 @@ public class HealthController : MonoBehaviour
 
         currentHealth -= damageToTake; //take away damage from current health
 
-        if(currentHealth <= 0) //if health is less than or equal to 0 after damage applied
+        if (currentHealth <= 0) //if health is less than or equal to 0 after damage applied
         {
             currentHealth = 0; //set health to 0 to avoid negative health
             isDead = true; //enemy is dead
@@ -72,9 +74,16 @@ public class HealthController : MonoBehaviour
 
             Animator animator = this.transform.parent.GetComponent<Animator>(); //get animator from parent
 
-            animator.SetTrigger("Dead"); //play death animation
-
-            Invoke(nameof(HideEnemy), 1.0f); //hide enemy after a second (when animation finishes)
+            if (isBoss)
+            {
+                animator.SetTrigger("BossDead"); //play boss death animation
+                Invoke(nameof(HideEnemy), 2.0f); //hide boss enemy after death animation finishes
+            }
+            else
+            {
+                animator.SetTrigger("Dead"); //play death animation
+                Invoke(nameof(HideEnemy), 1.0f); //hide enemy after a second (when animation finishes)
+            }
         }
 
         UpdateUI(); //update the health bar UI
@@ -95,7 +104,11 @@ public class HealthController : MonoBehaviour
 
         if (isBoss)
         {
-            //change UI to show victory message and ask to pick a perk
+            //change UI to show victory message and ask player to pick a perk
+
+            uiStatus = GameObject.Find("UI").GetComponent<NormalOrDeadUI>(); //find UI status component
+
+            uiStatus.VictoryUI();
         }
     }
 }

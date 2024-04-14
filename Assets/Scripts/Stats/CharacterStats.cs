@@ -46,4 +46,16 @@ public class CharacterStats : MonoBehaviour
 
         return damageToDeal; //return updated value
     }
+
+    public void UpdateHealth(int healthValue) //update health value when health should be increased
+    {
+        maxHealth += healthValue;
+
+        currentHealth = maxHealth;
+    }
+
+    public void UpdateDamage(int damageValue) //increase base damage by perk value
+    {
+        damage.IncreaseStat(damageValue);
+    }
 }

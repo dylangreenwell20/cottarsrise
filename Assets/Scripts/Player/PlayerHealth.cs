@@ -35,6 +35,8 @@ public class PlayerHealth : MonoBehaviour
 
     public PlayerStats playerStats; //reference to player stats script
 
+    public NormalOrDeadUI uiStatus; //to change to dead ui if player dies
+
     private void Start()
     {
         maxHealth = playerStats.currentHealth; //fetch current health of player
@@ -61,9 +63,9 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = 0; //set current health to 0 to avoid negative hp
             isDead = true; //player is dead
             player.SetActive(false); //disable player character
-            cam.GetComponent<PlayerCamera>().enabled = false; //stop player from being able to move the camera
-            cam.GetComponent<PlayerCamera>().UnlockCursor(); //unlock cursor
             weaponHolder.SetActive(false); //disable player weapon holder
+
+            uiStatus.DeadUI(); //enable death screen ui
         }
 
         UpdateUI(); //update the ui
@@ -77,6 +79,17 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth; //set current health to max health
         }
+
+        UpdateUI(); //update the ui
+    }
+
+    public void GainHealth(int healthIncrease)
+    {
+        playerStats.UpdateHealth(healthIncrease);
+
+        maxHealth = playerStats.maxHealth; //increase max health
+
+        currentHealth = maxHealth; //set current health to max health
 
         UpdateUI(); //update the ui
     }

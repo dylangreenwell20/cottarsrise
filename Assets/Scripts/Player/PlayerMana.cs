@@ -77,6 +77,15 @@ public class PlayerMana : MonoBehaviour
         UpdateUI(); //update the ui
     }
 
+    public void GainMana(int manaIncrease)
+    {
+        maxMana += manaIncrease; //increase max mana
+
+        currentMana = maxMana; //set current mana to max mana
+
+        UpdateUI(); //update the ui
+    }
+
     public void UpdateUI()
     {
         float percent = (currentMana / maxMana) * 100; //calculate percent of mana left

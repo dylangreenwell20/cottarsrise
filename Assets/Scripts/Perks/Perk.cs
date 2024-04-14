@@ -17,28 +17,8 @@ public class Perk : ScriptableObject
     {
         Debug.Log("applied " +  name);
 
-        GameObject player = GameObject.Find("Player"); //find player
-
-
-        if (this.whatStat == WhatStat.Health)
-        {
-            //add health
-        }
-        else if (this.whatStat == WhatStat.Mana)
-        {
-            //add mana
-        }
-        else if (this.whatStat == WhatStat.Damage)
-        {
-            //add damage
-        }
-        else if (this.whatStat == WhatStat.Dodge)
-        {
-            //add dodge chance
-        }
+        PerkChanges.chosenPerk = this; //update chosen perk
     }
-
-
 }
 
-public enum WhatStat { Health, Mana, Damage, Dodge}
+public enum WhatStat { Health, Mana, Damage, Add3HealthPots, Add3ManaPots}

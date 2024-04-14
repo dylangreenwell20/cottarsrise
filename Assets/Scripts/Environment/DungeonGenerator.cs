@@ -51,6 +51,10 @@ public class DungeonGenerator : MonoBehaviour
 
     public PlayerMovement pm; //reference to player movement
 
+    public NormalOrDeadUI uiStatus; //change ui status
+
+    public PerkHolder perkHolder; //to apply perk to player
+
     private void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond); //random seed for truly random rooms
@@ -58,6 +62,8 @@ public class DungeonGenerator : MonoBehaviour
         MazeGenerator(); //generate the maze
         GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
         SpawnEnemies(); //spawn room enemies
+
+        perkHolder.ApplyPerk(); //apply chosen perk
     }
 
     void GenerateDungeon()
@@ -503,10 +509,18 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        pm.bossButtonPressed = false; //boss button can be pressed again
+
+        createdRooms = new List<GameObject>(); //reset created rooms list
+
         MazeGenerator(); //generate the maze
         GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
         SpawnEnemies(); //spawn room enemies
 
         pm.SpawnPlayer(); //move player to dungeon spawn
+
+        perkHolder.ApplyPerk(); //apply chosen perk
+
+        uiStatus.NormalUI(); //change to normal ui
     }
 }

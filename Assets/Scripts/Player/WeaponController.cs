@@ -52,6 +52,8 @@ public class WeaponController : MonoBehaviour
 
     public Equipment currentWeapon; //current weapon the player has equipped
 
+    public NormalOrDeadUI uiStatus; //check if perk is being picked to stop weapon attacks
+
     private void Update()
     {
         currentWeapon = eM.currentEquipment[4]; //get current weapon
@@ -141,9 +143,9 @@ public class WeaponController : MonoBehaviour
 
         inventoryOpen = inventory.inventoryOpen; //get status of whether inventory is open or closed
 
-        if (inventoryOpen) //if inventory is open
+        if (inventoryOpen | uiStatus.perkBeingSelected) //if inventory is open or a perk is being selected
         {
-            return; //return function so player will not attack when clicking in inventory
+            return; //return function so player will not attack when clicking in inventory or selecting a perk
         }
 
         if (Input.GetMouseButton(0) && sW.swordActive && currentWeapon != null) //if left click pressed and sword is equipped

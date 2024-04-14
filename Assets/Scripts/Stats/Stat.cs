@@ -32,4 +32,9 @@ public class Stat
             modifiers.Remove(modifier); //remove modifier from list
         }
     }
+
+    public void IncreaseStat(int increaseAmount) //increase base value of stat
+    {
+        baseValue += increaseAmount;
+    }
 }

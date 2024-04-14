@@ -47,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool bossButtonPressed; //stop player pressing boss teleport button multiple times spawning many bosses
 
+    public LayerMask whatIsPlayer; //player layer
+    public bool playerInBossRoom; //detect if player is in boss room
+
     private void Start()
     {
         bossButtonPressed = false;
@@ -102,20 +105,22 @@ public class PlayerMovement : MonoBehaviour
                 {
                     bossButtonPressed = true; //boss button has been pressed
 
-                    this.transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
-                    this.transform.rotation = Quaternion.identity; //face player north
+                    playerInBossRoom = false;
+
+                    while(!playerInBossRoom)
+                    {
+                        transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
+                        transform.rotation = Quaternion.identity; //face player north
+
+                        playerInBossRoom = Physics.CheckSphere((bossTeleporter.MoveToBossRoom()).position, 10.0f, whatIsPlayer);
+                    }
+
+                    //transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
+                    //transform.rotation = Quaternion.identity; //face player north
 
                     Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
                 }
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.K)) //test to move player to boss room
-        {
-            this.transform.position = GameObject.Find("BossArena").transform.Find("Spawn").position; //move to boss arena spawn
-            this.transform.rotation = Quaternion.identity; //face player north
-
-            Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
         }
     }
 
