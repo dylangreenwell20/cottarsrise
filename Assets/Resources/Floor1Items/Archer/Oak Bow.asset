@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Oak Bow
   m_EditorClassIdentifier: 
   name: Oak Bow
-  itemIcon: {fileID: 21300000, guid: 0baa0a44197d7b242b1f2b120f263df3, type: 3}
+  itemIcon: {fileID: 21300000, guid: 789ad9c6234129746945917357d9e52e, type: 3}
   isDefaultItem: 0
   isEquippable: 1
   itemPrefab: {fileID: 2758330759861563590, guid: 98256f6ca59b01c41ab3704baf70d5e6, type: 3}

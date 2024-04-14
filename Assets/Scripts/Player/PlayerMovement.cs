@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck; //transform variable for ground check
     public float groundDistance = 0f; //float variable for distance to ground
     public LayerMask whatIsGround; //layermask variable for what is the ground
-    bool grounded; //boolean variable for grounded (true = on ground, false = off ground)
+    public bool grounded; //boolean variable for grounded (true = on ground, false = off ground)
 
     public Transform orientation; //orientation variable
     float horizontalInput; //horizontal movement input variable

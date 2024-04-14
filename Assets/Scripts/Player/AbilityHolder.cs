@@ -25,20 +25,22 @@ public class AbilityHolder : MonoBehaviour
 
     AbilityState state = AbilityState.ready; //create new ability state and set it to ready
 
-    public KeyCode abilityKey; //key to press to use the ability
+    public AbilityCooldown abilityCooldown; //reference to ability cooldown UI
 
     private void Update()
     {
         switch (state) //switch statement for ability states
         {
             case AbilityState.ready: //ready state
-                if (Input.GetKeyDown(abilityKey)) //if ability key pressed
+                if (Input.GetKeyDown(KeyCode.F)) //if ability key (F) pressed
                 {
                     if (playerMana.currentMana >= ability.manaCost) //if player has more mana than the ability mana cost
                     {
                         ability.Activate(gameObject); //activate ability
 
                         playerMana.LoseMana(ability.manaCost); //take away mana
+
+                        abilityCooldown.UsedAbilityUI(); //update ui to show ability was used
 
                         state = AbilityState.active; //set state to active
                         activeTime = ability.activeTime; //get active time of ability
@@ -66,6 +68,7 @@ public class AbilityHolder : MonoBehaviour
                 else //else if time is 0
                 {
                     state = AbilityState.ready; //change to ready state
+                    abilityCooldown.RechargedAbilityUI(); //update ui to show ability is ready
                 }
             break;
         }

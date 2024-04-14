@@ -20,7 +20,7 @@ public class UsePotions : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V)) //if v pressed
+        if(Input.GetKeyDown(KeyCode.H)) //if H pressed
         {
             if(Inventory.instance.healthPotCount > 0) //if player has more than 1 health pot
             {
@@ -29,7 +29,7 @@ public class UsePotions : MonoBehaviour
                 potionUI.UpdateHealthPotionUI(); //update health potion ui
             }
         }
-        if(Input.GetKeyDown(KeyCode.B)) //if b pressed
+        if(Input.GetKeyDown(KeyCode.B)) //if B pressed
         {
             if(Inventory.instance.manaPotCount > 0) //if player has more than 1 mana pot
             {

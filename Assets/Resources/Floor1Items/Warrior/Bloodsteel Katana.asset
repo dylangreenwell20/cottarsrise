@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bloodsteel Katana
   m_EditorClassIdentifier: 
   name: Bloodsteel Katana
-  itemIcon: {fileID: 21300000, guid: f5998a14b56e09b4d9d475957e896a2b, type: 3}
+  itemIcon: {fileID: 21300000, guid: cbcf5e6543d016847b4a90305db07ed8, type: 3}
   isDefaultItem: 0
   isEquippable: 1
   itemPrefab: {fileID: 831977288852332677, guid: b203afb43242b2b4884b4cb437ff1c3f, type: 3}

@@ -294,7 +294,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.114615895, y: 0.1305128, z: 0.18752278}
   m_Center: {x: -0.00023701423, y: -0.00007518013, z: 0.000044174492}
@@ -556,7 +556,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.11252507, y: 0.12835711, z: 0.18717092}
   m_Center: {x: 0.00002764725, y: 0.000009026381, z: 0.00004617497}
@@ -902,6 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootSpawnPoint: {fileID: 0}
   lootBag: {fileID: 875864819048443126, guid: 320c5eb117c875348997c5dbb861e018, type: 3}
+  enemyAI: {fileID: 0}
 --- !u!1 &3923146290799299575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1004,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.24846639, y: 0.15494375, z: 0.27399427}
   m_Center: {x: -0.0000000018139745, y: -0.03549181, z: 0.081867054}
@@ -1140,7 +1141,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -1650,7 +1651,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_Height: 1.2736223
   m_Direction: 1
   m_Center: {x: 0, y: 0.644642, z: 0}
@@ -1692,6 +1693,7 @@ MonoBehaviour:
   healthPanel: {fileID: 3261466278299830668}
   healthText: {fileID: 2787708741933757548}
   healthBar: {fileID: 1514873880063218304}
+  isDead: 0
 --- !u!114 &5283545506869633025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1707,6 +1709,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 6
   timeBetweenAttacks: 0.5
+  isAttackingPlayer: 0
   attackDistance: 1.5
   playerInSight: 0
   playerInHearDistance: 0
@@ -1730,7 +1733,7 @@ MonoBehaviour:
   patrolCD: 0
   enemyDamage: 25
   pm: {fileID: 0}
-  isMelee: 1
+  isMelee: 0
   isRange: 0
   isMage: 0
   isBoss: 1
@@ -1739,6 +1742,8 @@ MonoBehaviour:
   arrowPoint: {fileID: 7795516895615889837}
   magicPoint: {fileID: 7795516895615889837}
   playerTarget: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
+  healthController: {fileID: 0}
 --- !u!114 &3252476149399668978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1751,7 +1756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aecf2b2c1b4fb46b15cf8f0a5224e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
+  maxHealth: 500
   damage:
     baseValue: 30
   armour:

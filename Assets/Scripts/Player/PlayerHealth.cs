@@ -62,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
             isDead = true; //player is dead
             player.SetActive(false); //disable player character
             cam.GetComponent<PlayerCamera>().enabled = false; //stop player from being able to move the camera
+            cam.GetComponent<PlayerCamera>().UnlockCursor(); //unlock cursor
             weaponHolder.SetActive(false); //disable player weapon holder
         }
 

@@ -197,12 +197,36 @@ public class WeaponController : MonoBehaviour
     {
         IsAttacking = true; //player is currently attacking
         CanAttack = false; //cannot currently attack
+
+        Equipment currentWeapon = eM.currentEquipment[4];
+
+        //the code below is to fix a bug where when restarting the game, the sword will be null for some reason
+
+        if (sword == null)
+        {
+            //get name of weapon
+
+            string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+            //Debug.Log(weaponName); //for testing
+
+            sword = sW.meleePosition.Find(weaponName).gameObject; //find weapon game object and store to variable
+
+            if (sword != null) //if sword was found
+            {
+                sW.weaponFound = true; //sword set to true
+
+                //Debug.Log("Sword found"); //for testing
+
+                attackPoint = sword.transform.Find("AttackPoint"); //find attack point of sword and store to variable
+            }
+        }
+
         Animator animator = sword.GetComponent<Animator>(); //get animator
         animator.SetTrigger("Attack"); //trigger animation
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, swordRange, enemyLayer); //store all hit enemies in an array as multiple enemies can be hit at once
-
-        Equipment currentWeapon = eM.currentEquipment[4];
+        
         int damage = currentWeapon.damage;
         //Debug.Log(damage);
 
@@ -211,6 +235,7 @@ public class WeaponController : MonoBehaviour
         foreach(Collider enemy in hitEnemies) //for each enemy in the hitEnemies array
         {
             enemy.GetComponent<HealthController>().ApplyDamage(damageToDeal);
+
             //Debug.Log("Enemy hit: " + enemy.name); //print out who was hit for testing
         }
 

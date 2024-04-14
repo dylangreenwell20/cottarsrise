@@ -18,3 +18,4 @@ MonoBehaviour:
   abilityDamage: 0
   abilityVelocity: 100
   manaCost: 20
+  abilitySprite: {fileID: 21300000, guid: 07eb89287c308a54c9d2b65f3d8d1aa5, type: 3}

@@ -39,7 +39,7 @@ public class RoomScript : MonoBehaviour
             {
                 int chance = Random.Range(0, 10); //number from 0 - 9
 
-                if(chance >= 2) //if 70% chance has rolled to hide the potion
+                if(chance >= 3) //if 60% chance has rolled to hide the potion
                 {
                     Destroy(potionLocations[i]); //destroy the potion
                 }

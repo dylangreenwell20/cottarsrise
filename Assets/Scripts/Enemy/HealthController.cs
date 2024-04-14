@@ -32,6 +32,8 @@ public class HealthController : MonoBehaviour
 
     private EnemyLoot enemyLoot; //reference to enemy loot
 
+    private bool isBoss; //is the enemy a boss
+
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
@@ -43,6 +45,9 @@ public class HealthController : MonoBehaviour
         maxHealth = characterStats.maxHealth; //get character max health
         currentHealth = maxHealth; //current health is max health
         healthBarStartWidth = healthBar.sizeDelta.x; //width of health bar
+
+        isBoss = GetComponent<EnemyAI>().isBoss; //get boss status
+
         UpdateUI(); //update the health bar UI
     }
 
@@ -87,5 +92,10 @@ public class HealthController : MonoBehaviour
     private void HideEnemy()
     {
         this.gameObject.SetActive(false); //hide enemy capsule
+
+        if (isBoss)
+        {
+            //change UI to show victory message and ask to pick a perk
+        }
     }
 }

@@ -386,6 +386,7 @@ MonoBehaviour:
   healthPanel: {fileID: 806941068760928640}
   healthText: {fileID: 988422640642450457}
   healthBar: {fileID: 2996474376339527964}
+  isDead: 0
 --- !u!114 &7048414785818549752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +402,7 @@ MonoBehaviour:
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 6
   timeBetweenAttacks: 0.5
+  isAttackingPlayer: 0
   attackDistance: 1.5
   playerInSight: 0
   playerInHearDistance: 0
@@ -427,11 +429,14 @@ MonoBehaviour:
   isMelee: 0
   isRange: 1
   isMage: 0
+  isBoss: 0
   enemyArrow: {fileID: 590919792342168746, guid: 136697eff4ac1274782b1393cd2bd9ed, type: 3}
   enemyMagic: {fileID: 9146214330180021658, guid: b55935d810eef5545985cfed1c0b32c7, type: 3}
   arrowPoint: {fileID: 966025259375737920}
   magicPoint: {fileID: 966025259375737920}
   playerTarget: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
+  healthController: {fileID: 0}
 --- !u!114 &6429532556025297750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootSpawnPoint: {fileID: 0}
   lootBag: {fileID: 875864819048443126, guid: 320c5eb117c875348997c5dbb861e018, type: 3}
+  enemyAI: {fileID: 0}
 --- !u!1 &3646586991472184369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1193,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.24846639, y: 0.15494375, z: 0.27399427}
   m_Center: {x: -0.0000000018139745, y: -0.03549181, z: 0.081867054}
@@ -1436,7 +1442,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.55170125, y: 1.3864355, z: 0.09911406}
   m_Center: {x: -0.089225985, y: -0.014714688, z: 0.01759023}
@@ -1605,7 +1611,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.11252507, y: 0.12835711, z: 0.18717092}
   m_Center: {x: 0.00002764725, y: 0.000009026381, z: 0.00004617497}
@@ -1868,7 +1874,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.114615895, y: 0.1305128, z: 0.18752278}
   m_Center: {x: -0.00023701423, y: -0.00007518013, z: 0.000044174492}

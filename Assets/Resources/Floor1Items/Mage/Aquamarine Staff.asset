@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aquamarine Staff
   m_EditorClassIdentifier: 
   name: Aquamarine Staff
-  itemIcon: {fileID: 21300000, guid: e8b0fcfa5e358a94dbc534a3b144934d, type: 3}
+  itemIcon: {fileID: 21300000, guid: d758783b3dbda6f40950d4b5940d371f, type: 3}
   isDefaultItem: 0
   isEquippable: 1
   itemPrefab: {fileID: 7314696087476359758, guid: 6636af55fc530ad40ba006b968a2ef50, type: 3}

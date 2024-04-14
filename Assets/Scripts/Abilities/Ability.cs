@@ -12,6 +12,7 @@ public class Ability : ScriptableObject
     public int abilityDamage; //damage value for abilities
     public float abilityVelocity; //velocity value for abilites
     public int manaCost; //mana cost of the ability
+    public Sprite abilitySprite; //sprite (image) of ability
 
     public virtual void Activate(GameObject parent)
     {

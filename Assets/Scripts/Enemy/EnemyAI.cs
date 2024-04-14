@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     public float walkPointRange; //range the ai can generate a walk point from
 
     public float timeBetweenAttacks; //time between enemy attacks
-    private bool isAttackingPlayer; //is enemy attacking player currently
+    public bool isAttackingPlayer; //is enemy attacking player currently
 
     public float attackDistance; //distance the enemy can attack player from
     public bool playerInSight; //if player is actively seen by the enemy
@@ -83,12 +83,12 @@ public class EnemyAI : MonoBehaviour
         else if(isMage) //if enemy is mage type
         {
             attackDistance = 5.0f;
-            timeBetweenAttacks = 3.0f;
+            timeBetweenAttacks = 2.0f;
         }
         else if (isBoss) //if enemy is boss type
         {
             attackDistance = 2.0f;
-            timeBetweenAttacks = 4.0f;
+            timeBetweenAttacks = 3.0f;
         }
     }
 
@@ -99,20 +99,28 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
+        isPlayerDead = player.GetComponent<PlayerHealth>().isDead; //check if player is dead and assign the result to 'isPlayerDead' bool
+
         playerTarget = (player.transform.position - transform.position).normalized; //direction to player
         float distanceToTarget = Vector3.Distance(transform.position, player.transform.position); //calculate distance to the player
         playerInHearDistance = Physics.CheckSphere(transform.position, hearDistance, whatIsPlayer); //sphere around the enemy for the distance they can hear the player
         playerInAttackRange = Physics.CheckSphere(transform.position, attackDistance, whatIsPlayer); //sphere around the enemy for the distance they can attack the player from
 
-        //orientation.rotation = Quaternion.Euler(0, yRotation, 0); //rotating the orientation
+        if (isBoss && !isPlayerDead) //if is boss enemy type and player is not dead, chase player
+        {
+            if(!isAttackingPlayer) //if is not attacking player
+            {
+                ChasePlayer();
+            }
+
+            return;
+        }
 
         if (!playerInSight) //if player is not in sight
         {
             Patroling(); //patrol the area
         }
 
-        isPlayerDead = player.GetComponent<PlayerHealth>().isDead; //check if player is dead and assign the result to 'isPlayerDead' bool
-        
         if (!isPlayerDead) //if player is alive
         {
             if (distanceToTarget <= viewDistance) //if the distance from the player is less than or equal to the enemy's view distance
@@ -299,6 +307,13 @@ public class EnemyAI : MonoBehaviour
                     animator.SetTrigger("BossMelee");
 
                     //simple melee hit
+
+                    player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
+
+                    //Debug.Log("boss melee"); //for testing
+
+                    isAttackingPlayer = true; //enemy currently attacking player
+                    Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
                 }
                 else if(attack == 1) //kick attack
                 {
@@ -307,6 +322,15 @@ public class EnemyAI : MonoBehaviour
                     animator.SetTrigger("BossKick");
 
                     //apply force to player rigidbody and send them away from the boss
+
+                    player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
+
+                    player.transform.parent.GetComponent<Rigidbody>().AddForce((transform.forward) * 100, ForceMode.Impulse); //launch player backwards
+
+                    //Debug.Log("boss kick"); //for testing
+
+                    isAttackingPlayer = true; //enemy currently attacking player
+                    Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
                 }
                 else if(attack == 2) //jump attack
                 {
@@ -315,18 +339,15 @@ public class EnemyAI : MonoBehaviour
                     animator.SetTrigger("BossJump");
 
                     //wait until animation over then check if player is grounded - if yes then damage
+
+                    isAttackingPlayer = true; //enemy currently attacking player
+
+                    Invoke(nameof(JumpAttack), 1.5f);
+
+                    //Debug.Log("boss jump"); //for testing
+
+                    Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
                 }
-
-                animator.SetTrigger("Attack"); //play attack animation
-
-                //attack player
-
-                player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
-
-                //Debug.Log("boss attack"); //for testing
-
-                isAttackingPlayer = true; //enemy currently attacking player
-                Invoke(nameof(ResetAttack), timeBetweenAttacks); //attack cooldown
             }
             else
             {
@@ -338,5 +359,15 @@ public class EnemyAI : MonoBehaviour
     private void ResetAttack()
     {
         isAttackingPlayer = false; //enemy can attack again
+
+        animator.SetTrigger("BossChase");
+    }
+
+    private void JumpAttack()
+    {
+        if (pm.grounded) //if player is on the ground
+        {
+            player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage); //damage player
+        }
     }
 }
