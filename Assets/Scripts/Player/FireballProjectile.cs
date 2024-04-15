@@ -17,14 +17,14 @@ public class FireballProjectile : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>(); //get player stats component from player
         projectileDamage = AbilityVariables.abilityDamage; //get ability damage
 
-        Debug.Log("fireball created - damage is " + projectileDamage.ToString()); //for testing
+        //Debug.Log("fireball created - damage is " + projectileDamage.ToString()); //for testing
 
         Destroy(gameObject, fireballLife); //destroy after a few seconds
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.name); //for testing
+        //Debug.Log("Collided with: " + collision.gameObject.name); //for testing
 
         if (collision.gameObject.tag != "AbilityProjectile" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "EnemyArrow" && collision.gameObject.tag != "EnemyProjectile" && !hasCollided) //if projectile collides with something other than itself, the player, enemy arrows/projectiles and has not already collided
         {

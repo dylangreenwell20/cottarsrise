@@ -36,10 +36,14 @@ public class HealthController : MonoBehaviour
 
     public NormalOrDeadUI uiStatus; //status of ui
 
+    public AudioSource audioSource; //audio source of enemy
+
     private void Start()
     {
         mR = GetComponent<MeshRenderer>(); //get mesh renderer
         cC = GetComponent<CapsuleCollider>(); //get capsule collider
+
+        audioSource = GetComponent<AudioSource>(); //get audio source
 
         enemyLoot = GetComponentInParent<EnemyLoot>(); //get enemy loot script
 
@@ -70,9 +74,13 @@ public class HealthController : MonoBehaviour
             isDead = true; //enemy is dead
             //Destroy(gameObject); //destroy the enemy gameobject
 
+            
+
             enemyLoot.SpawnItem(); //spawn loot item - in the future, a drop chance will be calculated first before spawning loot
 
             Animator animator = this.transform.parent.GetComponent<Animator>(); //get animator from parent
+
+            AudioManager.Instance.PlaySFX("EnemyDeath", audioSource); //play death audio
 
             if (isBoss)
             {

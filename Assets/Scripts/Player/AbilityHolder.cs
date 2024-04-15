@@ -41,6 +41,15 @@ public class AbilityHolder : MonoBehaviour
                 {
                     if (playerMana.currentMana >= ability.manaCost) //if player has more mana than the ability mana cost
                     {
+                        if(ability.name == "Fireball")
+                        {
+                            AudioManager.Instance.PlaySFX("Fireball", AudioManager.Instance.sfxSource); //play fireball audio
+                        }
+                        else if(ability.name == "Dash")
+                        {
+                            AudioManager.Instance.PlaySFX("Dash", AudioManager.Instance.sfxSource); //play dash audio
+                        }
+
                         ability.Activate(gameObject); //activate ability
 
                         playerMana.LoseMana(ability.manaCost); //take away mana

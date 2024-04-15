@@ -24,6 +24,8 @@ public class UsePotions : MonoBehaviour
         {
             if(Inventory.instance.healthPotCount > 0) //if player has more than 1 health pot
             {
+                AudioManager.Instance.PlaySFX("PotionSip", AudioManager.Instance.sfxSource); //play potion audio
+
                 playerHealth.HealPlayer(healthAmount); //heal player's health for health potion amount
                 Inventory.instance.healthPotCount--; //decrement amount of health potions
                 potionUI.UpdateHealthPotionUI(); //update health potion ui
@@ -33,6 +35,8 @@ public class UsePotions : MonoBehaviour
         {
             if(Inventory.instance.manaPotCount > 0) //if player has more than 1 mana pot
             {
+                AudioManager.Instance.PlaySFX("PotionSip", AudioManager.Instance.sfxSource); //play potion audio
+
                 playerMana.HealMana(manaAmount); //heal player's mana for mana potion amount
                 Inventory.instance.manaPotCount--; //decrement mana pot amount
                 potionUI.UpdateManaPotionUI(); //update mana potion ui

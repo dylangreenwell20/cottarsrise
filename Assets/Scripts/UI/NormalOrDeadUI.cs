@@ -14,8 +14,6 @@ public class NormalOrDeadUI : MonoBehaviour
 
     public GeneratePerks perks;
 
-    private bool isPlayerDead;
-
     public bool perkBeingSelected; //if a perk is being selected so weapon attacks can be cancelled
 
     private void Start()
@@ -55,6 +53,11 @@ public class NormalOrDeadUI : MonoBehaviour
 
     public void VictoryUI() //enable victory ui
     {
+        //stop music and play victory jingle
+
+        AudioManager.Instance.musicSource.Stop(); //stop current music
+        AudioManager.Instance.PlaySFX("VictoryJingle", AudioManager.Instance.sfxSource); //play victory sfx
+
         perkBeingSelected = true;
 
         perks.Generate3Perks(); //generate 3 perks

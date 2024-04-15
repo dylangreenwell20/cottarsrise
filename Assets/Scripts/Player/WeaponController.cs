@@ -181,6 +181,21 @@ public class WeaponController : MonoBehaviour
 
                 if(currentMana >=  manaCost) //check if player has more mana than the staff requires
                 {
+                    string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+                    //Debug.Log(weaponName); //for testing
+
+                    staff = sW.magePosition.Find(weaponName).gameObject; //find staff
+                    Transform staffTransform = staff.transform; //create transform of staff game object
+                    staffFirePoint = staffTransform.transform.Find("FirePoint"); //find staffFirePoint from staff transform
+
+                    if (staff != null) //if staff has been found
+                    {
+                        sW.weaponFound = true; //staff was found
+
+                        //Debug.Log("Staff found"); //for testing
+                    }
+
                     StaffAttack(); //attack function
                 }
             }
@@ -257,6 +272,8 @@ public class WeaponController : MonoBehaviour
         Animator animator = sword.GetComponent<Animator>(); //get animator
         animator.SetTrigger("Attack"); //trigger animation
 
+        AudioManager.Instance.PlaySFX("SwordAttack", AudioManager.Instance.sfxSource); //play attack audio
+
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, swordRange, enemyLayer); //store all hit enemies in an array as multiple enemies can be hit at once
         
         int damage = currentWeapon.damage;
@@ -331,6 +348,8 @@ public class WeaponController : MonoBehaviour
             modelArrow.SetActive(false); //disable the model arrow
         }
 
+        AudioManager.Instance.PlaySFX("BowAttack", AudioManager.Instance.sfxSource); //play attack audio
+
         GameObject currentArrow = Instantiate(arrow, arrowFirePoint.position, Quaternion.identity); //create an arrow
         currentArrow.transform.forward = angleOfDirection.normalized; //rotate arrow to fire where the player is aiming
 
@@ -388,6 +407,8 @@ public class WeaponController : MonoBehaviour
         {
             destination = ray.GetPoint(75); //send projectile a distance of 75                             MAY NEED TO CHANGE THE VALUE
         }
+
+        AudioManager.Instance.PlaySFX("StaffAttack", AudioManager.Instance.sfxSource); //play attack audio
 
         InstantiateProjectile(staffFirePoint); //create projectile function
 

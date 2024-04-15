@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject bossArenaSpawn; //where to spawn player in boss arena
 
+    public NormalOrDeadUI uiStatus; //check if victory ui is up to stop movement
+
 
     private void Start()
     {
@@ -65,6 +67,11 @@ public class PlayerMovement : MonoBehaviour
             transform.position = bossArenaSpawn.transform.position;
             transform.rotation = Quaternion.identity;
 
+            return;
+        }
+
+        if(uiStatus.perkBeingSelected == true) //stop movement if perk is being selected
+        {
             return;
         }
 
@@ -118,8 +125,8 @@ public class PlayerMovement : MonoBehaviour
                     transform.position = bossArenaSpawn.transform.position;
                     transform.rotation = Quaternion.identity;
 
-                    //transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
-                    //transform.rotation = Quaternion.identity; //face player north
+                    AudioManager.Instance.musicSource.Stop(); //stop current music
+                    AudioManager.Instance.PlayMusic("BossMusic"); //play boss music
 
                     Invoke(nameof(StopPlayer), 0.3f);
 
@@ -136,6 +143,11 @@ public class PlayerMovement : MonoBehaviour
             transform.position = bossArenaSpawn.transform.position;
             transform.rotation = Quaternion.identity;
 
+            return;
+        }
+
+        if (uiStatus.perkBeingSelected == true) //stop movement if perk is being selected
+        {
             return;
         }
 
@@ -165,15 +177,39 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown); //invoke the ResetJump function with jumpCooldown
         }
 
+        if (!grounded) //if player is in air, disable walk/run audio
+        {
+            AudioManager.Instance.walkSource.enabled = false;
+            AudioManager.Instance.runSource.enabled = false;
+        }
+
         if(grounded) //if player is grounded
         {
+            if (horizontalInput != 0 | verticalInput != 0) //if player is moving in any direction
+            {
+                if (!isSprinting)
+                {
+                    AudioManager.Instance.walkSource.enabled = true;
+                }
+                else
+                {
+                    AudioManager.Instance.walkSource.enabled = false;
+                }
+            }
+            else
+            {
+                AudioManager.Instance.walkSource.enabled = false;
+            }
+
             if (Input.GetKey(sprintKey)) //if sprint key is pressed down
             {
+                AudioManager.Instance.runSource.enabled = true; //enable sprint audio
                 isSprinting = true; //player is sprinting
             }
         }
         if (Input.GetKeyUp(sprintKey)) //if sprint key is released
         {
+            AudioManager.Instance.runSource.enabled = false; //disable sprint audio
             isSprinting = false; //player is no longer sprinting
         }
     }

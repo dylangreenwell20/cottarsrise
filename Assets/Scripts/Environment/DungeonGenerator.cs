@@ -70,6 +70,9 @@ public class DungeonGenerator : MonoBehaviour
         GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
         SpawnEnemies(); //spawn room enemies
 
+        AudioManager.Instance.musicSource.Stop(); //stop current music
+        AudioManager.Instance.PlayMusic("GameMusic"); //play game music
+
         perkHolder.ApplyPerk(); //apply chosen perk
     }
 
@@ -523,6 +526,10 @@ public class DungeonGenerator : MonoBehaviour
         MazeGenerator(); //generate the maze
         GetComponent<NavMeshSurface>().BuildNavMesh(); //build nav mesh after dungeon is generated
         SpawnEnemies(); //spawn room enemies
+
+        AudioManager.Instance.musicSource.Stop(); //stop current music
+        AudioManager.Instance.sfxSource.Stop(); //stop current sfx
+        AudioManager.Instance.PlayMusic("GameMusic"); //play game music
 
         pm.SpawnPlayer(); //move player to dungeon spawn
 

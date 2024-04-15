@@ -16,6 +16,6 @@ public class Ability : ScriptableObject
 
     public virtual void Activate(GameObject parent)
     {
-        Debug.Log("Ability " + name + " used!"); //for testing
+        //Debug.Log("Ability " + name + " used!"); //for testing
     }
 }

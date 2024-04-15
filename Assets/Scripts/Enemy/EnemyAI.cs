@@ -58,10 +58,14 @@ public class EnemyAI : MonoBehaviour
 
     public HealthController healthController; //enemy health controller
 
+    public AudioSource audioSource; //current enemy audio source
+
     private void Awake()
     {
         animator = this.transform.parent.GetComponent<Animator>(); //get animator from parent
         healthController = this.GetComponent<HealthController>(); //get health controller component
+
+        audioSource = this.GetComponent<AudioSource>(); //get audio source
 
         player = GameObject.Find("PlayerObject"); //find player game object
         playerTransform = player.transform; //find player transform
@@ -97,6 +101,11 @@ public class EnemyAI : MonoBehaviour
         if (healthController.isDead) //if enemy is dead
         {
             return;
+        }
+
+        if (healthController.isDead)
+        {
+            nma.velocity = Vector3.zero;
         }
 
         isPlayerDead = player.GetComponent<PlayerHealth>().isDead; //check if player is dead and assign the result to 'isPlayerDead' bool
@@ -137,9 +146,12 @@ public class EnemyAI : MonoBehaviour
                 }
                 else if (playerInHearDistance) //if the player is not in the view cone but within hear distance
                 {
-                    ChasePlayer(); //chase the player
+                    if (!isAttackingPlayer)
+                    {
+                        ChasePlayer(); //chase the player
 
-                    //Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
+                        //Debug.Log("IN ENEMY HEAR RANGE!!!"); //for testing
+                    }
                 }
                 else //if player is not in view distance
                 {
@@ -253,6 +265,10 @@ public class EnemyAI : MonoBehaviour
 
                 animator.SetTrigger("Attack"); //play attack animation
 
+                //play attack audio
+
+                AudioManager.Instance.PlaySFX("EnemyMelee", audioSource);
+
                 //attack player
 
                 player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
@@ -267,6 +283,10 @@ public class EnemyAI : MonoBehaviour
                 //play attack animation
 
                 animator.SetTrigger("StopChase");
+
+                //play attack audio
+
+                AudioManager.Instance.PlaySFX("EnemyRange", audioSource);
 
                 //spawn projectile and send towards player
 
@@ -283,6 +303,10 @@ public class EnemyAI : MonoBehaviour
                 //play attack animation
 
                 animator.SetTrigger("StopChase");
+
+                //play attack audio
+
+                AudioManager.Instance.PlaySFX("EnemyMage", audioSource);
 
                 //spawn projectile and send towards player
 
@@ -306,6 +330,10 @@ public class EnemyAI : MonoBehaviour
 
                     animator.SetTrigger("BossMelee");
 
+                    //play attack audio
+
+                    AudioManager.Instance.PlaySFX("EnemyMelee", audioSource);
+
                     //simple melee hit
 
                     player.GetComponent<PlayerHealth>().DamagePlayer(enemyDamage);
@@ -320,6 +348,10 @@ public class EnemyAI : MonoBehaviour
                     //play attack animation
 
                     animator.SetTrigger("BossKick");
+
+                    //play attack audio
+
+                    AudioManager.Instance.PlaySFX("BossKick", audioSource);
 
                     //apply force to player rigidbody and send them away from the boss
 
@@ -337,6 +369,10 @@ public class EnemyAI : MonoBehaviour
                     //play attack animation
 
                     animator.SetTrigger("BossJump");
+
+                    //play attack audio
+
+                    AudioManager.Instance.PlaySFX("BossJump", audioSource);
 
                     //wait until animation over then check if player is grounded - if yes then damage
 

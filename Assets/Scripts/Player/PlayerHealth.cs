@@ -62,6 +62,12 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = 0; //set current health to 0 to avoid negative hp
             isDead = true; //player is dead
+
+            //disable walking/running audio
+
+            AudioManager.Instance.walkSource.enabled = false;
+            AudioManager.Instance.runSource.enabled = false;
+
             player.SetActive(false); //disable player character
             weaponHolder.SetActive(false); //disable player weapon holder
 

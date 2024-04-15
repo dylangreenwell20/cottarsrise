@@ -40846,6 +40846,7 @@ MonoBehaviour:
   enemyBossSpawn: {fileID: 1186531655}
   bossButtonPressed: 0
   bossArenaSpawn: {fileID: 43554313}
+  uiStatus: {fileID: 444449478}
 --- !u!114 &1736622283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44498,6 +44499,7 @@ MonoBehaviour:
   genPerks: {fileID: 1856902744}
   playerHealth: {fileID: 123873824}
   playerMana: {fileID: 123873825}
+  abilityHolder: {fileID: 0}
 --- !u!4 &1875499077
 Transform:
   m_ObjectHideFlags: 0
