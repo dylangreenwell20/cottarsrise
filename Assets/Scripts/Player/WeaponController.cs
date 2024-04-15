@@ -103,6 +103,11 @@ public class WeaponController : MonoBehaviour
 
                     arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
 
+                    if (!noArrows)
+                    {
+                        modelArrow.gameObject.SetActive(true);
+                    }
+
                     if (bow != null) //if bow has been found
                     {
                         sW.weaponFound = true; //bow has been found
@@ -190,6 +195,31 @@ public class WeaponController : MonoBehaviour
 
                 if (!noArrows && currentWeapon) //if player has arrows left
                 {
+                    string weaponName = (currentWeapon.name + "(Clone)"); //get name to game can search for clone prefab
+
+                    //Debug.Log(weaponName); //for testing
+
+                    bow = sW.rangePosition.Find(weaponName).gameObject; //find bow
+                    Transform bowTransform = bow.transform; //create bow transform variable - used to find child game objects of the bow
+                    Transform arrowTransform = bowTransform.gameObject.transform.Find("Arrow"); //find arrow transform
+                    modelArrow = arrowTransform.gameObject; //set modelArrow to arrow transform of bow
+
+                    arrowFirePoint = bowTransform.transform.Find("FirePoint"); //find arrowFirePoint from bow transform
+
+                    if (!noArrows)
+                    {
+                        modelArrow.gameObject.SetActive(true);
+                    }
+
+                    if (bow != null) //if bow has been found
+                    {
+                        sW.weaponFound = true; //bow has been found
+
+                        //Debug.Log("Bow found"); //for testing
+
+                        return; //return function
+                    }
+
                     modelArrow.SetActive(true); //enable the model arrow in the bow
                 }
             }

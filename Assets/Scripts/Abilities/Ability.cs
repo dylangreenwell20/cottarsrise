@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 
@@ -13,6 +12,7 @@ public class Ability : ScriptableObject
     public float abilityVelocity; //velocity value for abilites
     public int manaCost; //mana cost of the ability
     public Sprite abilitySprite; //sprite (image) of ability
+    public string abilityDescription; //description of what ability does
 
     public virtual void Activate(GameObject parent)
     {

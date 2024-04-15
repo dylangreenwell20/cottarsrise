@@ -27,6 +27,11 @@ public class AbilityHolder : MonoBehaviour
 
     public AbilityCooldown abilityCooldown; //reference to ability cooldown UI
 
+    private void Start()
+    {
+        GetAbility();
+    }
+
     private void Update()
     {
         switch (state) //switch statement for ability states
@@ -71,6 +76,14 @@ public class AbilityHolder : MonoBehaviour
                     abilityCooldown.RechargedAbilityUI(); //update ui to show ability is ready
                 }
             break;
+        }
+    }
+
+    public void GetAbility() //get ability from static variable
+    {
+        if (SelectedAbility.chosenAbility)
+        {
+            ability = SelectedAbility.chosenAbility;
         }
     }
 }

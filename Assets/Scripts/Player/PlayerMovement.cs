@@ -47,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool bossButtonPressed; //stop player pressing boss teleport button multiple times spawning many bosses
 
-    public LayerMask whatIsPlayer; //player layer
-    public bool playerInBossRoom; //detect if player is in boss room
+    public GameObject bossArenaSpawn; //where to spawn player in boss arena
+
 
     private void Start()
     {
@@ -60,6 +60,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (bossButtonPressed)
+        {
+            transform.position = bossArenaSpawn.transform.position;
+            transform.rotation = Quaternion.identity;
+
+            return;
+        }
+
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, whatIsGround); //check if the player is on the ground
         MyInput(); //run MyInput function
         SpeedControl(); //run SpeedControl function
@@ -105,20 +113,17 @@ public class PlayerMovement : MonoBehaviour
                 {
                     bossButtonPressed = true; //boss button has been pressed
 
-                    playerInBossRoom = false;
+                    rb.velocity = Vector3.zero;
 
-                    while(!playerInBossRoom)
-                    {
-                        transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
-                        transform.rotation = Quaternion.identity; //face player north
-
-                        playerInBossRoom = Physics.CheckSphere((bossTeleporter.MoveToBossRoom()).position, 10.0f, whatIsPlayer);
-                    }
+                    transform.position = bossArenaSpawn.transform.position;
+                    transform.rotation = Quaternion.identity;
 
                     //transform.position = (bossTeleporter.MoveToBossRoom()).position; //move player to dungeon spawn
                     //transform.rotation = Quaternion.identity; //face player north
 
-                    Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
+                    Invoke(nameof(StopPlayer), 0.3f);
+
+                    var boss = Instantiate(enemyBossPrefab, enemyBossSpawn.transform.position, enemyBossSpawn.transform.rotation); //spawn enemy boss at boss spawn
                 }
             }
         }
@@ -126,6 +131,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (bossButtonPressed)
+        {
+            transform.position = bossArenaSpawn.transform.position;
+            transform.rotation = Quaternion.identity;
+
+            return;
+        }
+
         MovePlayer(); //run MovePlayer function
 
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); //variable for current player speed
@@ -238,6 +251,11 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(PlayerSpawn.playerSpawn);
         this.transform.position = new Vector3(PlayerSpawn.playerSpawn.position.x, PlayerSpawn.playerSpawn.position.y, PlayerSpawn.playerSpawn.position.z); //set player position
         this.transform.rotation = Quaternion.identity; //face player north
+    }
+
+    public void StopPlayer()
+    {
+        bossButtonPressed = false;
     }
 
     IEnumerator DashCooldown(float cooldownTime)

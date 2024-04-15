@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged(); //create new delegate type
     public OnItemChanged onItemChangedCallback; //create new delegate callback to implement the delegate
 
-    public GameObject arrowCountUI, currentWeaponUI; //references to UI elements which need to be hidden when inventory is open
+    public GameObject mainUI, currentWeaponUI; //references to UI elements which need to be hidden when inventory is open
 
     public PotionUI potionUI; //reference to potion ui script
     public ArrowCounter arrowCounter; //reference to arrow counter script
@@ -47,12 +47,8 @@ public class Inventory : MonoBehaviour
                 inventory.SetActive(true); //open inventory
                 
                 pc.UnlockCursor(); //unlock the cursor so player can use cursor for inventory
-
-                if(StartingWeapon.archerClassSelected) //if archer class selected
-                {
-                    arrowCountUI.SetActive(false); //hide arrow count UI
-                }
                 
+                mainUI.SetActive(false);
                 currentWeaponUI.SetActive(false); //hide current weapon ui
 
                 inventoryOpen = true; //inv is open
@@ -62,12 +58,8 @@ public class Inventory : MonoBehaviour
                 inventory.SetActive(false); //close inventory
 
                 pc.LockCursor(); //lock the cursor so player can look around again
-
-                if (StartingWeapon.archerClassSelected) //if archer class selected
-                {
-                    arrowCountUI.SetActive(true); //show arrow count UI
-                }
                 
+                mainUI.SetActive(true);
                 currentWeaponUI.SetActive(true); //show current weapon ui
 
                 inventoryOpen = false; ; //inv is closed

@@ -14,6 +14,8 @@ public class PlayerCamera : MonoBehaviour
 
     private bool cursorUnlocked; //bool to check if cursor is currently locked or unlocked
 
+    public PlayerMovement pm; //check if player has entered boss arena
+
     private void Start()
     {
         LockCursor(); //lock the cursor in the game so player can look around
@@ -21,6 +23,17 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
+        if(pm.bossButtonPressed) //if boss teleport button pressed, make player face north towards boss
+        {
+            transform.rotation = Quaternion.identity;
+            orientation.rotation = Quaternion.identity;
+
+            xRotation = 0;
+            yRotation = 0;
+
+            return;
+        }
+
         if (cursorUnlocked) //if cursor is unlocked
         {
             return; //return function so mouse movement will not rotate the camera

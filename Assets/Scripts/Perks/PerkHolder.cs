@@ -11,7 +11,7 @@ public class PerkHolder : MonoBehaviour
 
     public void ApplyPerk()
     {
-        if (PerkChanges.chosenPerk != null) //if there is a chosen perk
+        if (PerkChanges.chosenPerk) //if there is a chosen perk
         {
             Perk perkToApply = PerkChanges.chosenPerk; //get chosen perk
 

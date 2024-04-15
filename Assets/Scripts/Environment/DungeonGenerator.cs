@@ -55,6 +55,13 @@ public class DungeonGenerator : MonoBehaviour
 
     public PerkHolder perkHolder; //to apply perk to player
 
+    public GeneratePerks genPerks; //to update what perk was selected
+
+    public PlayerHealth playerHealth;
+    public PlayerMana playerMana;
+
+    public AbilityHolder abilityHolder;
+
     private void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond); //random seed for truly random rooms
@@ -519,7 +526,14 @@ public class DungeonGenerator : MonoBehaviour
 
         pm.SpawnPlayer(); //move player to dungeon spawn
 
+        genPerks.UpdateStaticPerk(); //update static perk to allow for it to be applied
+
         perkHolder.ApplyPerk(); //apply chosen perk
+
+        Inventory.instance.arrowCount = 50; //max arrows
+
+        playerHealth.HealPlayer(9999); //heal player over max health
+        playerMana.HealMana(9999); //heal player over max mana
 
         uiStatus.NormalUI(); //change to normal ui
     }

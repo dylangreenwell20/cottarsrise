@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,8 +45,8 @@ public class SelectedWeapon : MonoBehaviour
             {
                 if(mageSelected == false)
                 {
-                    StartingWeapon.warriorClassSelected = true;
-                    warriorSelected = true;
+                    StartingWeapon.mageClassSelected = true;
+                    mageSelected = true;
                 }
             }
         }

@@ -93,6 +93,17 @@ public class GeneratePerks : MonoBehaviour
         ColourPerkButtons();
     }
 
+    public void ResetSelectedPerks() //reset outlines and status of selected perks
+    {
+        perk1 = false;
+        perk2 = false;
+        perk3 = false;
+
+        continueButton.interactable = false;
+
+        ColourPerkButtons();
+    }
+
     public void UpdateStaticPerk() //update static variable to know what perk has been selected
     {
         if (perk1)
@@ -107,6 +118,8 @@ public class GeneratePerks : MonoBehaviour
         {
             PerkChanges.chosenPerk = generatedPerks[2];
         }
+
+        ResetSelectedPerks();
     }
 
     public void ColourPerkButtons() //change outline colour of perk to indicate it has been selected

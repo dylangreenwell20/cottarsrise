@@ -31,11 +31,11 @@ public class SelectedClass : MonoBehaviour
     {
         if (classSelected) //if a class has been selected
         {
-            playButton.gameObject.SetActive(true); //show play button
+            playButton.interactable = true; //show play button
         }
         else //else if no class has been selected
         {
-            playButton.gameObject.SetActive(false); //hide play button
+            playButton.interactable = false; //hide play button
         }
     }
 

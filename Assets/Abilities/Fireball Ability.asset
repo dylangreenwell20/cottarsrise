@@ -19,3 +19,4 @@ MonoBehaviour:
   abilityVelocity: 30
   manaCost: 25
   abilitySprite: {fileID: 21300000, guid: e387d09feca4bfd4e9585e68523f3a90, type: 3}
+  abilityDescription: Hurl out a fireball dealing high damage to enemies.

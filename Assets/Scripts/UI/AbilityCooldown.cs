@@ -18,7 +18,17 @@ public class AbilityCooldown : MonoBehaviour
 
     public void UpdateIcon()
     {
-        Ability currentAbility = abilityHolder.ability; //get current ability
+        Ability currentAbility;
+
+        if(SelectedAbility.chosenAbility != null)
+        {
+            currentAbility = SelectedAbility.chosenAbility;
+        }
+        else
+        {
+            currentAbility = abilityHolder.ability; //get current ability
+        }
+        
         abilitySprite = currentAbility.abilitySprite; //get sprite of ability
         abilityIcon.sprite = abilitySprite; //set ability sprite as UI icon
     }
