@@ -89,7 +89,10 @@ public class PauseGame : MonoBehaviour
         uiStatus.onPauseUI = false;
         uiStatus.onSettingsUI = false;
 
+        settingsContainer.SetActive(false);
+        menuContainer.SetActive(true);
         pauseUI.SetActive(false);
+        
         mainUI.SetActive(true);
 
         //play music/sfx
