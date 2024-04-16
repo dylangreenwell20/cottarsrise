@@ -28,7 +28,7 @@ public class PauseGame : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y)) //if pause button pressed
+        if (Input.GetKeyDown(KeyCode.Escape)) //if pause button pressed
         {
             if (uiStatus.onPauseUI) //if on pause ui already
             {
