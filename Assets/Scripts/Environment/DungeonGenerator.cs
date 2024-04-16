@@ -536,7 +536,8 @@ public class DungeonGenerator : MonoBehaviour
 
         perkHolder.ApplyPerk(); //apply chosen perk
 
-        Inventory.instance.arrowCount = 50; //max arrows
+        Inventory.instance.arrowCounter.GainArrow(50); //replenish arrow count
+        
         Inventory.instance.arrowCounter.UpdateUI(); //update arrow ui
 
         playerHealth.HealPlayer(9999); //heal player over max health
