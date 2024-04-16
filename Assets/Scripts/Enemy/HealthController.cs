@@ -44,17 +44,25 @@ public class HealthController : MonoBehaviour
         cC = GetComponent<CapsuleCollider>(); //get capsule collider
 
         audioSource = GetComponent<AudioSource>(); //get audio source
+        audioSource.volume = AudioManager.Instance.sfxSource.volume; //set volume to sfx source volume
 
         enemyLoot = GetComponentInParent<EnemyLoot>(); //get enemy loot script
 
         characterStats = GetComponent<CharacterStats>(); //get character stats
-        maxHealth = characterStats.maxHealth; //get character max health
+        maxHealth = (int)(characterStats.maxHealth * (0.75 + (0.25 * FloorsCompleted.currentFloor))); //get character max health and multiply by current floor int to make later floors harder
         currentHealth = maxHealth; //current health is max health
         healthBarStartWidth = healthBar.sizeDelta.x; //width of health bar
+
+        //enemy max health goes up by 25% each floor
 
         isBoss = GetComponent<EnemyAI>().isBoss; //get boss status
 
         UpdateUI(); //update the health bar UI
+    }
+
+    private void Update()
+    {
+        //audioSource.volume = AudioManager.Instance.sfxSource.volume; //set volume to sfx source volume
     }
 
     public void ApplyDamage(int damage)

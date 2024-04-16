@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     public float patrolCooldownHigher; //higher cooldown number for random time between enemy patrols
     public bool cdActive; //patrol cooldown is active
     public float patrolCD; //cooldown between patrol points
+    public float distanceToTarget;
 
     public int enemyDamage; //damage the enemy deals
     private bool isPlayerDead; //is player dead or alive
@@ -66,6 +67,8 @@ public class EnemyAI : MonoBehaviour
         healthController = this.GetComponent<HealthController>(); //get health controller component
 
         audioSource = this.GetComponent<AudioSource>(); //get audio source
+
+        audioSource.volume = AudioManager.Instance.sfxSource.volume; //set volume to sfx source volume
 
         player = GameObject.Find("PlayerObject"); //find player game object
         playerTransform = player.transform; //find player transform
@@ -100,18 +103,16 @@ public class EnemyAI : MonoBehaviour
     {
         if (healthController.isDead) //if enemy is dead
         {
+            nma.velocity = Vector3.zero;
             return;
         }
 
-        if (healthController.isDead)
-        {
-            nma.velocity = Vector3.zero;
-        }
+        audioSource.volume = AudioManager.Instance.sfxSource.volume; //set volume to sfx source volume
 
         isPlayerDead = player.GetComponent<PlayerHealth>().isDead; //check if player is dead and assign the result to 'isPlayerDead' bool
 
         playerTarget = (player.transform.position - transform.position).normalized; //direction to player
-        float distanceToTarget = Vector3.Distance(transform.position, player.transform.position); //calculate distance to the player
+        distanceToTarget = Vector3.Distance(transform.position, player.transform.position); //calculate distance to the player
         playerInHearDistance = Physics.CheckSphere(transform.position, hearDistance, whatIsPlayer); //sphere around the enemy for the distance they can hear the player
         playerInAttackRange = Physics.CheckSphere(transform.position, attackDistance, whatIsPlayer); //sphere around the enemy for the distance they can attack the player from
 
@@ -238,17 +239,45 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        if(!isAttackingPlayer)
+        if(isBoss | isMelee)
         {
-            animator.SetTrigger("Chase"); //play chase animation
+            if (!isAttackingPlayer)
+            {
+                animator.SetTrigger("Chase"); //play chase animation
+
+                nma.SetDestination(playerTransform.position); //set destination to the player's location
+
+                if (playerInAttackRange) //if player is in attack range
+                {
+                    if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, whatIsObject) == false) //if enemy has clear line of sight on player
+                    {
+                        AttackPlayer(); //attack player
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (!playerInAttackRange) //if player not in attack range
+            {
+                animator.SetTrigger("Chase"); //play chase animation
+            }
+            else
+            {
+                animator.SetTrigger("StopChase"); //stop chase animation
+            }
 
             nma.SetDestination(playerTransform.position); //set destination to the player's location
 
             if (playerInAttackRange) //if player is in attack range
             {
-                AttackPlayer(); //attack player
+                if (Physics.Raycast(transform.position, playerTarget, distanceToTarget, whatIsObject) == false) //if enemy has clear line of sight on player
+                {
+                    AttackPlayer(); //attack player
+                }
             }
         }
+        
     }
 
     private void AttackPlayer()

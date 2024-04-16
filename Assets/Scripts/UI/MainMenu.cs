@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject classMenu; //reference to class menu
     public GameObject abilityMenu;
     public GameObject perkMenu;
+    public GameObject controlsMenu;
 
     public SelectedClass selectedClass; //reference to SelectedClass script
     public SelectAbility selectedAbility;
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour
         classMenu.SetActive(false); //disable class select menu
         abilityMenu.SetActive(false);
         perkMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     public void PlayGame()
@@ -29,6 +31,8 @@ public class MainMenu : MonoBehaviour
         selectedClass.UpdateStaticVariables(); //update static variables so game scene can know what class was picked in menu scene
         selectedAbility.UpdateStaticAbility();
         selectedPerks.UpdateStaticPerk();
+
+        FloorsCompleted.currentFloor = 1; //set to floor 1
 
         SceneManager.LoadScene("GameScene"); //load next scene
     }
@@ -46,15 +50,19 @@ public class MainMenu : MonoBehaviour
         settingsMenu.SetActive(false);
         abilityMenu.SetActive(false);
         perkMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     public void LoadSettings()
     {
+        AudioManager.Instance.volumeController.UpdateSliderPositions();
+
         mainMenu.SetActive(false); //disable main menu
         settingsMenu.SetActive(true); //enable settings menu
         classMenu.SetActive(false);
         abilityMenu.SetActive(false);
         perkMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     public void LoadMain()
@@ -64,6 +72,7 @@ public class MainMenu : MonoBehaviour
         classMenu.SetActive(false); //disable class menu
         abilityMenu.SetActive(false);
         perkMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     public void LoadAbilitySelect()
@@ -73,6 +82,7 @@ public class MainMenu : MonoBehaviour
         classMenu.SetActive(false); //disable class menu
         abilityMenu.SetActive(true);
         perkMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     public void LoadPerkSelect()
@@ -84,5 +94,16 @@ public class MainMenu : MonoBehaviour
         classMenu.SetActive(false); //disable class menu
         abilityMenu.SetActive(false);
         perkMenu.SetActive(true);
+        controlsMenu.SetActive(false);
+    }
+
+    public void LoadControls()
+    {
+        mainMenu.SetActive(false); //disable main menu
+        settingsMenu.SetActive(false); //disable settings menu
+        classMenu.SetActive(false); //disable class menu
+        abilityMenu.SetActive(false);
+        perkMenu.SetActive(false);
+        controlsMenu.SetActive(true);
     }
 }

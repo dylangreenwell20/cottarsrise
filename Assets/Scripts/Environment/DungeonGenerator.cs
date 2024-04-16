@@ -33,11 +33,8 @@ public class DungeonGenerator : MonoBehaviour
     List<Cell> board; //create board for cells
 
     public int genOrder = 0; //for testing
-
     private bool directionCheck; //loop to check if room is generating to a previously-made room
-
     public int previousGenDirection; //previous direction a room was generated in (0 = north, 1 = east, 2 = south, 3 = west)
-
     public bool sameDirectionTwice; //if 2 rooms were generated in the same direction - used because unity.random is (for some reason) not random all the time
     //and using this bool i can prevent every other dungeon from being a straight line north (yes this happens too much it should be impossible)
 
@@ -519,6 +516,8 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        FloorsCompleted.currentFloor += 1; //increment amount of floors completed
+
         pm.bossButtonPressed = false; //boss button can be pressed again
 
         createdRooms = new List<GameObject>(); //reset created rooms list
@@ -538,6 +537,7 @@ public class DungeonGenerator : MonoBehaviour
         perkHolder.ApplyPerk(); //apply chosen perk
 
         Inventory.instance.arrowCount = 50; //max arrows
+        Inventory.instance.arrowCounter.UpdateUI(); //update arrow ui
 
         playerHealth.HealPlayer(9999); //heal player over max health
         playerMana.HealMana(9999); //heal player over max mana

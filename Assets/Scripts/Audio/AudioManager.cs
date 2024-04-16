@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] musicSounds, sfxSounds; //audio arrays
     public AudioSource musicSource, sfxSource, walkSource, runSource; //sources of audio
+
+    public VolumeController volumeController; //update slider positions to volume levels
 
     private void Awake()
     {
@@ -28,6 +31,16 @@ public class AudioManager : MonoBehaviour
         PlayMusic("MainMenuMusic");
     }
 
+    private void Update()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.name == "MainMenu")
+        {
+            volumeController = GameObject.Find("MainMenuCanvas").transform.Find("Background").Find("Settings").gameObject.GetComponent<VolumeController>(); //get volume controller
+        }
+    }
+
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name); //find music called "name"
@@ -38,7 +51,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("playing music!!");
+            //Debug.Log("playing music!!");
             musicSource.clip = s.clip; //set music clip
             musicSource.Play(); //play music
         }
@@ -66,5 +79,7 @@ public class AudioManager : MonoBehaviour
     public void SFXVolume(float volume)
     {
         sfxSource.volume = volume;
+        walkSource.volume = volume;
+        runSource.volume = volume;
     }
 }

@@ -148,7 +148,7 @@ public class WeaponController : MonoBehaviour
 
         inventoryOpen = inventory.inventoryOpen; //get status of whether inventory is open or closed
 
-        if (inventoryOpen | uiStatus.perkBeingSelected) //if inventory is open or a perk is being selected
+        if (inventoryOpen | uiStatus.perkBeingSelected | uiStatus.onPauseUI) //if inventory is open or a perk is being selected or pause menu is open
         {
             return; //return function so player will not attack when clicking in inventory or selecting a perk
         }

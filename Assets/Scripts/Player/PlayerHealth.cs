@@ -52,6 +52,10 @@ public class PlayerHealth : MonoBehaviour
             return; //exit function as player is dead
         }
 
+        //multiply damage by current floor (higher floors mean enemies do more damage)
+
+        damage = (int)(damage * (0.9 + (0.1 * (FloorsCompleted.currentFloor)))); //increase damage based on current floor (damage is +10% per floor)
+
         //get armour value and do damage reduction calculation
 
         int damageToTake = playerStats.DamageToTake(damage); //calculate damage with armour reduction applied
