@@ -1,4 +1,4 @@
-#COMP3000 Project - Cottar's Rise
+# COMP3000 Project - Cottar's Rise
 ##Description
 Cottar's Rise is a medieval-themed rogue-like dungeon crawler game which serves as a submission for my COMP3000 Final Year Project. The game was created in Unity and all scripts are coded with C#.
 The game's objective is to reach the end of the dungeon and defeat the boss to progress to a deeper, and more dangerous, dungeon floor.
